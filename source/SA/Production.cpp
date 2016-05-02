@@ -2,8 +2,8 @@
 
 namespace pitaya {
 
-	Production::Production()
-		: m_lhs {}, m_rhs {} {}
+	Production::Production(std::size_t id)
+		: id {id}, m_lhs {}, m_rhs {} {}
 
 	void Production::set_lhs(SharedSymbol lhs) {
 		// move to avoid changing ref-count

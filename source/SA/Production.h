@@ -13,8 +13,11 @@ namespace pitaya {
 
 	public:
 
-		//! Default constructor.
-		Production();
+		//! Constructor.
+		/*!
+			\param id ID of the production.
+		*/
+		Production(std::size_t id);
 
 		//! Setter for lhs.
 		/*!
@@ -36,6 +39,8 @@ namespace pitaya {
 
 		//! Number of rhs.
 		std::size_t num_rhs() const;
+
+		const std::size_t id;				//!< ID of the production.
 
 	private:
 
