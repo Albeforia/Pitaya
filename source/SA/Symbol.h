@@ -5,6 +5,7 @@
 #include <string>
 #include <memory>
 #include <unordered_map>
+#include <iostream>
 
 namespace pitaya {
 
@@ -38,6 +39,9 @@ namespace pitaya {
 
 		//! First set of the symbol.
 		SymbolSet& first_set();
+
+		//! Output.
+		friend std::ostream& operator<<(std::ostream&, const Symbol&);
 
 		//! Use this factory function to 'create' symbols.
 		/*!

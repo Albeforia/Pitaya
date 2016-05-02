@@ -33,4 +33,8 @@ namespace pitaya {
 		return m_first_set;
 	}
 
+	std::ostream& operator<<(std::ostream& os, const Symbol& s) {
+		return os << s.m_name;
+	}
+
 }

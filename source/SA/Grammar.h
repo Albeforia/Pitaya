@@ -26,6 +26,12 @@ namespace pitaya {
 		//! Compute the first sets of every nonterminal.
 		void compute_first_sets();
 
+		/// @cond test
+
+		void print_first_sets() const;
+
+		/// @endcond
+
 	private:
 
 		std::vector<SharedSymbol> m_symbols;		//!< All symbols in this grammar.

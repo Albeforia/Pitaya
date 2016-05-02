@@ -2,6 +2,7 @@
 
 #include <fstream>
 #include <algorithm>
+#include <iostream>
 
 namespace pitaya {
 
@@ -97,6 +98,24 @@ namespace pitaya {
 				}
 			}
 		} while (not_fin);
+	}
+
+	void Grammar::print_first_sets() const {
+		std::cout << "FIRST sets:" << std::endl;
+		for (const auto& s : m_symbols) {
+			if (s->type() == SymbolType::NONTERMINAL) {
+				std::cout << *s << ":\t";
+				for (size_t i = 0; i < s->first_set().size(); i++) {
+					if (s->first_set()[i]) {
+						std::cout << *m_symbols[i] << " ";
+					}
+				}
+				if (s->lambda()) {
+					std::cout << "(empty)";
+				}
+				std::cout << std::endl;
+			}
+		}
 	}
 
 	Grammar::ProductionReader::ProductionReader()

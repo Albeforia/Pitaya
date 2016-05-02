@@ -18,7 +18,7 @@ namespace pitaya {
 
 	bool SymbolSet::add(const Symbol& s) {
 		auto id = s.id();
-		assert(id < m_set.size());
+		assert(id < size());
 		if (m_set[id]) return false;
 		return m_set[id] = true;
 	}
@@ -34,6 +34,11 @@ namespace pitaya {
 			}
 		}
 		return changed;
+	}
+
+	bool SymbolSet::operator[](std::size_t id) const {
+		assert(id < size());
+		return m_set[id];
 	}
 
 }

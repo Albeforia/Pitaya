@@ -35,6 +35,9 @@ namespace pitaya {
 		*/
 		bool union_with(const SymbolSet& s);
 
+		//! Whether the symbol of id is in set.
+		bool operator[](std::size_t id) const;
+
 	private:
 
 		boost::dynamic_bitset<> m_set;		//!< Underlying set representation.

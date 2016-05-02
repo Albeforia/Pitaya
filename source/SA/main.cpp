@@ -8,6 +8,7 @@ int main() {
 
 	auto pg {std::make_unique<Grammar>("test.gram")};
 	pg->compute_first_sets();
+	pg->print_first_sets();
 
 	return 0;
 
