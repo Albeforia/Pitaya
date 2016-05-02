@@ -2,8 +2,6 @@
 
 #include "Production.h"
 
-#include <set>
-
 #include <boost/statechart/state_machine.hpp>
 #include <boost/statechart/simple_state.hpp>
 #include <boost/statechart/event.hpp>
@@ -30,10 +28,7 @@ namespace pitaya {
 
 	private:
 
-		std::set<
-			SharedSymbol, std::function<bool(SharedSymbol, SharedSymbol)>
-		> m_symbols;		//!< All symbols in this grammar.
-
+		std::vector<SharedSymbol> m_symbols;		//!< All symbols in this grammar.
 		std::vector<Production> m_productions;		//!< All productions in this grammar.
 
 		//! Parse a grammar file.

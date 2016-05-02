@@ -1,12 +1,19 @@
 #include "Grammar.h"
 
 #include <fstream>
+#include <algorithm>
 
 namespace pitaya {
 
 	Grammar::Grammar(const char* file)
-		: m_productions {}, m_symbols {
-		[](SharedSymbol a, SharedSymbol b) {
+		: m_productions {}, m_symbols {} {
+		read(file);
+
+		for (const auto& p : Symbol::pool()) {
+			m_symbols.emplace_back(p.second);
+		}
+
+		std::sort(m_symbols.begin(), m_symbols.end(), [](auto a, auto b) {
 			// sort terminals before nonterminals
 			// while keeping the order they appeared in the grammar file
 			if (a->type() != b->type()) {
@@ -15,15 +22,7 @@ namespace pitaya {
 			else {
 				return a->id() < b->id();
 			}
-		}
-	} {
-		read(file);
-
-		for (const auto& p : Symbol::pool()) {
-			auto& res = m_symbols.emplace(p.second);
-			// the insertion should success because we fetch from pool
-			assert(res.second);
-		}
+		});
 
 		std::size_t num_terminals = 0;
 		std::size_t num_nonterminals = 0;
@@ -32,7 +31,7 @@ namespace pitaya {
 				s->id() = num_terminals++;
 			}
 			else {
-				s->id() = ++num_nonterminals + num_terminals;
+				s->id() = num_terminals + num_nonterminals++;
 				s->first_set().resize(num_terminals + 1);
 			}
 		}
