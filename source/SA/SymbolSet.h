@@ -2,9 +2,9 @@
 
 #include <boost\dynamic_bitset\dynamic_bitset.hpp>
 
-#include "Symbol.h"
-
 namespace pitaya {
+
+	class Symbol;
 
 	//! Set of symbols.
 	class SymbolSet {

@@ -1,4 +1,5 @@
 #include "SymbolSet.h"
+#include "Symbol.h"
 
 #include <cassert>
 

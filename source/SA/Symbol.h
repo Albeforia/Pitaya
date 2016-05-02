@@ -1,12 +1,13 @@
 #pragma once
 
+#include "SymbolSet.h"
+
 #include <string>
 #include <memory>
 #include <unordered_map>
 
 namespace pitaya {
 
-	class Symbol;
 	using SharedSymbol = std::shared_ptr<Symbol>;
 
 	//! Symbol type.
@@ -34,6 +35,9 @@ namespace pitaya {
 
 		//! Whether this symbol can generate an empty string.
 		bool& lambda();
+
+		//! First set of the symbol.
+		SymbolSet& first_set();
 
 		//! Use this factory function to 'create' symbols.
 		/*!
@@ -83,6 +87,7 @@ namespace pitaya {
 		std::size_t m_id;		//!< ID of the symbol.
 		SymbolType m_type;		//!< Type of the symbol.
 		bool m_lambda;			//!< True if this symbol can generate an empty string.
+		SymbolSet m_first_set;	//!< First set of the symbol.
 
 		/// @cond
 		//! Unique ID marking the first appearance of a symbol.

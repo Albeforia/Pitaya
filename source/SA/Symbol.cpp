@@ -5,7 +5,7 @@
 namespace pitaya {
 
 	Symbol::Symbol(SymbolName name)
-		: m_name {name}, m_lambda {false} {
+		: m_name {name}, m_lambda {false}, m_first_set {} {
 		m_type = std::isupper(*m_name) ? SymbolType::TERMINAL : SymbolType::NONTERMINAL;
 	}
 
@@ -27,6 +27,10 @@ namespace pitaya {
 
 	bool& Symbol::lambda() {
 		return m_lambda;
+	}
+
+	SymbolSet& Symbol::first_set() {
+		return m_first_set;
 	}
 
 }

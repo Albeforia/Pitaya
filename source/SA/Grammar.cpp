@@ -24,6 +24,18 @@ namespace pitaya {
 			// the insertion should success because we fetch from pool
 			assert(res.second);
 		}
+
+		std::size_t num_terminals = 0;
+		std::size_t num_nonterminals = 0;
+		for (auto& s : m_symbols) {
+			if (s->type() == SymbolType::TERMINAL) {
+				s->id() = num_terminals++;
+			}
+			else {
+				s->id() = ++num_nonterminals + num_terminals;
+				s->first_set().resize(num_terminals + 1);
+			}
+		}
 	}
 
 	void Grammar::read(const char* file) {
@@ -61,6 +73,28 @@ namespace pitaya {
 				if (i == p.num_rhs()) {				// including zero rhs
 					p[0].lambda() = true;
 					not_fin = true;					// find a new lambda, continue computing
+				}
+			}
+		} while (not_fin);
+
+		// compute all first sets
+		do {
+			not_fin = false;
+			for (auto& p : m_productions) {
+				auto& lhs = p[0];
+				for (std::size_t i = 0; i < p.num_rhs(); i++) {
+					auto& rhs = p[i + 1];
+					if (rhs.type() == SymbolType::TERMINAL) {
+						not_fin = lhs.first_set().add(rhs);
+						break;		// encounter a terminal, add to first set and stop
+					}
+					else if (lhs.id() == rhs.id()) {
+						if (!lhs.lambda()) break;	// recurrence happened, should compute in another production
+					}
+					else {
+						not_fin = lhs.first_set().union_with(rhs.first_set());
+						if (!rhs.lambda()) break;	// stop if a rhs cannot generate empty string
+					}
 				}
 			}
 		} while (not_fin);
