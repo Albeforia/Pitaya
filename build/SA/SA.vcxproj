@@ -152,11 +152,13 @@
     <ClCompile Include="..\..\source\SA\main.cpp" />
     <ClCompile Include="..\..\source\SA\Production.cpp" />
     <ClCompile Include="..\..\source\SA\Symbol.cpp" />
+    <ClCompile Include="..\..\source\SA\SymbolSet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\source\SA\Grammar.h" />
     <ClInclude Include="..\..\source\SA\Production.h" />
     <ClInclude Include="..\..\source\SA\Symbol.h" />
+    <ClInclude Include="..\..\source\SA\SymbolSet.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

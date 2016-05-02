@@ -17,6 +17,10 @@ namespace pitaya {
 		return m_id;
 	}
 
+	const std::size_t& Symbol::id() const {
+		return m_id;
+	}
+
 	SymbolType Symbol::type() const {
 		return m_type;
 	}

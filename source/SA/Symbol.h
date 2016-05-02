@@ -27,6 +27,7 @@ namespace pitaya {
 
 		//! ID of the symbol.
 		std::size_t& id();
+		const std::size_t& id() const;
 
 		//! Type of this symbol.
 		SymbolType type() const;
