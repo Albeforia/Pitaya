@@ -126,7 +126,7 @@ namespace pitaya {
 		if (state_downcast<const WaitForLHS*>() != nullptr) {
 			std::string lhs;
 			file >> lhs;
-			productions.emplace_back(Production {});
+			productions.emplace_back(Production {current});
 			productions[current].set_lhs(Symbol::create(lhs));
 			process_event(EvGetLHS {});
 		}
