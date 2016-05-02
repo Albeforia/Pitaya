@@ -88,7 +88,7 @@ namespace pitaya {
 						not_fin = lhs.first_set().add(rhs);
 						break;		// encounter a terminal, add to first set and stop
 					}
-					else if (lhs.id() == rhs.id()) {
+					else if (lhs == rhs) {
 						if (!lhs.lambda()) break;	// recurrence happened, should compute in another production
 					}
 					else {

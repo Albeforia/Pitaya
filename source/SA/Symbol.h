@@ -40,9 +40,6 @@ namespace pitaya {
 		//! First set of the symbol.
 		SymbolSet& first_set();
 
-		//! Output.
-		friend std::ostream& operator<<(std::ostream&, const Symbol&);
-
 		//! Use this factory function to 'create' symbols.
 		/*!
 			This function ensures a symbol is stored only once
@@ -102,5 +99,11 @@ namespace pitaya {
 		/// @endcond
 
 	};
+
+	//! Equality.
+	bool operator==(const Symbol&, const Symbol&);
+
+	//! Output.
+	std::ostream& operator<<(std::ostream&, const Symbol&);
 
 }

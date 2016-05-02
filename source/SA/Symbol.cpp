@@ -33,8 +33,12 @@ namespace pitaya {
 		return m_first_set;
 	}
 
+	bool operator==(const Symbol& a, const Symbol& b) {
+		return a.id() == b.id();
+	}
+
 	std::ostream& operator<<(std::ostream& os, const Symbol& s) {
-		return os << s.m_name;
+		return os << s.name();
 	}
 
 }
