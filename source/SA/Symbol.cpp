@@ -1,13 +1,9 @@
 #include "Symbol.h"
 
-#include <cctype>
-
 namespace pitaya {
 
 	Symbol::Symbol(SymbolName name)
-		: m_name {name}, m_lambda {false}, m_first_set {} {
-		m_type = std::isupper(*m_name) ? SymbolType::TERMINAL : SymbolType::NONTERMINAL;
-	}
+		: m_name {name}, m_type {SymbolType::UNDEFINED}, m_lambda {false}, m_first_set {} {}
 
 	Symbol::SymbolName Symbol::name() const {
 		return m_name;
@@ -21,7 +17,7 @@ namespace pitaya {
 		return m_id;
 	}
 
-	SymbolType Symbol::type() const {
+	SymbolType& Symbol::type() {
 		return m_type;
 	}
 

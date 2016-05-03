@@ -13,6 +13,7 @@ namespace pitaya {
 
 	//! Symbol type.
 	enum class SymbolType {
+		UNDEFINED,
 		TERMINAL,
 		NONTERMINAL,
 	};
@@ -32,7 +33,7 @@ namespace pitaya {
 		const std::size_t& id() const;
 
 		//! Type of this symbol.
-		SymbolType type() const;
+		SymbolType& type();
 
 		//! Whether this symbol can generate an empty string.
 		bool& lambda();

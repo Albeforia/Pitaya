@@ -11,6 +11,9 @@ namespace pitaya {
 		read(file);
 
 		for (const auto& p : Symbol::pool()) {
+			if (p.second->type() == SymbolType::UNDEFINED) {
+				p.second->type() = SymbolType::TERMINAL;
+			}
 			m_symbols.emplace_back(p.second);
 		}
 
@@ -128,6 +131,7 @@ namespace pitaya {
 			file >> lhs;
 			productions.emplace_back(Production {current});
 			productions[current].set_lhs(Symbol::create(lhs));
+			productions[current][0].type() = SymbolType::NONTERMINAL;
 			process_event(EvGetLHS {});
 		}
 		else {
