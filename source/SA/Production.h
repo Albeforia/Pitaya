@@ -17,7 +17,7 @@ namespace pitaya {
 		/*!
 			\param id ID of the production.
 		*/
-		Production(std::size_t id);
+		explicit Production(std::size_t id);
 
 		//! Setter for lhs.
 		/*!
