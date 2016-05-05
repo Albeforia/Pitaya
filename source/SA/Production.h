@@ -8,6 +8,8 @@ namespace pitaya {
 
 	class Symbol;
 
+	using ProductionID = std::size_t;
+
 	//! Production class.
 	class Production {
 
@@ -16,14 +18,9 @@ namespace pitaya {
 		//! Constructor.
 		/*!
 			\param id ID of the production.
+			\param lhs Left-hand side of the production.
 		*/
-		explicit Production(std::size_t id);
-
-		//! Setter for lhs.
-		/*!
-			Should only use during parsing grammar file.
-		*/
-		void set_lhs(SharedSymbol);
+		Production(ProductionID id, SharedSymbol lhs);
 
 		//! Getter for rhs.
 		/*!
@@ -38,14 +35,14 @@ namespace pitaya {
 		Symbol& operator[](std::size_t pos) const;
 
 		//! Number of rhs.
-		std::size_t num_rhs() const;
+		std::size_t rhs_count() const;
 
-		const std::size_t id;				//!< ID of the production.
+		const ProductionID id;				//!< ID of the production.
 
 	private:
 
-		SharedSymbol m_lhs;					//!< Left-hand side of the rule.
-		std::vector<SharedSymbol> m_rhs;	//!< Right-hand side of the rule.
+		SharedSymbol m_lhs;					//!< Left-hand side of the production.
+		std::vector<SharedSymbol> m_rhs;	//!< Right-hand side of the production.
 
 	};
 

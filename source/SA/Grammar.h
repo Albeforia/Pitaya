@@ -24,10 +24,10 @@ namespace pitaya {
 		Grammar(const char* file);
 
 		//! Get a production by id.
-		Production& get_production(std::size_t id);
+		Production& get_production(ProductionID);
 
 		//! Number of productions in the grammar.
-		std::size_t num_productions() const;
+		std::size_t production_count() const;
 
 		//! Compute the first sets of every nonterminal.
 		void compute_first_sets();
@@ -61,7 +61,7 @@ namespace pitaya {
 
 			ProductionReader();
 
-			std::size_t current;
+			ProductionID current;
 
 			void read(std::ifstream&, std::vector<pitaya::Production>&);
 

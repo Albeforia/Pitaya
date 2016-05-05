@@ -2,13 +2,8 @@
 
 namespace pitaya {
 
-	Production::Production(std::size_t id)
-		: id {id}, m_lhs {}, m_rhs {} {}
-
-	void Production::set_lhs(SharedSymbol lhs) {
-		// move to avoid changing ref-count
-		m_lhs = std::move(lhs);
-	}
+	Production::Production(ProductionID id, SharedSymbol lhs)
+		: id {id}, m_lhs {std::move(lhs)}, m_rhs {} {}
 
 	std::vector<SharedSymbol>& Production::rhs() {
 		return m_rhs;
@@ -21,7 +16,7 @@ namespace pitaya {
 		return *m_rhs[pos - 1];
 	}
 
-	std::size_t Production::num_rhs() const {
+	std::size_t Production::rhs_count() const {
 		return m_rhs.size();
 	}
 

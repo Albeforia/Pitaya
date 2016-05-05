@@ -41,11 +41,11 @@ namespace pitaya {
 		}
 	}
 
-	Production& Grammar::get_production(std::size_t id) {
+	Production& Grammar::get_production(ProductionID id) {
 		return m_productions[id];
 	}
 
-	std::size_t Grammar::num_productions() const {
+	std::size_t Grammar::production_count() const {
 		return m_productions.size();
 	}
 
@@ -76,12 +76,12 @@ namespace pitaya {
 			for (auto& p : m_productions) {
 				if (p[0].lambda()) continue;
 				std::size_t i;
-				for (i = 0; i < p.num_rhs(); i++) {
+				for (i = 0; i < p.rhs_count(); i++) {
 					auto& rhs = p[i + 1];
 					assert(rhs.type() == SymbolType::NONTERMINAL || !rhs.lambda());
 					if (!rhs.lambda()) break;		// lhs is lambda <=> all rhs are lambda
 				}
-				if (i == p.num_rhs()) {				// including zero rhs
+				if (i == p.rhs_count()) {				// including zero rhs
 					p[0].lambda() = true;
 					not_fin = true;					// find a new lambda, continue computing
 				}
@@ -93,7 +93,7 @@ namespace pitaya {
 			not_fin = false;
 			for (auto& p : m_productions) {
 				auto& lhs = p[0];
-				for (std::size_t i = 0; i < p.num_rhs(); i++) {
+				for (std::size_t i = 0; i < p.rhs_count(); i++) {
 					auto& rhs = p[i + 1];
 					if (rhs.type() == SymbolType::TERMINAL) {
 						not_fin = lhs.first_set().add(rhs);
@@ -137,8 +137,7 @@ namespace pitaya {
 		if (state_downcast<const WaitForLHS*>() != nullptr) {
 			std::string lhs;
 			file >> lhs;
-			productions.emplace_back(Production {current});
-			productions[current].set_lhs(Symbol::create(lhs));
+			productions.emplace_back(current, Symbol::create(lhs));
 			productions[current][0].type() = SymbolType::NONTERMINAL;
 			process_event(EvGetLHS {});
 		}
