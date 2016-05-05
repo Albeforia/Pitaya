@@ -8,6 +8,7 @@ namespace pitaya {
 
 	Grammar::Grammar(const char* file)
 		: m_productions {}, m_symbols {} {
+		Symbol::create("$");
 		read(file);
 
 		for (const auto& p : Symbol::pool()) {
@@ -28,17 +29,22 @@ namespace pitaya {
 			}
 		});
 
-		std::size_t num_terminals = 0;
-		std::size_t num_nonterminals = 0;
+		m_terminal_count = 0;
+		std::size_t nonterminal_count = 0;
 		for (auto& s : m_symbols) {
 			if (s->type() == SymbolType::TERMINAL) {
-				s->id() = num_terminals++;
+				s->id() = m_terminal_count++;
 			}
 			else {
-				s->id() = num_terminals + num_nonterminals++;
-				s->first_set().resize(num_terminals + 1);
+				s->id() = m_terminal_count + nonterminal_count++;
+				s->first_set().resize(m_terminal_count);
 			}
 		}
+		assert(m_terminal_count + nonterminal_count == m_symbols.size());
+	}
+
+	std::size_t Grammar::terminal_count() const {
+		return m_terminal_count;
 	}
 
 	Production& Grammar::get_production(ProductionID id) {

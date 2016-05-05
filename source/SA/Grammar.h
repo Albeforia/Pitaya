@@ -23,6 +23,9 @@ namespace pitaya {
 		*/
 		Grammar(const char* file);
 
+		//! Number of terminals in this grammar.
+		std::size_t terminal_count() const;
+
 		//! Get a production by id.
 		Production& get_production(ProductionID);
 
@@ -42,6 +45,8 @@ namespace pitaya {
 
 		std::vector<SharedSymbol> m_symbols;		//!< All symbols in this grammar.
 		std::vector<Production> m_productions;		//!< All productions in this grammar.
+
+		std::size_t m_terminal_count;		//!< Number of terminals in this grammar.
 
 		//! Parse a grammar file.
 		void read(const char* file);
