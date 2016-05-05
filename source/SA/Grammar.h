@@ -23,6 +23,12 @@ namespace pitaya {
 		*/
 		Grammar(const char* file);
 
+		//! Get a production by id.
+		Production& get_production(std::size_t id);
+
+		//! Number of productions in the grammar.
+		std::size_t num_productions() const;
+
 		//! Compute the first sets of every nonterminal.
 		void compute_first_sets();
 

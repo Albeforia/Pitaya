@@ -41,6 +41,14 @@ namespace pitaya {
 		}
 	}
 
+	Production& Grammar::get_production(std::size_t id) {
+		return m_productions[id];
+	}
+
+	std::size_t Grammar::num_productions() const {
+		return m_productions.size();
+	}
+
 	void Grammar::read(const char* file) {
 		std::ifstream f;
 		f.open(file);
