@@ -42,27 +42,27 @@ namespace pitaya {
 					auto& p = g.get_production(pid);
 					auto& res = m_closure.emplace(p.id());
 					not_fin = res.second;
+					// update lookaheads generated spontaneously
 					if (res.second) {
-						// update lookaheads
 						res.first->lookaheads().resize(g.terminal_count());
-						// A -> α.Bβ, a
-						// B -> γ, b where b ∈ first(βa)
-						std::size_t i;
-						for (i = dot + 1; i < production.rhs_count(); i++) {
-							auto& rhs = production[i + 1];
-							if (rhs.type() == SymbolType::TERMINAL) {
-								res.first->lookaheads().add(rhs);
-								break;
-							}
-							else {
-								res.first->lookaheads().union_with(rhs.first_set());
-								if (!rhs.lambda()) break;
-							}
+					}
+					// A -> α.Bβ, a
+					// B -> γ, b where b ∈ first(βa)
+					std::size_t i;
+					for (i = dot + 1; i < production.rhs_count(); i++) {
+						auto& rhs = production[i + 1];
+						if (rhs.type() == SymbolType::TERMINAL) {
+							res.first->lookaheads().add(rhs);
+							break;
 						}
-						// if β is empty, add forward propagation link
-						if (i == production.rhs_count()) {
-							//
+						else {
+							res.first->lookaheads().union_with(rhs.first_set());
+							if (!rhs.lambda()) break;
 						}
+					}
+					// if β is empty, add forward propagation link
+					if (i == production.rhs_count()) {
+						//
 					}
 				}
 				if (not_fin) break;
