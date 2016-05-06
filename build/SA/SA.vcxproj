@@ -149,6 +149,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\source\SA\Grammar.cpp" />
+    <ClCompile Include="..\..\source\SA\Item.cpp" />
+    <ClCompile Include="..\..\source\SA\ItemSet.cpp" />
+    <ClCompile Include="..\..\source\SA\ItemSetBuilder.cpp" />
     <ClCompile Include="..\..\source\SA\main.cpp" />
     <ClCompile Include="..\..\source\SA\Production.cpp" />
     <ClCompile Include="..\..\source\SA\Symbol.cpp" />
@@ -156,6 +159,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\source\SA\Grammar.h" />
+    <ClInclude Include="..\..\source\SA\Item.h" />
+    <ClInclude Include="..\..\source\SA\ItemSet.h" />
+    <ClInclude Include="..\..\source\SA\ItemSetBuilder.h" />
     <ClInclude Include="..\..\source\SA\Production.h" />
     <ClInclude Include="..\..\source\SA\Symbol.h" />
     <ClInclude Include="..\..\source\SA\SymbolSet.h" />
