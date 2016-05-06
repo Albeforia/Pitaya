@@ -37,10 +37,13 @@ namespace pitaya {
 		//! Number of rhs.
 		std::size_t rhs_count() const;
 
-		const ProductionID id;				//!< ID of the production.
+		//! ID of the production.
+		ProductionID& id();
+		const ProductionID& id() const;
 
 	private:
 
+		ProductionID m_id;					//!< ID of the production.
 		SharedSymbol m_lhs;					//!< Left-hand side of the production.
 		std::vector<SharedSymbol> m_rhs;	//!< Right-hand side of the production.
 

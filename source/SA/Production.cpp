@@ -3,7 +3,7 @@
 namespace pitaya {
 
 	Production::Production(ProductionID id, SharedSymbol lhs)
-		: id {id}, m_lhs {std::move(lhs)}, m_rhs {} {}
+		: m_id {id}, m_lhs {std::move(lhs)}, m_rhs {} {}
 
 	std::vector<SharedSymbol>& Production::rhs() {
 		return m_rhs;
@@ -18,6 +18,14 @@ namespace pitaya {
 
 	std::size_t Production::rhs_count() const {
 		return m_rhs.size();
+	}
+
+	ProductionID& Production::id() {
+		return m_id;
+	}
+
+	const ProductionID& Production::id() const {
+		return m_id;
 	}
 
 }
