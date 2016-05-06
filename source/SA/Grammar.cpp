@@ -41,18 +41,53 @@ namespace pitaya {
 			}
 		}
 		assert(m_terminal_count + nonterminal_count == m_symbols.size());
+
+		assert(m_productions.size() > 0);
+
+		std::sort(m_productions.begin(), m_productions.end(), [](auto a, auto b) {
+			if (a[0] == b[0]) {
+				return a.id() < b.id();
+			}
+			else {
+				return a[0].id() < b[0].id();
+			}
+		});
+
+		auto curr_lhs = m_productions[0][0].id();
+		std::size_t start = 0;
+		for (std::size_t i = 0; i < m_productions.size(); i++) {
+			if (m_productions[i][0].id() != curr_lhs) {
+				m_productions_by_lhs.emplace(curr_lhs, PP {start, i - 1});
+				curr_lhs = m_productions[i][0].id();
+				start = i;
+			}
+			m_productions[i].id() = i;
+		}
+		m_productions_by_lhs.emplace(curr_lhs, PP {start, m_productions.size() - 1});
 	}
 
 	std::size_t Grammar::terminal_count() const {
 		return m_terminal_count;
 	}
 
+	Symbol& Grammar::get_symbol(SymbolID id) {
+		return *m_symbols[id];
+	}
+
 	Production& Grammar::get_production(ProductionID id) {
 		return m_productions[id];
 	}
 
+	Grammar::PP Grammar::productions_by_lhs(SymbolID id) {
+		return m_productions_by_lhs.at(id);
+	}
+
 	std::size_t Grammar::production_count() const {
 		return m_productions.size();
+	}
+
+	Symbol& Grammar::endmark() {
+		return *m_symbols[0];
 	}
 
 	void Grammar::read(const char* file) {
@@ -122,7 +157,7 @@ namespace pitaya {
 		for (const auto& s : m_symbols) {
 			if (s->type() == SymbolType::NONTERMINAL) {
 				std::cout << *s << ":\t";
-				for (size_t i = 0; i < s->first_set().size(); i++) {
+				for (SymbolID i = 0; i < s->first_set().size(); i++) {
 					if (s->first_set()[i]) {
 						std::cout << *m_symbols[i] << " ";
 					}

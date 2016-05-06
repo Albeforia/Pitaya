@@ -15,6 +15,8 @@ namespace pitaya {
 	//! Grammar class.
 	class Grammar {
 
+		using PP = std::pair<ProductionID, ProductionID>;
+
 	public:
 
 		//! Constructor.
@@ -26,19 +28,30 @@ namespace pitaya {
 		//! Number of terminals in this grammar.
 		std::size_t terminal_count() const;
 
+		//! Get a symbol by id.
+		Symbol& get_symbol(SymbolID);
+
 		//! Get a production by id.
 		Production& get_production(ProductionID);
 
+		//! Get productions with same lhs.
+		/*!
+			\param id ID of the lhs.
+			\return A pair indicating the start and end production id.
+		*/
+		PP productions_by_lhs(SymbolID);
+
 		//! Number of productions in the grammar.
 		std::size_t production_count() const;
+
+		//! Get the end-mark symbol.
+		Symbol& endmark();
 
 		//! Compute the first sets of every nonterminal.
 		void compute_first_sets();
 
 		/// @cond test
-
 		void print_first_sets() const;
-
 		/// @endcond
 
 	private:
@@ -47,6 +60,9 @@ namespace pitaya {
 		std::vector<Production> m_productions;		//!< All productions in this grammar.
 
 		std::size_t m_terminal_count;		//!< Number of terminals in this grammar.
+
+		//!
+		std::unordered_map<SymbolID, PP> m_productions_by_lhs;
 
 		//! Parse a grammar file.
 		void read(const char* file);
