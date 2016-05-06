@@ -10,6 +10,7 @@
 namespace pitaya {
 
 	using SharedSymbol = std::shared_ptr<Symbol>;
+	using SymbolID = std::size_t;
 
 	//! Symbol type.
 	enum class SymbolType {
@@ -29,8 +30,8 @@ namespace pitaya {
 		SymbolName name() const;
 
 		//! ID of the symbol.
-		std::size_t& id();
-		const std::size_t& id() const;
+		SymbolID& id();
+		const SymbolID& id() const;
 
 		//! Type of this symbol.
 		SymbolType& type();
@@ -77,6 +78,12 @@ namespace pitaya {
 		}
 		/// @endcond
 
+		//! Equality.
+		friend bool operator==(const Symbol&, const Symbol&);
+
+		//! Output.
+		friend std::ostream& operator<<(std::ostream&, const Symbol&);
+
 	private:
 
 		//! Constructor.
@@ -85,8 +92,8 @@ namespace pitaya {
 		*/
 		Symbol(SymbolName name);
 
+		SymbolID m_id;			//!< ID of the symbol.
 		SymbolName m_name;		//!< Name of the symbol.
-		std::size_t m_id;		//!< ID of the symbol.
 		SymbolType m_type;		//!< Type of the symbol.
 		bool m_lambda;			//!< True if this symbol can generate an empty string.
 		SymbolSet m_first_set;	//!< First set of the symbol.
@@ -100,11 +107,5 @@ namespace pitaya {
 		/// @endcond
 
 	};
-
-	//! Equality.
-	bool operator==(const Symbol&, const Symbol&);
-
-	//! Output.
-	std::ostream& operator<<(std::ostream&, const Symbol&);
 
 }
