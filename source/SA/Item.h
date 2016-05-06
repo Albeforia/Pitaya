@@ -4,6 +4,13 @@
 
 namespace pitaya {
 
+	class Item;
+	struct PLinkNode {
+		const Item* item;
+		PLinkNode* next;
+		PLinkNode() : item {}, next {} {}
+	};
+
 	//! Item class.
 	class Item {
 
@@ -12,7 +19,18 @@ namespace pitaya {
 		using Dot = std::size_t;
 
 		//! Constructor.
-		Item(ProductionID, Dot = 0);
+		explicit Item(ProductionID, Dot = 0);
+
+		//! Move constructor.
+		Item(Item&&) noexcept;
+		Item& operator=(Item&&) noexcept;
+
+		//! Copy constructor.
+		Item(const Item&) = default;
+		Item& operator=(const Item&) = default;
+
+		//! Destructor.
+		~Item();
 
 		//! The id of the production upon which the item is based.
 		ProductionID production_id() const;
@@ -26,11 +44,21 @@ namespace pitaya {
 		//! Getter for m_lookaheads.
 		SymbolSet& lookaheads() const;
 
+		//! Getter for m_forward_plink.
+		PLinkNode*& forward_plink() const;
+
+		//! Getter for m_backward_plink.
+		PLinkNode*& backward_plink() const;
+
 		//! Equality.
 		friend bool operator==(const Item&, const Item&);
 
 		//! Hash.
 		friend std::size_t hash_value(const Item&);
+
+		/// @cond test
+		mutable bool complete;		// used in item-set closure\successor computing
+		/// @endcond
 
 	private:
 
@@ -46,11 +74,8 @@ namespace pitaya {
 		*/
 		mutable SymbolSet m_lookaheads;
 
-	public:
-
-		/// @cond test
-		mutable bool complete;		// used in item set successor computing
-		/// @endcond
+		mutable PLinkNode* m_forward_plink;		//!< Forward propagation link.
+		mutable PLinkNode* m_backward_plink;	//!< Backward propagation link.
 
 	};
 

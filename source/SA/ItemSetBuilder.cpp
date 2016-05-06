@@ -1,15 +1,15 @@
 #include "ItemSetBuilder.h"
 
+#include <cassert>
 #include <iostream>
 
 namespace pitaya {
 
 	ItemSetBuilder::ItemSetBuilder(std::shared_ptr<Grammar>& grammar)
-		: m_grammar {grammar},
-		m_item_sets {}, m_curr_item_set {} {}
+		: m_grammar {grammar}, m_item_sets {}, m_curr_item_set {} {}
 
 	void ItemSetBuilder::build() {
-		// initial item set
+		// initial item-set
 		m_curr_item_set.reset();
 		// assume the first production is the augmented one
 		// it's the only kernel for initial state
@@ -24,25 +24,45 @@ namespace pitaya {
 		m_curr_item_set.sort();		// sort kernels for hashing and comparing
 		auto& find = m_item_sets.find(m_curr_item_set);
 		if (find != m_item_sets.end()) {
-			// a state with the same kernels already exists
+			// a set with the same kernels already exists
+			// copy all the backward propagation links
+			for (std::size_t i = 0; i < m_curr_item_set.kernel_count(); i++) {
+				auto& from_item = m_curr_item_set.get_kernel(i);
+				auto& res = find->closure().find(from_item);
+				// the closure must have been computed
+				assert(res != find->closure().end());
+				auto from = from_item.backward_plink();
+				auto* to = &(res->backward_plink());
+				PLinkNode* next;
+				while (from != nullptr) {
+					next = from->next;
+					from->next = *to;
+					*to = from;
+					from = next;
+				}
+				from_item.backward_plink() = nullptr;
+			}
+			m_curr_item_set.reset();
 		}
 		else {
 			// compute closure before moving
 			m_curr_item_set.compute_closure(*m_grammar);
 			// 'move' the currently building set into a new set
 			auto& new_item = m_item_sets.emplace(std::move(m_curr_item_set)).first;
-			// sort closure?
-			//...
+			// compute successor
 			build_successor(*new_item);
 		}
 	}
 
 	void ItemSetBuilder::build_successor(const ItemSet& set) {
+		// reset
+		for (auto& item : set.closure()) item.complete = false;
+
 		for (auto& item : set.closure()) {
 			if (item.complete) continue;
 			auto& production = m_grammar->get_production(item.production_id());
-			// skip item whose dot is at right end
 			auto dot = item.dot();
+			// skip item whose dot is at right end
 			if (dot >= production.rhs_count()) {
 				item.complete = true;
 				continue;
@@ -53,14 +73,21 @@ namespace pitaya {
 				if (item2.complete) continue;
 				auto& production2 = m_grammar->get_production(item2.production_id());
 				auto dot2 = item2.dot();
-				if (dot2 >= production2.rhs_count()) continue;	// no successor
+				if (dot2 >= production2.rhs_count()) {
+					// 'item2' has no successor
+					item2.complete = true;
+					continue;
+				}
 				auto& symbol2 = production2[dot2 + 1];			// symbol after dot
 				if (symbol == symbol2) {
 					// each item becomes complete after contibuting a successor
 					item2.complete = true;
-					m_curr_item_set.add_kernel(production2, dot2 + 1);
+					auto& add = m_curr_item_set.add_kernel(production2, dot2 + 1);
 					// add backward propagation link
-					//...
+					auto new_node = new PLinkNode {};
+					new_node->next = add.backward_plink();
+					add.backward_plink() = new_node;
+					new_node->item = &item2;
 				}
 			}
 			// build set from new kernels
@@ -73,8 +100,8 @@ namespace pitaya {
 			for (auto& item : set.closure()) {
 				auto& p = m_grammar->get_production(item.production_id());
 				std::cout << p[0] << "->";
-				std::size_t i;
-				for (i = 0; i < p.rhs_count(); i++) {
+				std::size_t i = 0;
+				for (i; i < p.rhs_count(); i++) {
 					if (item.dot() == i) {
 						std::cout << ".";
 					}

@@ -21,6 +21,14 @@ namespace pitaya {
 		return m_kernels.back();
 	}
 
+	const Item& ItemSet::get_kernel(std::size_t pos) const {
+		return m_kernels[pos];
+	}
+
+	std::size_t ItemSet::kernel_count() const {
+		return m_kernels.size();
+	}
+
 	void ItemSet::compute_closure(Grammar& g) {
 		// copy kernels into closure
 		for (auto& i : m_kernels) {
@@ -31,11 +39,20 @@ namespace pitaya {
 		do {
 			not_fin = false;
 			for (auto& item : m_closure) {
+				if (item.complete) continue;
 				auto& production = g.get_production(item.production_id());
 				auto dot = item.dot();
-				if (dot >= production.rhs_count()) continue;	// skip kernel whose dot is at right end
+				if (dot >= production.rhs_count()) {
+					// skip item whose dot is at right end
+					item.complete = true;
+					continue;
+				}
 				auto& symbol = production[dot + 1];				// symbol after dot
-				if (symbol.type() == SymbolType::TERMINAL) continue;
+				if (symbol.type() == SymbolType::TERMINAL) {
+					// 'symbol' is a terminal, cannot contribute any more items
+					item.complete = true;
+					continue;
+				}
 				// for each production with 'symbol' as its lhs
 				auto range = g.productions_by_lhs(symbol.id());
 				for (auto pid = range.first; pid <= range.second; pid++) {
@@ -48,8 +65,8 @@ namespace pitaya {
 					}
 					// A -> α.Bβ, a
 					// B -> γ, b where b ∈ first(βa)
-					std::size_t i;
-					for (i = dot + 1; i < production.rhs_count(); i++) {
+					std::size_t i = dot + 1;
+					for (i; i < production.rhs_count(); i++) {
 						auto& rhs = production[i + 1];
 						if (rhs.type() == SymbolType::TERMINAL) {
 							res.first->lookaheads().add(rhs);
@@ -62,16 +79,20 @@ namespace pitaya {
 					}
 					// if β is empty, add forward propagation link
 					if (i == production.rhs_count()) {
-						//
+						auto new_node = new PLinkNode {};
+						new_node->next = item.forward_plink();
+						item.forward_plink() = new_node;
+						new_node->item = &(*res.first);
 					}
 				}
+				item.complete = true;
 				if (not_fin) break;
 			}
 		} while (not_fin);
 	}
 
 	void ItemSet::sort() {
-		std::sort(m_kernels.begin(), m_kernels.end(), [](auto a, auto b) {
+		std::sort(m_kernels.begin(), m_kernels.end(), [](auto& a, auto& b) {
 			if (a.production_id() != b.production_id()) {
 				return a.production_id() < b.production_id();
 			}

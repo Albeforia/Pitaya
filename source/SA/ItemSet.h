@@ -29,6 +29,12 @@ namespace pitaya {
 		*/
 		Item& add_kernel(const Production&, Item::Dot = 0);
 
+		//! Get a kernel.
+		const Item& get_kernel(std::size_t pos) const;
+
+		//! Number of kernels.
+		std::size_t kernel_count() const;
+
 		//! Compute the closure of kernels.
 		void compute_closure(Grammar&);
 
