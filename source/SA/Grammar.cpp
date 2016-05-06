@@ -18,7 +18,7 @@ namespace pitaya {
 			m_symbols.emplace_back(p.second);
 		}
 
-		std::sort(m_symbols.begin(), m_symbols.end(), [](auto a, auto b) {
+		std::sort(m_symbols.begin(), m_symbols.end(), [](auto& a, auto& b) {
 			// sort terminals before nonterminals
 			// while keeping the order they appeared in the grammar file
 			if (a->type() != b->type()) {
@@ -44,7 +44,7 @@ namespace pitaya {
 
 		assert(m_productions.size() > 0);
 
-		std::sort(m_productions.begin(), m_productions.end(), [](auto a, auto b) {
+		std::sort(m_productions.begin(), m_productions.end(), [](auto& a, auto& b) {
 			if (a[0] == b[0]) {
 				return a.id() < b.id();
 			}
@@ -116,8 +116,8 @@ namespace pitaya {
 			not_fin = false;
 			for (auto& p : m_productions) {
 				if (p[0].lambda()) continue;
-				std::size_t i;
-				for (i = 0; i < p.rhs_count(); i++) {
+				std::size_t i = 0;
+				for (i; i < p.rhs_count(); i++) {
 					auto& rhs = p[i + 1];
 					assert(rhs.type() == SymbolType::NONTERMINAL || !rhs.lambda());
 					if (!rhs.lambda()) break;		// lhs is lambda <=> all rhs are lambda
