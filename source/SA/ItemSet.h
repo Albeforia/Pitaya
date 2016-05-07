@@ -9,6 +9,8 @@
 
 namespace pitaya {
 
+	using StateID = std::size_t;
+
 	class Production;
 	class Grammar;
 	class ItemSetBuilder;
@@ -23,6 +25,9 @@ namespace pitaya {
 
 		//! Move constructor.
 		ItemSet(ItemSet&&) noexcept;
+
+		//! ID of the set(or state).
+		StateID id() const;
 
 		//! Add a kernel to the set.
 		/*!
@@ -53,9 +58,19 @@ namespace pitaya {
 
 	private:
 
+		StateID m_id;		//! ID of the set(or state).
+
 		std::vector<Item> m_kernels;				//!< All kernels in this set.
 		//! Closure of this set.
 		std::unordered_set<Item, boost::hash<Item>> m_closure;
+
+		/// @cond
+		//! Unique ID marking the first appearance of an item-set(or state).
+		static std::size_t order() {
+			static std::size_t interned_ = 0;
+			return interned_++;
+		}
+		/// @endcond
 
 	public:
 

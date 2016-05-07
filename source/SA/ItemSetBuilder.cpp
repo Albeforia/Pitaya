@@ -28,7 +28,7 @@ namespace pitaya {
 		fill_lookaheads();
 	}
 
-	void ItemSetBuilder::build_item_set() {
+	const ItemSet& ItemSetBuilder::build_item_set() {
 		m_curr_item_set.sort();		// sort kernels for hashing and comparing
 		auto& find = m_item_sets.find(m_curr_item_set);
 		if (find != m_item_sets.end()) {
@@ -51,15 +51,16 @@ namespace pitaya {
 				from_item.backward_plink() = nullptr;
 			}
 			m_curr_item_set.reset();
+			return *find;
 		}
-		else {
-			// compute closure before moving
-			m_curr_item_set.compute_closure(*m_grammar, *this);
-			// 'move' the currently building set into a new set
-			auto& new_item = m_item_sets.emplace(std::move(m_curr_item_set)).first;
-			// compute successors
-			build_successors(*new_item);
-		}
+		// a new item-set
+		// compute closure before moving
+		m_curr_item_set.compute_closure(*m_grammar, *this);
+		// 'move' the currently building set into the new set
+		auto& new_item = m_item_sets.emplace(std::move(m_curr_item_set)).first;
+		// compute successors
+		build_successors(*new_item);
+		return *new_item;
 	}
 
 	void ItemSetBuilder::build_successors(const ItemSet& set) {
@@ -100,7 +101,7 @@ namespace pitaya {
 				}
 			}
 			// build set from new kernels
-			build_item_set();
+			auto& new_set = build_item_set();
 		}
 	}
 

@@ -42,7 +42,7 @@ namespace pitaya {
 		std::vector<PLinkNode*> m_plinks;		//! Maintain all PLinkNodes.
 
 		//!
-		void build_item_set();
+		const ItemSet& build_item_set();
 
 		//!
 		void build_successors(const ItemSet&);

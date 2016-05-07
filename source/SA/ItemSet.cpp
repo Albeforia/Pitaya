@@ -9,12 +9,17 @@
 namespace pitaya {
 
 	ItemSet::ItemSet()
-		: m_kernels {}, m_closure {} {}
+		: m_id {order()}, m_kernels {}, m_closure {} {}
 
 	ItemSet::ItemSet(ItemSet&& from) noexcept
-		: m_kernels {std::move(from.m_kernels)}, m_closure {std::move(from.m_closure)} {
+		: m_id {order()},
+		m_kernels {std::move(from.m_kernels)}, m_closure {std::move(from.m_closure)} {
 		// ensure 'from' is empty after move
 		from.reset();
+	}
+
+	StateID ItemSet::id() const {
+		return m_id;
 	}
 
 	Item& ItemSet::add_kernel(const Production& p, Item::Dot d) {
