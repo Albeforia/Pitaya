@@ -11,7 +11,10 @@ namespace pitaya {
 		SHIFT,
 		REDUCE,
 		ACCEPT,
-		ERROR
+		ERROR,
+		SSCONFLICT,		//! A shift-shift conflict
+		SRCONFLICT,		//! A shift-reduce conflict
+		RRCONFLICT,		//! A reduce-reduce conflict
 
 	};
 

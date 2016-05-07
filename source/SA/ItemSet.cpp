@@ -100,9 +100,26 @@ namespace pitaya {
 		} while (not_fin);
 	}
 
-	void ItemSet::add_action(SymbolID symbol, ActionType type, std::size_t value) const {
+	Action& ItemSet::add_action(SymbolID symbol, ActionType type, std::size_t value) const {
 		auto& res = m_actions.emplace(symbol, Action {type, value});
-		assert(type == ActionType::REDUCE || res.second);
+		Action& act = res.first->second;
+		if (!res.second) {
+			// a conflict has occurred
+			if (type == ActionType::SHIFT) {
+				if (act.type == ActionType::SHIFT) {
+					act.type = ActionType::SSCONFLICT;
+				}
+			}
+			else if (type == ActionType::REDUCE) {
+				if (act.type == ActionType::SHIFT) {
+					act.type = ActionType::SRCONFLICT;
+				}
+				else if (act.type == ActionType::REDUCE) {
+					act.type = ActionType::RRCONFLICT;
+				}
+			}
+		}
+		return act;
 	}
 
 	void ItemSet::sort() {

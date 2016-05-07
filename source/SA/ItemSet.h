@@ -50,7 +50,10 @@ namespace pitaya {
 		void sort();
 
 		//! Add an action.
-		void add_action(SymbolID, ActionType, std::size_t value) const;
+		/*!
+			\return The added action(a conflict may have occurred).
+		*/
+		Action& add_action(SymbolID, ActionType, std::size_t value) const;
 
 		//! Clear all items.
 		void reset();

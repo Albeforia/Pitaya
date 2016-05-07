@@ -103,7 +103,8 @@ namespace pitaya {
 			}
 			// build set from new kernels
 			auto& new_set = build_item_set();
-			set.add_action(symbol.id(), ActionType::SHIFT, new_set.id());
+			auto& act = set.add_action(symbol.id(), ActionType::SHIFT, new_set.id());
+			assert(act.type != ActionType::SSCONFLICT);
 		}
 	}
 
