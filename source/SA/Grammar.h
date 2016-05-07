@@ -6,6 +6,7 @@
 #include <boost/statechart/simple_state.hpp>
 #include <boost/statechart/event.hpp>
 #include <boost/statechart/custom_reaction.hpp>
+#include <boost/statechart/transition.hpp>
 #include <boost/mpl/list.hpp>
 
 namespace pitaya {
@@ -71,18 +72,23 @@ namespace pitaya {
 		// forward state declarations
 		struct WaitForLHS;
 		struct WaitForRHS;
+		struct WaitForDecl;
+		struct WaitForSyms;
+		struct ReadComment;
 
 		// event definitions
-		struct EvGetLHS : sc::event<EvGetLHS> {};
-		struct EvGetRHS : sc::event<EvGetRHS> {};
+		struct EvGetSymbol : sc::event<EvGetSymbol> {};
 		struct EvNextProduction : sc::event<EvNextProduction> {};
+		struct EvStartDecl : sc::event<EvStartDecl> {};
+		struct EvStartComm : sc::event<EvStartComm> {};
 
 		// FSM definition
 		struct ProductionReader : sc::state_machine<ProductionReader, WaitForLHS> {
 
 			ProductionReader();
 
-			ProductionID current;
+			ProductionID curr_pid;
+			Associativity curr_assc;
 
 			void read(std::ifstream&, std::vector<pitaya::Production>&);
 
@@ -92,22 +98,53 @@ namespace pitaya {
 		struct WaitForLHS : sc::simple_state<WaitForLHS, ProductionReader> {
 
 			using reactions = boost::mpl::list<
-				sc::custom_reaction<EvGetLHS>
+				sc::custom_reaction<EvGetSymbol>,
+				sc::custom_reaction<EvStartDecl>
 			>;
 
-			sc::result react(const EvGetLHS&);
+			sc::result react(const EvGetSymbol&);
+			sc::result react(const EvStartDecl&);
 
 		};
 
 		struct WaitForRHS : sc::simple_state<WaitForRHS, ProductionReader> {
 
 			using reactions = boost::mpl::list<
-				sc::custom_reaction<EvNextProduction>,
-				sc::custom_reaction<EvGetRHS>
+				sc::custom_reaction<EvGetSymbol>,
+				sc::transition<EvNextProduction, WaitForLHS>
+			>;
+			sc::result react(const EvGetSymbol&);
+
+		};
+
+		struct WaitForDecl : sc::simple_state<WaitForDecl, ProductionReader> {
+
+			using reactions = boost::mpl::list<
+				sc::custom_reaction<EvStartDecl>,
+				sc::custom_reaction<EvStartComm>
 			>;
 
-			sc::result react(const EvNextProduction&);
-			sc::result react(const EvGetRHS&);
+			sc::result react(const EvStartDecl&);
+			sc::result react(const EvStartComm&);
+
+		};
+
+		struct WaitForSyms : sc::simple_state<WaitForSyms, ProductionReader> {
+
+			using reactions = boost::mpl::list<
+				sc::custom_reaction<EvGetSymbol>,
+				sc::transition<EvNextProduction, WaitForLHS>
+			>;
+
+			sc::result react(const EvGetSymbol&);
+
+		};
+
+		struct ReadComment : sc::simple_state<ReadComment, ProductionReader> {
+
+			using reactions = boost::mpl::list<
+				sc::transition<EvNextProduction, WaitForLHS>
+			>;
 
 		};
 		/// @endcond

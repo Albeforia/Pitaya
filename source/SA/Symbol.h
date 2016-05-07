@@ -19,6 +19,14 @@ namespace pitaya {
 		NONTERMINAL,
 	};
 
+	//! Symbol associativity.
+	enum class Associativity {
+		UNDEFINED,
+		LEFT,
+		RIGHT,
+		NONE
+	};
+
 	//! Symbol class.
 	class Symbol : public std::enable_shared_from_this<Symbol> {
 
@@ -35,6 +43,9 @@ namespace pitaya {
 
 		//! Type of this symbol.
 		SymbolType& type();
+
+		//! Associativity of this symbol.
+		Associativity& associativity();
 
 		//! Whether this symbol can generate an empty string.
 		bool& lambda();
@@ -92,11 +103,12 @@ namespace pitaya {
 		*/
 		Symbol(SymbolName name);
 
-		SymbolID m_id;			//!< ID of the symbol.
-		SymbolName m_name;		//!< Name of the symbol.
-		SymbolType m_type;		//!< Type of the symbol.
-		bool m_lambda;			//!< True if this symbol can generate an empty string.
-		SymbolSet m_first_set;	//!< First set of the symbol.
+		SymbolID m_id;					//!< ID of the symbol.
+		SymbolName m_name;				//!< Name of the symbol.
+		SymbolType m_type;				//!< Type of the symbol.
+		Associativity m_associativity;	//!< Associativity of the symbol.
+		bool m_lambda;					//!< True if this symbol can generate an empty string.
+		SymbolSet m_first_set;			//!< First set of the symbol.
 
 		/// @cond
 		//! Unique ID marking the first appearance of a symbol.

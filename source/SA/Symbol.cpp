@@ -3,7 +3,8 @@
 namespace pitaya {
 
 	Symbol::Symbol(SymbolName name)
-		: m_name {name}, m_type {SymbolType::UNDEFINED}, m_lambda {false}, m_first_set {} {}
+		: m_name {name}, m_type {SymbolType::UNDEFINED}, m_associativity {Associativity::UNDEFINED},
+		m_lambda {false}, m_first_set {} {}
 
 	Symbol::SymbolName Symbol::name() const {
 		return m_name;
@@ -19,6 +20,10 @@ namespace pitaya {
 
 	SymbolType& Symbol::type() {
 		return m_type;
+	}
+
+	Associativity& Symbol::associativity() {
+		return m_associativity;
 	}
 
 	bool& Symbol::lambda() {

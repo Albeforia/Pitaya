@@ -3,6 +3,7 @@
 #include <fstream>
 #include <algorithm>
 #include <iostream>
+#include <cctype>
 
 namespace pitaya {
 
@@ -171,16 +172,62 @@ namespace pitaya {
 	}
 
 	Grammar::ProductionReader::ProductionReader()
-		: current {} {}
+		: curr_pid {}, curr_assc {} {}
 
 	void Grammar::ProductionReader::read(std::ifstream& file,
 										 std::vector<pitaya::Production>& productions) {
 		if (state_downcast<const WaitForLHS*>() != nullptr) {
-			std::string lhs;
-			file >> lhs;
-			productions.emplace_back(current, Symbol::create(lhs));
-			productions[current][0].type() = SymbolType::NONTERMINAL;
-			process_event(EvGetLHS {});
+			if (file.peek() == '%') {
+				file.get();
+				process_event(EvStartDecl {});
+			}
+			else {
+				std::string lhs;
+				file >> lhs;
+				productions.emplace_back(curr_pid, Symbol::create(lhs));
+				productions[curr_pid][0].type() = SymbolType::NONTERMINAL;
+				process_event(EvGetSymbol {});
+			}
+		}
+		else if (state_downcast<const WaitForDecl*>() != nullptr) {
+			if (std::isalpha(file.peek())) {
+				std::string s;
+				file >> s;
+				curr_assc = Associativity::UNDEFINED;
+				if (s == "left") curr_assc = Associativity::LEFT;
+				if (s == "right") curr_assc = Associativity::RIGHT;
+				if (s == "none") curr_assc = Associativity::NONE;
+				if (curr_assc != Associativity::UNDEFINED) {
+					process_event(EvStartDecl {});
+				}
+			}
+			process_event(EvStartComm {});
+		}
+		else if (state_downcast<const ReadComment*>() != nullptr) {
+			while (file.peek() != '\n' && file.peek() != std::ifstream::traits_type::eof()) {
+				file.get();
+			}
+			// eat '\n's
+			while (file.peek() == '\n') {
+				file.get();
+			}
+			process_event(EvNextProduction {});
+		}
+		else if (state_downcast<const WaitForSyms*>() != nullptr) {
+			if (file.peek() == '\n') {
+				// eat '\n's
+				while (file.peek() == '\n') {
+					file.get();
+				}
+				process_event(EvNextProduction {});
+			}
+			else {
+				std::string s;
+				file >> s;
+				auto& sym = Symbol::create(s);
+				sym->associativity() = curr_assc;
+				process_event(EvGetSymbol {});
+			}
 		}
 		else {
 			if (file.peek() == '\n') {
@@ -188,27 +235,39 @@ namespace pitaya {
 				while (file.peek() == '\n') {
 					file.get();
 				}
-				current++;
+				curr_pid++;
 				process_event(EvNextProduction {});
 			}
 			else {
 				std::string rhs;
 				file >> rhs;
-				productions[current].rhs().emplace_back(std::move(Symbol::create(rhs)));
-				process_event(EvGetRHS {});
+				productions[curr_pid].rhs().emplace_back(std::move(Symbol::create(rhs)));
+				process_event(EvGetSymbol {});
 			}
 		}
 	}
 
-	sc::result Grammar::WaitForLHS::react(const EvGetLHS& ev) {
+	sc::result Grammar::WaitForLHS::react(const EvGetSymbol& ev) {
 		return transit<WaitForRHS>();
 	}
 
-	sc::result Grammar::WaitForRHS::react(const EvNextProduction& ev) {
-		return transit<WaitForLHS>();
+	sc::result Grammar::WaitForLHS::react(const EvStartDecl& ev) {
+		return transit<WaitForDecl>();
 	}
 
-	sc::result Grammar::WaitForRHS::react(const EvGetRHS& ev) {
+	sc::result Grammar::WaitForRHS::react(const EvGetSymbol& ev) {
+		return discard_event();
+	}
+
+	sc::result Grammar::WaitForDecl::react(const EvStartDecl& ev) {
+		return transit<WaitForSyms>();
+	}
+
+	sc::result Grammar::WaitForDecl::react(const EvStartComm& ev) {
+		return transit<ReadComment>();
+	}
+
+	sc::result Grammar::WaitForSyms::react(const EvGetSymbol& ev) {
 		return discard_event();
 	}
 
