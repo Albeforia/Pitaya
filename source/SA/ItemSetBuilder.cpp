@@ -26,6 +26,7 @@ namespace pitaya {
 		add.lookaheads().add(m_grammar->endmark());
 		build_item_set();
 		fill_lookaheads();
+		fill_actions();
 	}
 
 	const ItemSet& ItemSetBuilder::build_item_set() {
@@ -102,6 +103,7 @@ namespace pitaya {
 			}
 			// build set from new kernels
 			auto& new_set = build_item_set();
+			set.add_action(symbol.id(), ActionType::SHIFT, new_set.id());
 		}
 	}
 
@@ -145,6 +147,27 @@ namespace pitaya {
 		} while (not_fin);
 	}
 
+	void ItemSetBuilder::fill_actions() {
+		for (auto& set : m_item_sets) {
+			for (auto& item : set.closure()) {
+				auto& production = m_grammar->get_production(item.production_id());
+				// for every production whose dot is at right end
+				if (item.dot() == production.rhs_count()) {
+					for (SymbolID i = 0; i < m_grammar->terminal_count(); i++) {
+						if (item.lookaheads()[i]) {
+							if (production.id() == 0) {
+								set.add_action(i, ActionType::ACCEPT, production.id());
+							}
+							else {
+								set.add_action(i, ActionType::REDUCE, production.id());
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
 	PLinkNode*& ItemSetBuilder::new_link() {
 		m_plinks.push_back(new PLinkNode {});
 		return m_plinks.back();
@@ -152,6 +175,7 @@ namespace pitaya {
 
 	void ItemSetBuilder::print_all() const {
 		for (auto& set : m_item_sets) {
+			std::cout << "state " << set.id() << std::endl;
 			for (auto& item : set.closure()) {
 				auto& p = m_grammar->get_production(item.production_id());
 				std::cout << p[0] << "->";

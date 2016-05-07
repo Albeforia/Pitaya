@@ -1,9 +1,11 @@
 #pragma once
 
 #include "Item.h"
+#include "Action.h"
 
 #include <vector>
 #include <unordered_set>
+#include <unordered_map>
 
 #include <boost\functional\hash\hash.hpp>
 
@@ -47,6 +49,9 @@ namespace pitaya {
 		//! Sort the kernels.
 		void sort();
 
+		//! Add an action.
+		void add_action(SymbolID, ActionType, std::size_t value) const;
+
 		//! Clear all items.
 		void reset();
 
@@ -58,11 +63,13 @@ namespace pitaya {
 
 	private:
 
-		StateID m_id;		//! ID of the set(or state).
-
 		std::vector<Item> m_kernels;				//!< All kernels in this set.
 		//! Closure of this set.
 		std::unordered_set<Item, boost::hash<Item>> m_closure;
+
+		StateID m_id;		//! ID of the set(or state).
+		//! Actions of this state
+		mutable std::unordered_map<std::size_t, Action> m_actions;
 
 		/// @cond
 		//! Unique ID marking the first appearance of an item-set(or state).

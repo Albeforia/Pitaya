@@ -3,17 +3,20 @@
 #include "ItemSetBuilder.h"
 
 #include <algorithm>
+#include <cassert>
 
 #include <boost\functional\hash\hash.hpp>
 
 namespace pitaya {
 
 	ItemSet::ItemSet()
-		: m_id {order()}, m_kernels {}, m_closure {} {}
+		: m_id {order()}, m_kernels {}, m_closure {}, m_actions {} {}
 
 	ItemSet::ItemSet(ItemSet&& from) noexcept
 		: m_id {order()},
-		m_kernels {std::move(from.m_kernels)}, m_closure {std::move(from.m_closure)} {
+		m_kernels {std::move(from.m_kernels)},
+		m_closure {std::move(from.m_closure)},
+		m_actions {std::move(from.m_actions)} {
 		// ensure 'from' is empty after move
 		from.reset();
 	}
@@ -97,6 +100,11 @@ namespace pitaya {
 		} while (not_fin);
 	}
 
+	void ItemSet::add_action(SymbolID symbol, ActionType type, std::size_t value) const {
+		auto& res = m_actions.emplace(symbol, Action {type, value});
+		assert(type == ActionType::REDUCE || res.second);
+	}
+
 	void ItemSet::sort() {
 		std::sort(m_kernels.begin(), m_kernels.end(), [](auto& a, auto& b) {
 			if (a.production_id() != b.production_id()) {
@@ -111,6 +119,7 @@ namespace pitaya {
 	void ItemSet::reset() {
 		m_kernels.clear();
 		m_closure.clear();
+		m_actions.clear();
 	}
 
 	const std::unordered_set<Item, boost::hash<Item>>& ItemSet::closure() const {

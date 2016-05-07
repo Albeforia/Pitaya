@@ -50,6 +50,9 @@ namespace pitaya {
 		//!
 		void fill_lookaheads();
 
+		//!
+		void fill_actions();
+
 	};
 
 }
