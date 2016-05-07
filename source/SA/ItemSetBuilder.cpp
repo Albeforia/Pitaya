@@ -16,6 +16,7 @@ namespace pitaya {
 	}
 
 	void ItemSetBuilder::build() {
+		compute_first_sets();
 		// initial item-set
 		m_curr_item_set.reset();
 		// assume the first production is the augmented one
@@ -27,6 +28,52 @@ namespace pitaya {
 		build_item_set();
 		fill_lookaheads();
 		fill_actions();
+	}
+
+	void ItemSetBuilder::compute_first_sets() {
+		bool not_fin = false;
+
+		// compute all lambdas
+		do {
+			not_fin = false;
+			for (ProductionID pid = 0; pid < m_grammar->production_count(); pid++) {
+				auto& p = m_grammar->get_production(pid);
+				if (p[0].lambda()) continue;
+				std::size_t i = 0;
+				for (i; i < p.rhs_count(); i++) {
+					auto& rhs = p[i + 1];
+					assert(rhs.type() == SymbolType::NONTERMINAL || !rhs.lambda());
+					if (!rhs.lambda()) break;		// lhs is lambda <=> all rhs are lambda
+				}
+				if (i == p.rhs_count()) {				// including zero rhs
+					p[0].lambda() = true;
+					not_fin = true;					// find a new lambda, continue computing
+				}
+			}
+		} while (not_fin);
+
+		// compute all first sets
+		do {
+			not_fin = false;
+			for (ProductionID pid = 0; pid < m_grammar->production_count(); pid++) {
+				auto& p = m_grammar->get_production(pid);
+				auto& lhs = p[0];
+				for (std::size_t i = 0; i < p.rhs_count(); i++) {
+					auto& rhs = p[i + 1];
+					if (rhs.type() == SymbolType::TERMINAL) {
+						not_fin = lhs.first_set().add(rhs);
+						break;		// encounter a terminal, add to first set and stop
+					}
+					else if (lhs == rhs) {
+						if (!lhs.lambda()) break;	// recurrence happened, should compute in another production
+					}
+					else {
+						not_fin = lhs.first_set().union_with(rhs.first_set());
+						if (!rhs.lambda()) break;	// stop if a rhs cannot generate empty string
+					}
+				}
+			}
+		} while (not_fin);
 	}
 
 	const ItemSet& ItemSetBuilder::build_item_set() {

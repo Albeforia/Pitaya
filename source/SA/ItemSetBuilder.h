@@ -41,6 +41,9 @@ namespace pitaya {
 
 		std::vector<PLinkNode*> m_plinks;		//! Maintain all PLinkNodes.
 
+		//! Compute the first sets of every nonterminal.
+		void compute_first_sets();
+
 		//!
 		const ItemSet& build_item_set();
 

@@ -38,18 +38,15 @@ namespace pitaya {
 		//! Get productions with same lhs.
 		/*!
 			\param id ID of the lhs.
-			\return A pair indicating the start and end production id.
+			\return A pair indicating the start and the end production id.
 		*/
-		PP productions_by_lhs(SymbolID);
+		PP productions_by_lhs(SymbolID id);
 
 		//! Number of productions in the grammar.
 		std::size_t production_count() const;
 
 		//! Get the end-mark symbol.
 		Symbol& endmark();
-
-		//! Compute the first sets of every nonterminal.
-		void compute_first_sets();
 
 		/// @cond test
 		void print_first_sets() const;
@@ -62,7 +59,7 @@ namespace pitaya {
 
 		std::size_t m_terminal_count;		//!< Number of terminals in this grammar.
 
-		//!
+		//! Productions grouped by their lhs.
 		std::unordered_map<SymbolID, PP> m_productions_by_lhs;
 
 		//! Parse a grammar file.
