@@ -28,25 +28,6 @@ namespace pitaya {
 		return *this;
 	}
 
-	Item::~Item() {
-		// do not delete
-		// propagation links should be managed by something else
-		/*auto p1 = m_forward_plink;
-		auto p2 = p1;
-		while (p2 != nullptr) {
-			p1 = p2;
-			p2 = p1->next;
-			delete p1;
-		}
-		p1 = m_backward_plink;
-		p2 = p1;
-		while (p2 != nullptr) {
-			p1 = p2;
-			p2 = p1->next;
-			delete p1;
-		}*/
-	}
-
 	ProductionID Item::production_id() const {
 		return m_production;
 	}

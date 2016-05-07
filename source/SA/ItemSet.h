@@ -11,6 +11,7 @@ namespace pitaya {
 
 	class Production;
 	class Grammar;
+	class ItemSetBuilder;
 
 	//! ItemSet class.
 	class ItemSet {
@@ -36,7 +37,7 @@ namespace pitaya {
 		std::size_t kernel_count() const;
 
 		//! Compute the closure of kernels.
-		void compute_closure(Grammar&);
+		void compute_closure(Grammar&, ItemSetBuilder&);
 
 		//! Sort the kernels.
 		void sort();

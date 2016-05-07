@@ -1,5 +1,6 @@
 ﻿#include "ItemSet.h"
 #include "Grammar.h"
+#include "ItemSetBuilder.h"
 
 #include <algorithm>
 
@@ -29,7 +30,7 @@ namespace pitaya {
 		return m_kernels.size();
 	}
 
-	void ItemSet::compute_closure(Grammar& g) {
+	void ItemSet::compute_closure(Grammar& g, ItemSetBuilder& builder) {
 		// copy kernels into closure
 		for (auto& i : m_kernels) {
 			m_closure.emplace(i);
@@ -79,7 +80,7 @@ namespace pitaya {
 					}
 					// if β is empty, add forward propagation link
 					if (i == production.rhs_count()) {
-						auto new_node = new PLinkNode {};
+						auto& new_node = builder.new_link();
 						new_node->next = item.forward_plink();
 						item.forward_plink() = new_node;
 						new_node->item = &(*res.first);

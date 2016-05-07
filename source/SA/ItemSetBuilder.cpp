@@ -6,7 +6,14 @@
 namespace pitaya {
 
 	ItemSetBuilder::ItemSetBuilder(std::shared_ptr<Grammar>& grammar)
-		: m_grammar {grammar}, m_item_sets {}, m_curr_item_set {} {}
+		: m_grammar {grammar}, m_item_sets {}, m_curr_item_set {},
+		m_plinks {} {}
+
+	ItemSetBuilder::~ItemSetBuilder() {
+		for (auto& p : m_plinks) {
+			delete p;
+		}
+	}
 
 	void ItemSetBuilder::build() {
 		// initial item-set
@@ -46,7 +53,7 @@ namespace pitaya {
 		}
 		else {
 			// compute closure before moving
-			m_curr_item_set.compute_closure(*m_grammar);
+			m_curr_item_set.compute_closure(*m_grammar, *this);
 			// 'move' the currently building set into a new set
 			auto& new_item = m_item_sets.emplace(std::move(m_curr_item_set)).first;
 			// compute successor
@@ -84,7 +91,7 @@ namespace pitaya {
 					item2.complete = true;
 					auto& add = m_curr_item_set.add_kernel(production2, dot2 + 1);
 					// add backward propagation link
-					auto new_node = new PLinkNode {};
+					auto& new_node = new_link();
 					new_node->next = add.backward_plink();
 					add.backward_plink() = new_node;
 					new_node->item = &item2;
@@ -93,6 +100,11 @@ namespace pitaya {
 			// build set from new kernels
 			build_item_set();
 		}
+	}
+
+	PLinkNode*& ItemSetBuilder::new_link() {
+		m_plinks.push_back(new PLinkNode {});
+		return m_plinks.back();
 	}
 
 	void ItemSetBuilder::print_all() const {

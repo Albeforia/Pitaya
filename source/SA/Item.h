@@ -29,9 +29,6 @@ namespace pitaya {
 		Item(const Item&) = default;
 		Item& operator=(const Item&) = default;
 
-		//! Destructor.
-		~Item();
-
 		//! The id of the production upon which the item is based.
 		ProductionID production_id() const;
 

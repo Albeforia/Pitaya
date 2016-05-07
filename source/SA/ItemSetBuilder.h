@@ -17,8 +17,14 @@ namespace pitaya {
 		//! Constructor.
 		ItemSetBuilder(std::shared_ptr<Grammar>&);
 
+		//! Destructor.
+		~ItemSetBuilder();
+
 		//! Build all item sets.
 		void build();
+
+		//! Get a new PLinkNode.
+		PLinkNode*& new_link();
 
 		/// @cond test
 		void print_all() const;
@@ -32,6 +38,8 @@ namespace pitaya {
 		std::unordered_set<ItemSet, boost::hash<ItemSet>> m_item_sets;
 		//! The ItemSet being built currently.
 		ItemSet m_curr_item_set;
+
+		std::vector<PLinkNode*> m_plinks;		//! Maintain all PLinkNodes.
 
 		//!
 		void build_item_set();
