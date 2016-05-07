@@ -89,6 +89,7 @@ namespace pitaya {
 
 			ProductionID curr_pid;
 			Associativity curr_assc;
+			int curr_prec;
 
 			void read(std::ifstream&, std::vector<pitaya::Production>&);
 

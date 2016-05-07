@@ -47,6 +47,9 @@ namespace pitaya {
 		//! Associativity of this symbol.
 		Associativity& associativity();
 
+		//! Precedence of this symbol.
+		int& precedence();
+
 		//! Whether this symbol can generate an empty string.
 		bool& lambda();
 
@@ -107,6 +110,7 @@ namespace pitaya {
 		SymbolName m_name;				//!< Name of the symbol.
 		SymbolType m_type;				//!< Type of the symbol.
 		Associativity m_associativity;	//!< Associativity of the symbol.
+		int m_precedence;				//!< Precedence of the symbol.
 		bool m_lambda;					//!< True if this symbol can generate an empty string.
 		SymbolSet m_first_set;			//!< First set of the symbol.
 
