@@ -25,6 +25,7 @@ namespace pitaya {
 		add.lookaheads().resize(m_grammar->terminal_count());
 		add.lookaheads().add(m_grammar->endmark());
 		build_item_set();
+		fill_lookaheads();
 	}
 
 	void ItemSetBuilder::build_item_set() {
@@ -56,12 +57,12 @@ namespace pitaya {
 			m_curr_item_set.compute_closure(*m_grammar, *this);
 			// 'move' the currently building set into a new set
 			auto& new_item = m_item_sets.emplace(std::move(m_curr_item_set)).first;
-			// compute successor
-			build_successor(*new_item);
+			// compute successors
+			build_successors(*new_item);
 		}
 	}
 
-	void ItemSetBuilder::build_successor(const ItemSet& set) {
+	void ItemSetBuilder::build_successors(const ItemSet& set) {
 		// reset
 		for (auto& item : set.closure()) item.complete = false;
 
@@ -90,6 +91,7 @@ namespace pitaya {
 					// each item becomes complete after contibuting a successor
 					item2.complete = true;
 					auto& add = m_curr_item_set.add_kernel(production2, dot2 + 1);
+					add.lookaheads().resize(m_grammar->terminal_count());
 					// add backward propagation link
 					auto& new_node = new_link();
 					new_node->next = add.backward_plink();
@@ -100,6 +102,46 @@ namespace pitaya {
 			// build set from new kernels
 			build_item_set();
 		}
+	}
+
+	void ItemSetBuilder::fill_lookaheads() {
+		// convert all backward links into forward links
+		for (auto& set : m_item_sets) {
+			for (auto& item : set.closure()) {
+				for (auto bpl = item.backward_plink(); bpl != nullptr; bpl = bpl->next) {
+					auto& fpl = bpl->item->forward_plink();
+					auto& new_node = new_link();
+					new_node->next = fpl;
+					fpl = new_node;
+					new_node->item = &item;
+				}
+			}
+		}
+
+		// reset
+		for (auto& set : m_item_sets) {
+			for (auto& item : set.closure()) {
+				item.complete = false;
+			}
+		}
+
+		bool not_fin = false;
+		do {
+			not_fin = false;
+			for (auto& set : m_item_sets) {
+				for (auto& item : set.closure()) {
+					if (item.complete) continue;
+					for (auto fpl = item.forward_plink(); fpl != nullptr; fpl = fpl->next) {
+						bool change = fpl->item->lookaheads().union_with(item.lookaheads());
+						if (change) {
+							fpl->item->complete = false;
+							not_fin = true;
+						}
+					}
+					item.complete = true;
+				}
+			}
+		} while (not_fin);
 	}
 
 	PLinkNode*& ItemSetBuilder::new_link() {

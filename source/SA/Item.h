@@ -54,7 +54,8 @@ namespace pitaya {
 		friend std::size_t hash_value(const Item&);
 
 		/// @cond test
-		mutable bool complete;		// used in item-set closure\successor computing
+		// used in item-set closure\successors\lookaheads computing
+		mutable bool complete;
 		/// @endcond
 
 	private:

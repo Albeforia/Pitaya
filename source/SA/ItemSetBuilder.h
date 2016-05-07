@@ -45,7 +45,10 @@ namespace pitaya {
 		void build_item_set();
 
 		//!
-		void build_successor(const ItemSet&);
+		void build_successors(const ItemSet&);
+
+		//!
+		void fill_lookaheads();
 
 	};
 
