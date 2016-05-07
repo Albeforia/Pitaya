@@ -3,7 +3,8 @@
 namespace pitaya {
 
 	Symbol::Symbol(SymbolName name)
-		: m_name {name}, m_type {SymbolType::UNDEFINED}, m_associativity {Associativity::UNDEFINED},
+		: m_name {name}, m_type {SymbolType::UNDEFINED},
+		m_associativity {Associativity::UNDEFINED}, m_precedence {-1},
 		m_lambda {false}, m_first_set {} {}
 
 	Symbol::SymbolName Symbol::name() const {
@@ -24,6 +25,10 @@ namespace pitaya {
 
 	Associativity& Symbol::associativity() {
 		return m_associativity;
+	}
+
+	int& Symbol::precedence() {
+		return m_precedence;
 	}
 
 	bool& Symbol::lambda() {

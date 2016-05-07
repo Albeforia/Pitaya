@@ -172,7 +172,7 @@ namespace pitaya {
 	}
 
 	Grammar::ProductionReader::ProductionReader()
-		: curr_pid {}, curr_assc {} {}
+		: curr_pid {}, curr_assc {}, curr_prec {-1} {}
 
 	void Grammar::ProductionReader::read(std::ifstream& file,
 										 std::vector<pitaya::Production>& productions) {
@@ -198,6 +198,7 @@ namespace pitaya {
 				if (s == "right") curr_assc = Associativity::RIGHT;
 				if (s == "none") curr_assc = Associativity::NONE;
 				if (curr_assc != Associativity::UNDEFINED) {
+					curr_prec++;
 					process_event(EvStartDecl {});
 				}
 			}
@@ -226,6 +227,7 @@ namespace pitaya {
 				file >> s;
 				auto& sym = Symbol::create(s);
 				sym->associativity() = curr_assc;
+				sym->precedence() = curr_prec;
 				process_event(EvGetSymbol {});
 			}
 		}
