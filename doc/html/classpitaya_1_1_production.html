@@ -115,43 +115,84 @@ $(document).ready(function(){initNavTree('classpitaya_1_1_production.html','');}
 
 <p><a class="el" href="classpitaya_1_1_production.html" title="Production class. ">Production</a> class.  
  <a href="classpitaya_1_1_production.html#details">More...</a></p>
-
-<p><code>#include &lt;<a class="el" href="_production_8h_source.html">Production.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ac5d283ee4cdecfc4fa3c246dd7b4b5d3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac5d283ee4cdecfc4fa3c246dd7b4b5d3"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_production.html#ac5d283ee4cdecfc4fa3c246dd7b4b5d3">Production</a> ()</td></tr>
-<tr class="memdesc:ac5d283ee4cdecfc4fa3c246dd7b4b5d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor. <br /></td></tr>
-<tr class="separator:ac5d283ee4cdecfc4fa3c246dd7b4b5d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa48b5bfb6904375d7f62525f7ecd9288"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_production.html#aa48b5bfb6904375d7f62525f7ecd9288">set_lhs</a> (SharedSymbol)</td></tr>
-<tr class="memdesc:aa48b5bfb6904375d7f62525f7ecd9288"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setter for lhs.  <a href="#aa48b5bfb6904375d7f62525f7ecd9288">More...</a><br /></td></tr>
-<tr class="separator:aa48b5bfb6904375d7f62525f7ecd9288"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a76d8a2118a2913e9264aeb5a07df1524"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_production.html#a76d8a2118a2913e9264aeb5a07df1524">Production</a> (ProductionID <a class="el" href="classpitaya_1_1_production.html#ac31f266594de6d7d728850806d2d98be">id</a>, SharedSymbol lhs)</td></tr>
+<tr class="memdesc:a76d8a2118a2913e9264aeb5a07df1524"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a76d8a2118a2913e9264aeb5a07df1524">More...</a><br /></td></tr>
+<tr class="separator:a76d8a2118a2913e9264aeb5a07df1524"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a57f0ff7bb350f9534ddf6510b64efe67"><td class="memItemLeft" align="right" valign="top">std::vector&lt; SharedSymbol &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_production.html#a57f0ff7bb350f9534ddf6510b64efe67">rhs</a> ()</td></tr>
 <tr class="memdesc:a57f0ff7bb350f9534ddf6510b64efe67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Getter for rhs.  <a href="#a57f0ff7bb350f9534ddf6510b64efe67">More...</a><br /></td></tr>
 <tr class="separator:a57f0ff7bb350f9534ddf6510b64efe67"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8318a22a97488c532c0349174d7724ad"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classpitaya_1_1_symbol.html">Symbol</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_production.html#a8318a22a97488c532c0349174d7724ad">operator[]</a> (std::size_t pos) const </td></tr>
 <tr class="memdesc:a8318a22a97488c532c0349174d7724ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index lhs and rhs of this production.  <a href="#a8318a22a97488c532c0349174d7724ad">More...</a><br /></td></tr>
 <tr class="separator:a8318a22a97488c532c0349174d7724ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad5a918024d59be9ebc412575d863ca22"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad5a918024d59be9ebc412575d863ca22"></a>
-std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_production.html#ad5a918024d59be9ebc412575d863ca22">num_rhs</a> () const </td></tr>
-<tr class="memdesc:ad5a918024d59be9ebc412575d863ca22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of rhs. <br /></td></tr>
-<tr class="separator:ad5a918024d59be9ebc412575d863ca22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a650aabc78b6cd74821a93a9a4a83a40c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a650aabc78b6cd74821a93a9a4a83a40c"></a>
+std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_production.html#a650aabc78b6cd74821a93a9a4a83a40c">rhs_count</a> () const </td></tr>
+<tr class="memdesc:a650aabc78b6cd74821a93a9a4a83a40c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of rhs. <br /></td></tr>
+<tr class="separator:a650aabc78b6cd74821a93a9a4a83a40c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac31f266594de6d7d728850806d2d98be"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac31f266594de6d7d728850806d2d98be"></a>
+ProductionID &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_production.html#ac31f266594de6d7d728850806d2d98be">id</a> ()</td></tr>
+<tr class="memdesc:ac31f266594de6d7d728850806d2d98be"><td class="mdescLeft">&#160;</td><td class="mdescRight">ID of the production. <br /></td></tr>
+<tr class="separator:ac31f266594de6d7d728850806d2d98be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a477a9477ac1a3f0e71996e878526aae7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a477a9477ac1a3f0e71996e878526aae7"></a>
+const ProductionID &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>id</b> () const </td></tr>
+<tr class="separator:a477a9477ac1a3f0e71996e878526aae7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
+<tr class="memitem:a67fa3bb2695d36e2e6d3b23f0ffb476a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a67fa3bb2695d36e2e6d3b23f0ffb476a"></a>
+ProductionID&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_production.html#a67fa3bb2695d36e2e6d3b23f0ffb476a">m_id</a></td></tr>
+<tr class="memdesc:a67fa3bb2695d36e2e6d3b23f0ffb476a"><td class="mdescLeft">&#160;</td><td class="mdescRight">ID of the production. <br /></td></tr>
+<tr class="separator:a67fa3bb2695d36e2e6d3b23f0ffb476a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac4eba4a5960a9c608b21e39f662c8203"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac4eba4a5960a9c608b21e39f662c8203"></a>
 SharedSymbol&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_production.html#ac4eba4a5960a9c608b21e39f662c8203">m_lhs</a></td></tr>
-<tr class="memdesc:ac4eba4a5960a9c608b21e39f662c8203"><td class="mdescLeft">&#160;</td><td class="mdescRight">Left-hand side of the rule. <br /></td></tr>
+<tr class="memdesc:ac4eba4a5960a9c608b21e39f662c8203"><td class="mdescLeft">&#160;</td><td class="mdescRight">Left-hand side of the production. <br /></td></tr>
 <tr class="separator:ac4eba4a5960a9c608b21e39f662c8203"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab88457a784b493f998775f99f3ee73d4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab88457a784b493f998775f99f3ee73d4"></a>
 std::vector&lt; SharedSymbol &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_production.html#ab88457a784b493f998775f99f3ee73d4">m_rhs</a></td></tr>
-<tr class="memdesc:ab88457a784b493f998775f99f3ee73d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Right-hand side of the rule. <br /></td></tr>
+<tr class="memdesc:ab88457a784b493f998775f99f3ee73d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Right-hand side of the production. <br /></td></tr>
 <tr class="separator:ab88457a784b493f998775f99f3ee73d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classpitaya_1_1_production.html" title="Production class. ">Production</a> class. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a76d8a2118a2913e9264aeb5a07df1524"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">pitaya::Production::Production </td>
+          <td>(</td>
+          <td class="paramtype">ProductionID&#160;</td>
+          <td class="paramname"><em>id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SharedSymbol&#160;</td>
+          <td class="paramname"><em>lhs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>ID of the production. </td></tr>
+    <tr><td class="paramname">lhs</td><td>Left-hand side of the production. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="a8318a22a97488c532c0349174d7724ad"></a>
 <div class="memitem">
 <div class="memproto">
@@ -194,29 +235,6 @@ std::vector&lt; SharedSymbol &gt;&#160;</td><td class="memItemRight" valign="bot
 
 </div>
 </div>
-<a class="anchor" id="aa48b5bfb6904375d7f62525f7ecd9288"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void pitaya::Production::set_lhs </td>
-          <td>(</td>
-          <td class="paramtype">SharedSymbol&#160;</td>
-          <td class="paramname"><em>lhs</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Setter for lhs. </p>
-<p>Should only use during parsing grammar file. </p>
-
-</div>
-</div>
-<hr/>The documentation for this class was generated from the following files:<ul>
-<li>D:/Projects/Pitaya/source/SA/<a class="el" href="_production_8h_source.html">Production.h</a></li>
-<li>D:/Projects/Pitaya/source/SA/Production.cpp</li>
-</ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

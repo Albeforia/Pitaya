@@ -62,5 +62,8 @@
     <ClInclude Include="..\..\source\SA\ItemSetBuilder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\source\SA\Action.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

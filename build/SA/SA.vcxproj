@@ -158,6 +158,7 @@
     <ClCompile Include="..\..\source\SA\SymbolSet.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\source\SA\Action.h" />
     <ClInclude Include="..\..\source\SA\Grammar.h" />
     <ClInclude Include="..\..\source\SA\Item.h" />
     <ClInclude Include="..\..\source\SA\ItemSet.h" />

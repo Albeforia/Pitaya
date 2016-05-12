@@ -106,6 +106,7 @@ $(document).ready(function(){initNavTree('classpitaya_1_1_grammar.html','');});
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-types">Private Types</a> &#124;
 <a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classpitaya_1_1_grammar-members.html">List of all members</a>  </div>
@@ -116,18 +117,41 @@ $(document).ready(function(){initNavTree('classpitaya_1_1_grammar.html','');});
 
 <p><a class="el" href="classpitaya_1_1_grammar.html" title="Grammar class. ">Grammar</a> class.  
  <a href="classpitaya_1_1_grammar.html#details">More...</a></p>
-
-<p><code>#include &lt;<a class="el" href="_grammar_8h_source.html">Grammar.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a2635ab7fd749974729473500db670736"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_grammar.html#a2635ab7fd749974729473500db670736">Grammar</a> (const char *file)</td></tr>
 <tr class="memdesc:a2635ab7fd749974729473500db670736"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a2635ab7fd749974729473500db670736">More...</a><br /></td></tr>
 <tr class="separator:a2635ab7fd749974729473500db670736"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5ba99de6bc662b0754bfa18468ccd1d9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5ba99de6bc662b0754bfa18468ccd1d9"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_grammar.html#a5ba99de6bc662b0754bfa18468ccd1d9">compute_first_sets</a> ()</td></tr>
-<tr class="memdesc:a5ba99de6bc662b0754bfa18468ccd1d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the first sets of every nonterminal. <br /></td></tr>
-<tr class="separator:a5ba99de6bc662b0754bfa18468ccd1d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac78e7c0afd2e913fe7b015ff4125c01"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aac78e7c0afd2e913fe7b015ff4125c01"></a>
+std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_grammar.html#aac78e7c0afd2e913fe7b015ff4125c01">terminal_count</a> () const </td></tr>
+<tr class="memdesc:aac78e7c0afd2e913fe7b015ff4125c01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of terminals in this grammar. <br /></td></tr>
+<tr class="separator:aac78e7c0afd2e913fe7b015ff4125c01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a812ef05fde4b3d40159a5711575f1d5a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a812ef05fde4b3d40159a5711575f1d5a"></a>
+<a class="el" href="classpitaya_1_1_symbol.html">Symbol</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_grammar.html#a812ef05fde4b3d40159a5711575f1d5a">get_symbol</a> (SymbolID)</td></tr>
+<tr class="memdesc:a812ef05fde4b3d40159a5711575f1d5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a symbol by id. <br /></td></tr>
+<tr class="separator:a812ef05fde4b3d40159a5711575f1d5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0740160e95d10d68a7d806af010154f2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0740160e95d10d68a7d806af010154f2"></a>
+<a class="el" href="classpitaya_1_1_production.html">Production</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_grammar.html#a0740160e95d10d68a7d806af010154f2">get_production</a> (ProductionID)</td></tr>
+<tr class="memdesc:a0740160e95d10d68a7d806af010154f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a production by id. <br /></td></tr>
+<tr class="separator:a0740160e95d10d68a7d806af010154f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68c5e51cc57c86af63b0bf3487a5e5bc"><td class="memItemLeft" align="right" valign="top">PP&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_grammar.html#a68c5e51cc57c86af63b0bf3487a5e5bc">productions_by_lhs</a> (SymbolID id)</td></tr>
+<tr class="memdesc:a68c5e51cc57c86af63b0bf3487a5e5bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get productions with same lhs.  <a href="#a68c5e51cc57c86af63b0bf3487a5e5bc">More...</a><br /></td></tr>
+<tr class="separator:a68c5e51cc57c86af63b0bf3487a5e5bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9edb9bc35a72917bbb7c8cc64d11e9f8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9edb9bc35a72917bbb7c8cc64d11e9f8"></a>
+std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_grammar.html#a9edb9bc35a72917bbb7c8cc64d11e9f8">production_count</a> () const </td></tr>
+<tr class="memdesc:a9edb9bc35a72917bbb7c8cc64d11e9f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of productions in the grammar. <br /></td></tr>
+<tr class="separator:a9edb9bc35a72917bbb7c8cc64d11e9f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06d4bb2a5ef95a634d4f5247c4d394f1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a06d4bb2a5ef95a634d4f5247c4d394f1"></a>
+<a class="el" href="classpitaya_1_1_symbol.html">Symbol</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_grammar.html#a06d4bb2a5ef95a634d4f5247c4d394f1">endmark</a> ()</td></tr>
+<tr class="memdesc:a06d4bb2a5ef95a634d4f5247c4d394f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the end-mark symbol. <br /></td></tr>
+<tr class="separator:a06d4bb2a5ef95a634d4f5247c4d394f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-types"></a>
+Private Types</h2></td></tr>
+<tr class="memitem:a486ba7906ea93529a29fdd0af05e429a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a486ba7906ea93529a29fdd0af05e429a"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>PP</b> = std::pair&lt; ProductionID, ProductionID &gt;</td></tr>
+<tr class="separator:a486ba7906ea93529a29fdd0af05e429a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
@@ -138,14 +162,22 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:a4fc0a7e469881df1131ec97f6df36c56"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4fc0a7e469881df1131ec97f6df36c56"></a>
-std::set&lt; SharedSymbol, std::function&lt; bool(SharedSymbol, SharedSymbol)&gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_grammar.html#a4fc0a7e469881df1131ec97f6df36c56">m_symbols</a></td></tr>
-<tr class="memdesc:a4fc0a7e469881df1131ec97f6df36c56"><td class="mdescLeft">&#160;</td><td class="mdescRight">All symbols in this grammar. <br /></td></tr>
-<tr class="separator:a4fc0a7e469881df1131ec97f6df36c56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:addb4dce8a623f97fa1c94f4fe713e05c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="addb4dce8a623f97fa1c94f4fe713e05c"></a>
+std::vector&lt; SharedSymbol &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_grammar.html#addb4dce8a623f97fa1c94f4fe713e05c">m_symbols</a></td></tr>
+<tr class="memdesc:addb4dce8a623f97fa1c94f4fe713e05c"><td class="mdescLeft">&#160;</td><td class="mdescRight">All symbols in this grammar. <br /></td></tr>
+<tr class="separator:addb4dce8a623f97fa1c94f4fe713e05c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a35e5b3fce0e5f41eb499cfef55577eb3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a35e5b3fce0e5f41eb499cfef55577eb3"></a>
 std::vector&lt; <a class="el" href="classpitaya_1_1_production.html">Production</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_grammar.html#a35e5b3fce0e5f41eb499cfef55577eb3">m_productions</a></td></tr>
 <tr class="memdesc:a35e5b3fce0e5f41eb499cfef55577eb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">All productions in this grammar. <br /></td></tr>
 <tr class="separator:a35e5b3fce0e5f41eb499cfef55577eb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad9b0031b4b291ac5eb0a0b4eac10fbcd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad9b0031b4b291ac5eb0a0b4eac10fbcd"></a>
+std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_grammar.html#ad9b0031b4b291ac5eb0a0b4eac10fbcd">m_terminal_count</a></td></tr>
+<tr class="memdesc:ad9b0031b4b291ac5eb0a0b4eac10fbcd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of terminals in this grammar. <br /></td></tr>
+<tr class="separator:ad9b0031b4b291ac5eb0a0b4eac10fbcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d2e545b2958b9a830d436f6e4d28cee"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3d2e545b2958b9a830d436f6e4d28cee"></a>
+std::unordered_map&lt; SymbolID, PP &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_grammar.html#a3d2e545b2958b9a830d436f6e4d28cee">m_productions_by_lhs</a></td></tr>
+<tr class="memdesc:a3d2e545b2958b9a830d436f6e4d28cee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Productions grouped by their lhs. <br /></td></tr>
+<tr class="separator:a3d2e545b2958b9a830d436f6e4d28cee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classpitaya_1_1_grammar.html" title="Grammar class. ">Grammar</a> class. </p>
@@ -174,10 +206,32 @@ std::vector&lt; <a class="el" href="classpitaya_1_1_production.html">Production<
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following files:<ul>
-<li>D:/Projects/Pitaya/source/SA/<a class="el" href="_grammar_8h_source.html">Grammar.h</a></li>
-<li>D:/Projects/Pitaya/source/SA/Grammar.cpp</li>
-</ul>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a68c5e51cc57c86af63b0bf3487a5e5bc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Grammar::PP pitaya::Grammar::productions_by_lhs </td>
+          <td>(</td>
+          <td class="paramtype">SymbolID&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get productions with same lhs. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>ID of the lhs. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A pair indicating the start and the end production id. </dd></dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

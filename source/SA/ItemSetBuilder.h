@@ -39,21 +39,21 @@ namespace pitaya {
 		//! The ItemSet being built currently.
 		ItemSet m_curr_item_set;
 
-		std::vector<PLinkNode*> m_plinks;		//! Maintain all PLinkNodes.
+		std::vector<PLinkNode*> m_plinks;		//!< Maintain all PLinkNodes.
 
 		//! Compute the first sets of every nonterminal.
 		void compute_first_sets();
 
-		//!
+		//! Build or merge item-set according to m_curr_item_set.
 		const ItemSet& build_item_set();
 
-		//!
+		//! Build all successors of an item-set.
 		void build_successors(const ItemSet&);
 
-		//!
+		//! Compute all lookaheads.
 		void fill_lookaheads();
 
-		//!
+		//! Generate all actions.
 		void fill_actions();
 
 	};

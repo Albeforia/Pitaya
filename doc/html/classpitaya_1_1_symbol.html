@@ -110,6 +110,7 @@ $(document).ready(function(){initNavTree('classpitaya_1_1_symbol.html','');});
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a> &#124;
+<a href="#friends">Friends</a> &#124;
 <a href="classpitaya_1_1_symbol-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">pitaya::Symbol Class Reference</div>  </div>
@@ -118,8 +119,6 @@ $(document).ready(function(){initNavTree('classpitaya_1_1_symbol.html','');});
 
 <p><a class="el" href="classpitaya_1_1_symbol.html" title="Symbol class. ">Symbol</a> class.  
  <a href="classpitaya_1_1_symbol.html#details">More...</a></p>
-
-<p><code>#include &lt;<a class="el" href="_symbol_8h_source.html">Symbol.h</a>&gt;</code></p>
 
 <p>Inherits enable_shared_from_this&lt; Symbol &gt;.</p>
 <table class="memberdecls">
@@ -135,23 +134,38 @@ Public Member Functions</h2></td></tr>
 SymbolName&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_symbol.html#a3b6dbdb17e604bb1ef9c02ebcf673ed7">name</a> () const </td></tr>
 <tr class="memdesc:a3b6dbdb17e604bb1ef9c02ebcf673ed7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of this symbol. <br /></td></tr>
 <tr class="separator:a3b6dbdb17e604bb1ef9c02ebcf673ed7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0659c32f50b6e41b1cc3157e611d2d66"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0659c32f50b6e41b1cc3157e611d2d66"></a>
-std::size_t &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_symbol.html#a0659c32f50b6e41b1cc3157e611d2d66">id</a> ()</td></tr>
-<tr class="memdesc:a0659c32f50b6e41b1cc3157e611d2d66"><td class="mdescLeft">&#160;</td><td class="mdescRight">ID of the symbol. <br /></td></tr>
-<tr class="separator:a0659c32f50b6e41b1cc3157e611d2d66"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5bf43d39d18b397482a24f9c1ee19ec0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5bf43d39d18b397482a24f9c1ee19ec0"></a>
-SymbolType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_symbol.html#a5bf43d39d18b397482a24f9c1ee19ec0">type</a> () const </td></tr>
-<tr class="memdesc:a5bf43d39d18b397482a24f9c1ee19ec0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of this symbol. <br /></td></tr>
-<tr class="separator:a5bf43d39d18b397482a24f9c1ee19ec0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb464855dbfabebe1ff209f74c9f98b1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afb464855dbfabebe1ff209f74c9f98b1"></a>
+SymbolID &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_symbol.html#afb464855dbfabebe1ff209f74c9f98b1">id</a> ()</td></tr>
+<tr class="memdesc:afb464855dbfabebe1ff209f74c9f98b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">ID of the symbol. <br /></td></tr>
+<tr class="separator:afb464855dbfabebe1ff209f74c9f98b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe902fe1412bb322084a50803e9e048b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abe902fe1412bb322084a50803e9e048b"></a>
+const SymbolID &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>id</b> () const </td></tr>
+<tr class="separator:abe902fe1412bb322084a50803e9e048b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0fee43751bee9ecea04dd84ef80b82cc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0fee43751bee9ecea04dd84ef80b82cc"></a>
+SymbolType &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_symbol.html#a0fee43751bee9ecea04dd84ef80b82cc">type</a> ()</td></tr>
+<tr class="memdesc:a0fee43751bee9ecea04dd84ef80b82cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of this symbol. <br /></td></tr>
+<tr class="separator:a0fee43751bee9ecea04dd84ef80b82cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa79f947ffa0b3312f70ce32fafe0d666"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa79f947ffa0b3312f70ce32fafe0d666"></a>
+Associativity &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_symbol.html#aa79f947ffa0b3312f70ce32fafe0d666">associativity</a> ()</td></tr>
+<tr class="memdesc:aa79f947ffa0b3312f70ce32fafe0d666"><td class="mdescLeft">&#160;</td><td class="mdescRight">Associativity of this symbol. <br /></td></tr>
+<tr class="separator:aa79f947ffa0b3312f70ce32fafe0d666"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8fac5661fe2dcfc901999644c9fd4a8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab8fac5661fe2dcfc901999644c9fd4a8"></a>
+int &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_symbol.html#ab8fac5661fe2dcfc901999644c9fd4a8">precedence</a> ()</td></tr>
+<tr class="memdesc:ab8fac5661fe2dcfc901999644c9fd4a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Precedence of this symbol. <br /></td></tr>
+<tr class="separator:ab8fac5661fe2dcfc901999644c9fd4a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6c2e66dec74826e2448cbcc68ac98d4b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6c2e66dec74826e2448cbcc68ac98d4b"></a>
 bool &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_symbol.html#a6c2e66dec74826e2448cbcc68ac98d4b">lambda</a> ()</td></tr>
 <tr class="memdesc:a6c2e66dec74826e2448cbcc68ac98d4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether this symbol can generate an empty string. <br /></td></tr>
 <tr class="separator:a6c2e66dec74826e2448cbcc68ac98d4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad32431cf83cf4e7271d8e9479d11ef04"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad32431cf83cf4e7271d8e9479d11ef04"></a>
+<a class="el" href="classpitaya_1_1_symbol_set.html">SymbolSet</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_symbol.html#ad32431cf83cf4e7271d8e9479d11ef04">first_set</a> ()</td></tr>
+<tr class="memdesc:ad32431cf83cf4e7271d8e9479d11ef04"><td class="mdescLeft">&#160;</td><td class="mdescRight">First set of the symbol. <br /></td></tr>
+<tr class="separator:ad32431cf83cf4e7271d8e9479d11ef04"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a2f7fc8c07af79ffe6cb0596103572fde"><td class="memTemplParams" colspan="2">template&lt;typename... Ts&gt; </td></tr>
-<tr class="memitem:a2f7fc8c07af79ffe6cb0596103572fde"><td class="memTemplItemLeft" align="right" valign="top">static std::enable_if&lt; std::is_constructible&lt; std::string, Ts... &gt;::value, SharedSymbol &gt;::<a class="el" href="classpitaya_1_1_symbol.html#a5bf43d39d18b397482a24f9c1ee19ec0">type</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_symbol.html#a2f7fc8c07af79ffe6cb0596103572fde">create</a> (Ts &amp;&amp;...params)</td></tr>
+<tr class="memitem:a2f7fc8c07af79ffe6cb0596103572fde"><td class="memTemplItemLeft" align="right" valign="top">static std::enable_if&lt; std::is_constructible&lt; std::string, Ts... &gt;::value, SharedSymbol &gt;::<a class="el" href="classpitaya_1_1_symbol.html#a0fee43751bee9ecea04dd84ef80b82cc">type</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_symbol.html#a2f7fc8c07af79ffe6cb0596103572fde">create</a> (Ts &amp;&amp;...params)</td></tr>
 <tr class="memdesc:a2f7fc8c07af79ffe6cb0596103572fde"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use this factory function to 'create' symbols.  <a href="#a2f7fc8c07af79ffe6cb0596103572fde">More...</a><br /></td></tr>
 <tr class="separator:a2f7fc8c07af79ffe6cb0596103572fde"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -163,22 +177,45 @@ Private Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
+<tr class="memitem:a3412b9a0b45a63de80bd51d86c457f41"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3412b9a0b45a63de80bd51d86c457f41"></a>
+SymbolID&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_symbol.html#a3412b9a0b45a63de80bd51d86c457f41">m_id</a></td></tr>
+<tr class="memdesc:a3412b9a0b45a63de80bd51d86c457f41"><td class="mdescLeft">&#160;</td><td class="mdescRight">ID of the symbol. <br /></td></tr>
+<tr class="separator:a3412b9a0b45a63de80bd51d86c457f41"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a338096e60b05a8691c9ff4b57e217882"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a338096e60b05a8691c9ff4b57e217882"></a>
 SymbolName&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_symbol.html#a338096e60b05a8691c9ff4b57e217882">m_name</a></td></tr>
 <tr class="memdesc:a338096e60b05a8691c9ff4b57e217882"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of the symbol. <br /></td></tr>
 <tr class="separator:a338096e60b05a8691c9ff4b57e217882"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abd3097c533d4c02330b8046d2fb8f857"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abd3097c533d4c02330b8046d2fb8f857"></a>
-std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_symbol.html#abd3097c533d4c02330b8046d2fb8f857">m_id</a></td></tr>
-<tr class="memdesc:abd3097c533d4c02330b8046d2fb8f857"><td class="mdescLeft">&#160;</td><td class="mdescRight">ID of the symbol. <br /></td></tr>
-<tr class="separator:abd3097c533d4c02330b8046d2fb8f857"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a49021f0ffae4f57c836b8c9a1d945d96"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a49021f0ffae4f57c836b8c9a1d945d96"></a>
 SymbolType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_symbol.html#a49021f0ffae4f57c836b8c9a1d945d96">m_type</a></td></tr>
 <tr class="memdesc:a49021f0ffae4f57c836b8c9a1d945d96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of the symbol. <br /></td></tr>
 <tr class="separator:a49021f0ffae4f57c836b8c9a1d945d96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a553e8762036c5bd6559b1386074d2625"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a553e8762036c5bd6559b1386074d2625"></a>
+Associativity&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_symbol.html#a553e8762036c5bd6559b1386074d2625">m_associativity</a></td></tr>
+<tr class="memdesc:a553e8762036c5bd6559b1386074d2625"><td class="mdescLeft">&#160;</td><td class="mdescRight">Associativity of the symbol. <br /></td></tr>
+<tr class="separator:a553e8762036c5bd6559b1386074d2625"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85826e2dce767934eb149c81f97a9971"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a85826e2dce767934eb149c81f97a9971"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_symbol.html#a85826e2dce767934eb149c81f97a9971">m_precedence</a></td></tr>
+<tr class="memdesc:a85826e2dce767934eb149c81f97a9971"><td class="mdescLeft">&#160;</td><td class="mdescRight">Precedence of the symbol. <br /></td></tr>
+<tr class="separator:a85826e2dce767934eb149c81f97a9971"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7c5bb5257531ae38730cfe7274ec27fb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7c5bb5257531ae38730cfe7274ec27fb"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_symbol.html#a7c5bb5257531ae38730cfe7274ec27fb">m_lambda</a></td></tr>
 <tr class="memdesc:a7c5bb5257531ae38730cfe7274ec27fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">True if this symbol can generate an empty string. <br /></td></tr>
 <tr class="separator:a7c5bb5257531ae38730cfe7274ec27fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a67a1243ed92efb4d1ca0115d285801"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8a67a1243ed92efb4d1ca0115d285801"></a>
+<a class="el" href="classpitaya_1_1_symbol_set.html">SymbolSet</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_symbol.html#a8a67a1243ed92efb4d1ca0115d285801">m_first_set</a></td></tr>
+<tr class="memdesc:a8a67a1243ed92efb4d1ca0115d285801"><td class="mdescLeft">&#160;</td><td class="mdescRight">First set of the symbol. <br /></td></tr>
+<tr class="separator:a8a67a1243ed92efb4d1ca0115d285801"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
+Friends</h2></td></tr>
+<tr class="memitem:ae9f042a84687e313698528c7f5a63e64"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae9f042a84687e313698528c7f5a63e64"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_symbol.html#ae9f042a84687e313698528c7f5a63e64">operator==</a> (const <a class="el" href="classpitaya_1_1_symbol.html">Symbol</a> &amp;, const <a class="el" href="classpitaya_1_1_symbol.html">Symbol</a> &amp;)</td></tr>
+<tr class="memdesc:ae9f042a84687e313698528c7f5a63e64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Equality. <br /></td></tr>
+<tr class="separator:ae9f042a84687e313698528c7f5a63e64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add70cb233ce1301ba2136d2f5e204b77"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="add70cb233ce1301ba2136d2f5e204b77"></a>
+std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_symbol.html#add70cb233ce1301ba2136d2f5e204b77">operator&lt;&lt;</a> (std::ostream &amp;, const <a class="el" href="classpitaya_1_1_symbol.html">Symbol</a> &amp;)</td></tr>
+<tr class="memdesc:add70cb233ce1301ba2136d2f5e204b77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output. <br /></td></tr>
+<tr class="separator:add70cb233ce1301ba2136d2f5e204b77"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classpitaya_1_1_symbol.html" title="Symbol class. ">Symbol</a> class. </p>
@@ -221,7 +258,7 @@ template&lt;typename... Ts&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static std::enable_if&lt; std::is_constructible&lt;std::string, Ts...&gt;::value, SharedSymbol &gt;::<a class="el" href="classpitaya_1_1_symbol.html#a5bf43d39d18b397482a24f9c1ee19ec0">type</a> pitaya::Symbol::create </td>
+          <td class="memname">static std::enable_if&lt; std::is_constructible&lt;std::string, Ts...&gt;::value, SharedSymbol &gt;::<a class="el" href="classpitaya_1_1_symbol.html#a0fee43751bee9ecea04dd84ef80b82cc">type</a> pitaya::Symbol::create </td>
           <td>(</td>
           <td class="paramtype">Ts &amp;&amp;...&#160;</td>
           <td class="paramname"><em>params</em></td><td>)</td>
@@ -246,10 +283,6 @@ template&lt;typename... Ts&gt; </div>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following files:<ul>
-<li>D:/Projects/Pitaya/source/SA/<a class="el" href="_symbol_8h_source.html">Symbol.h</a></li>
-<li>D:/Projects/Pitaya/source/SA/Symbol.cpp</li>
-</ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

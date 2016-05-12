@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['grammar',['Grammar',['../classpitaya_1_1_grammar.html',1,'pitaya']]]
+  ['action',['Action',['../structpitaya_1_1_action.html',1,'pitaya']]]
 ];

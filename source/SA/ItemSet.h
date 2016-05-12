@@ -66,12 +66,17 @@ namespace pitaya {
 
 	private:
 
-		std::vector<Item> m_kernels;				//!< All kernels in this set.
+		//! All kernels in this set.
+		std::vector<Item> m_kernels;
 		//! Closure of this set.
 		std::unordered_set<Item, boost::hash<Item>> m_closure;
 
-		StateID m_id;		//! ID of the set(or state).
-		//! Actions of this state
+		StateID m_id;		//!< ID of the set(or state).
+
+		//! Actions of this state.
+		/*!
+			Declared mutable because it will be updated after being added to set.
+		*/
 		mutable std::unordered_map<std::size_t, Action> m_actions;
 
 		/// @cond

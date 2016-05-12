@@ -5,6 +5,11 @@
 namespace pitaya {
 
 	class Item;
+
+	//! Node on propagation links.
+	/*
+		Used in lookaheads computation.
+	*/
 	struct PLinkNode {
 		const Item* item;
 		PLinkNode* next;
@@ -23,10 +28,14 @@ namespace pitaya {
 
 		//! Move constructor.
 		Item(Item&&) noexcept;
+
+		//! Move assignment.
 		Item& operator=(Item&&) noexcept;
 
-		//! Copy constructor.
+		//! Generated copy constructor.
 		Item(const Item&) = default;
+
+		//! Generated copy assignment.
 		Item& operator=(const Item&) = default;
 
 		//! The id of the production upon which the item is based.
@@ -53,10 +62,11 @@ namespace pitaya {
 		//! Hash.
 		friend std::size_t hash_value(const Item&);
 
-		/// @cond test
-		// used in item-set closure\successors\lookaheads computing
+		//! Used in item-set closure\\successors\\lookaheads computing.
+		/*!
+			Declared mutable because it will be updated after being added to set.
+		*/
 		mutable bool complete;
-		/// @endcond
 
 	private:
 
@@ -65,10 +75,12 @@ namespace pitaya {
 			Note item should not own a production, so we use id instead of ptr here.
 		*/
 		ProductionID m_production;
+
 		Dot m_dot;					//!< The parse point.
+
 		//! Lookaheads of the item.
 		/*!
-			Declare mutable because it will be updated after being added to set.
+			Declared mutable because it will be updated after being added to set.
 		*/
 		mutable SymbolSet m_lookaheads;
 
