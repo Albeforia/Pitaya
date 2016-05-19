@@ -15,6 +15,10 @@ namespace pitaya {
 		rearrange_productions();
 	}
 
+	std::size_t Grammar::symbol_count() const {
+		return m_symbols.size();
+	}
+
 	std::size_t Grammar::terminal_count() const {
 		return m_terminal_count;
 	}

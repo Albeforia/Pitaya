@@ -26,6 +26,9 @@ namespace pitaya {
 		*/
 		Grammar(const char* file);
 
+		//! Number of symbols in this grammar.
+		std::size_t symbol_count() const;
+
 		//! Number of terminals in this grammar.
 		std::size_t terminal_count() const;
 
