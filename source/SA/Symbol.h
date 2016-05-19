@@ -30,6 +30,8 @@ namespace pitaya {
 	//! Symbol class.
 	class Symbol : public std::enable_shared_from_this<Symbol> {
 
+		friend class Grammar;
+
 	public:
 
 		using SymbolName = const char*;
@@ -37,23 +39,22 @@ namespace pitaya {
 		//! Name of this symbol.
 		SymbolName name() const;
 
-		//! ID of the symbol.
-		SymbolID& id();
-		const SymbolID& id() const;
+		//! ID of this symbol.
+		SymbolID id() const;
 
 		//! Type of this symbol.
-		SymbolType& type();
+		SymbolType type() const;
 
 		//! Associativity of this symbol.
-		Associativity& associativity();
+		Associativity associativity() const;
 
 		//! Precedence of this symbol.
-		int& precedence();
+		int precedence() const;
 
 		//! Whether this symbol can generate an empty string.
 		bool& lambda();
 
-		//! First set of the symbol.
+		//! First set of this symbol.
 		SymbolSet& first_set();
 
 		//! Use this factory function to 'create' symbols.
@@ -71,8 +72,7 @@ namespace pitaya {
 			auto& res = pool().emplace(std::forward<Ts>(params)..., std::move(ps));
 			if (res.second) {
 				auto& emplaced = res.first;
-				emplaced->second.reset(new Symbol {emplaced->first.c_str()});
-				emplaced->second->id() = order();
+				emplaced->second.reset(new Symbol {emplaced->first.c_str(), order()});
 				return emplaced->second;
 			}
 			else {
@@ -80,17 +80,6 @@ namespace pitaya {
 				return res.first->second->shared_from_this();
 			}
 		}
-
-		/// @cond
-		//! Symbol pool.
-		/*!
-			Guarantee static pool is initialised before accessing.
-		*/
-		static auto& pool() {
-			static std::unordered_map<std::string, SharedSymbol> interned_;
-			return interned_;
-		}
-		/// @endcond
 
 		//! Equality.
 		friend bool operator==(const Symbol&, const Symbol&);
@@ -104,22 +93,30 @@ namespace pitaya {
 		/*!
 			Use create() instead.
 		*/
-		Symbol(SymbolName name);
+		Symbol(SymbolName, SymbolID);
 
 		SymbolID m_id;					//!< ID of the symbol.
 		SymbolName m_name;				//!< Name of the symbol.
 		SymbolType m_type;				//!< Type of the symbol.
 		Associativity m_associativity;	//!< Associativity of the symbol.
 		int m_precedence;				//!< Precedence of the symbol.
-		bool m_lambda;					//!< True if this symbol can generate an empty string.
+		bool m_lambda;					//!< True if the symbol can generate an empty string.
 		SymbolSet m_first_set;			//!< First set of the symbol.
 
 		/// @cond
-		//! Unique ID marking the first appearance of a symbol.
+
+		// guarantee the static pool is initialised before accessing
+		static auto& pool() {
+			static std::unordered_map<std::string, SharedSymbol> interned_;
+			return interned_;
+		}
+
+		// unique ID marking the first appearance of a symbol
 		static std::size_t order() {
 			static std::size_t interned_ = 0;
 			return interned_++;
 		}
+
 		/// @endcond
 
 	};

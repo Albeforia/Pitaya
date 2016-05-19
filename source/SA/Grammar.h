@@ -48,7 +48,7 @@ namespace pitaya {
 		//! Get the end-mark symbol.
 		Symbol& endmark();
 
-		/// @cond test
+		/// @cond
 		void print_first_sets() const;
 		/// @endcond
 
@@ -64,6 +64,10 @@ namespace pitaya {
 
 		//! Parse a grammar file.
 		void read(const char* file);
+
+		/// @cond
+		void rearrange_symbols();
+		/// @endcond
 
 		/// @cond boost
 		// forward state declarations

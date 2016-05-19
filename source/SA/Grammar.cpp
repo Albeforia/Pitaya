@@ -9,39 +9,11 @@ namespace pitaya {
 
 	Grammar::Grammar(const char* file)
 		: m_productions {}, m_symbols {} {
+
 		Symbol::create("$");
 		read(file);
 
-		for (const auto& p : Symbol::pool()) {
-			if (p.second->type() == SymbolType::UNDEFINED) {
-				p.second->type() = SymbolType::TERMINAL;
-			}
-			m_symbols.emplace_back(p.second);
-		}
-
-		std::sort(m_symbols.begin(), m_symbols.end(), [](auto& a, auto& b) {
-			// sort terminals before nonterminals
-			// while keeping the order they appeared in the grammar file
-			if (a->type() != b->type()) {
-				return a->type() == SymbolType::TERMINAL;
-			}
-			else {
-				return a->id() < b->id();
-			}
-		});
-
-		m_terminal_count = 0;
-		std::size_t nonterminal_count = 0;
-		for (auto& s : m_symbols) {
-			if (s->type() == SymbolType::TERMINAL) {
-				s->id() = m_terminal_count++;
-			}
-			else {
-				s->id() = m_terminal_count + nonterminal_count++;
-				s->first_set().resize(m_terminal_count);
-			}
-		}
-		assert(m_terminal_count + nonterminal_count == m_symbols.size());
+		rearrange_symbols();
 
 		assert(m_productions.size() > 0);
 
@@ -89,6 +61,40 @@ namespace pitaya {
 
 	Symbol& Grammar::endmark() {
 		return *m_symbols[0];
+	}
+
+	void Grammar::rearrange_symbols() {
+		// after reading grammar file, every nonterminal has been determined
+		for (const auto& p : Symbol::pool()) {
+			if (p.second->m_type == SymbolType::UNDEFINED) {
+				p.second->m_type = SymbolType::TERMINAL;
+			}
+			m_symbols.emplace_back(p.second);
+		}
+
+		// sort terminals before nonterminals while
+		// keeping the order they appeared in the grammar file
+		std::sort(m_symbols.begin(), m_symbols.end(), [](auto& a, auto& b) {
+			if (a->type() != b->type()) {
+				return a->type() == SymbolType::TERMINAL;
+			}
+			else {
+				return a->id() < b->id();
+			}
+		});
+
+		// reset symbol's id
+		m_terminal_count = 0;
+		std::size_t nonterminal_count = 0;
+		for (auto& s : m_symbols) {
+			if (s->type() == SymbolType::TERMINAL) {
+				s->m_id = m_terminal_count++;
+			}
+			else {
+				s->m_id = m_terminal_count + nonterminal_count++;
+				s->first_set().resize(m_terminal_count);
+			}
+		}
 	}
 
 	void Grammar::read(const char* file) {
@@ -141,7 +147,7 @@ namespace pitaya {
 				std::string lhs;
 				file >> lhs;
 				productions.emplace_back(curr_pid, Symbol::create(lhs));
-				productions[curr_pid][0].type() = SymbolType::NONTERMINAL;
+				productions[curr_pid][0].m_type = SymbolType::NONTERMINAL;
 				process_event(EvGetSymbol {});
 			}
 		}
@@ -182,8 +188,8 @@ namespace pitaya {
 				std::string s;
 				file >> s;
 				auto& sym = Symbol::create(s);
-				sym->associativity() = curr_assc;
-				sym->precedence() = curr_prec;
+				sym->m_associativity = curr_assc;
+				sym->m_precedence = curr_prec;
 				process_event(EvGetSymbol {});
 			}
 		}
