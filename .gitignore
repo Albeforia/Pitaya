@@ -1,5 +1,6 @@
 # Custom Ignore
 external/
+lib/
 Lemon/
 
 ## Ignore Visual Studio temporary files, build results, and
