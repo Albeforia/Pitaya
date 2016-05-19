@@ -9,38 +9,18 @@ namespace pitaya {
 
 	Grammar::Grammar(const char* file)
 		: m_productions {}, m_symbols {} {
-
 		Symbol::create("$");
 		read(file);
-
 		rearrange_symbols();
-
-		assert(m_productions.size() > 0);
-
-		std::sort(m_productions.begin(), m_productions.end(), [](auto& a, auto& b) {
-			if (a[0] == b[0]) {
-				return a.id() < b.id();
-			}
-			else {
-				return a[0].id() < b[0].id();
-			}
-		});
-
-		auto curr_lhs = m_productions[0][0].id();
-		std::size_t start = 0;
-		for (std::size_t i = 0; i < m_productions.size(); i++) {
-			if (m_productions[i][0].id() != curr_lhs) {
-				m_productions_by_lhs.emplace(curr_lhs, PP {start, i - 1});
-				curr_lhs = m_productions[i][0].id();
-				start = i;
-			}
-			m_productions[i].id() = i;
-		}
-		m_productions_by_lhs.emplace(curr_lhs, PP {start, m_productions.size() - 1});
+		rearrange_productions();
 	}
 
 	std::size_t Grammar::terminal_count() const {
 		return m_terminal_count;
+	}
+
+	std::size_t Grammar::production_count() const {
+		return m_productions.size();
 	}
 
 	Symbol& Grammar::get_symbol(SymbolID id) {
@@ -53,10 +33,6 @@ namespace pitaya {
 
 	Grammar::PP Grammar::productions_by_lhs(SymbolID id) {
 		return m_productions_by_lhs.at(id);
-	}
-
-	std::size_t Grammar::production_count() const {
-		return m_productions.size();
 	}
 
 	Symbol& Grammar::endmark() {
@@ -95,6 +71,33 @@ namespace pitaya {
 				s->first_set().resize(m_terminal_count);
 			}
 		}
+	}
+
+	void Grammar::rearrange_productions() {
+		assert(m_productions.size() > 0);
+
+		// sort productions by lhs then by id
+		std::sort(m_productions.begin(), m_productions.end(), [](auto& a, auto& b) {
+			if (a[0] == b[0]) {
+				return a.id() < b.id();
+			}
+			else {
+				return a[0].id() < b[0].id();
+			}
+		});
+
+		auto curr_lhs = m_productions[0][0].id();
+		std::size_t start = 0;
+		for (std::size_t i = 0; i < m_productions.size(); i++) {
+			if (m_productions[i][0].id() != curr_lhs) {
+				m_productions_by_lhs.emplace(curr_lhs, PP {start, i - 1});
+				curr_lhs = m_productions[i][0].id();
+				start = i;
+			}
+			m_productions[i].m_id = i;
+		}
+		// the last group
+		m_productions_by_lhs.emplace(curr_lhs, PP {start, m_productions.size() - 1});
 	}
 
 	void Grammar::read(const char* file) {
@@ -205,7 +208,7 @@ namespace pitaya {
 			else {
 				std::string rhs;
 				file >> rhs;
-				productions[curr_pid].rhs().emplace_back(std::move(Symbol::create(rhs)));
+				productions[curr_pid].m_rhs.emplace_back(std::move(Symbol::create(rhs)));
 				process_event(EvGetSymbol {});
 			}
 		}

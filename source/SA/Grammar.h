@@ -29,6 +29,9 @@ namespace pitaya {
 		//! Number of terminals in this grammar.
 		std::size_t terminal_count() const;
 
+		//! Number of productions in this grammar.
+		std::size_t production_count() const;
+
 		//! Get a symbol by id.
 		Symbol& get_symbol(SymbolID);
 
@@ -42,9 +45,6 @@ namespace pitaya {
 		*/
 		PP productions_by_lhs(SymbolID id);
 
-		//! Number of productions in the grammar.
-		std::size_t production_count() const;
-
 		//! Get the end-mark symbol.
 		Symbol& endmark();
 
@@ -54,10 +54,9 @@ namespace pitaya {
 
 	private:
 
-		std::vector<SharedSymbol> m_symbols;		//!< All symbols in this grammar.
-		std::vector<Production> m_productions;		//!< All productions in this grammar.
-
-		std::size_t m_terminal_count;		//!< Number of terminals in this grammar.
+		std::vector<SharedSymbol> m_symbols;	//!< All symbols in this grammar.
+		std::vector<Production> m_productions;	//!< All productions in this grammar.
+		std::size_t m_terminal_count;			//!< Number of terminals in this grammar.
 
 		//! Productions grouped by their lhs.
 		std::unordered_map<SymbolID, PP> m_productions_by_lhs;
@@ -67,6 +66,7 @@ namespace pitaya {
 
 		/// @cond
 		void rearrange_symbols();
+		void rearrange_productions();
 		/// @endcond
 
 		/// @cond boost

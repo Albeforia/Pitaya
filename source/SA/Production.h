@@ -6,12 +6,12 @@
 
 namespace pitaya {
 
-	class Symbol;
-
 	using ProductionID = std::size_t;
 
 	//! Production class.
 	class Production {
+
+		friend class Grammar;
 
 	public:
 
@@ -22,24 +22,17 @@ namespace pitaya {
 		*/
 		Production(ProductionID id, SharedSymbol lhs);
 
-		//! Getter for rhs.
-		/*!
-			Should only use during parsing grammar file.
-		*/
-		std::vector<SharedSymbol>& rhs();
+		//! ID of the production.
+		ProductionID id() const;
+
+		//! Number of rhs.
+		std::size_t rhs_count() const;
 
 		//! Index lhs and rhs of this production.
 		/*!
 			\param pos Return lhs when pos equals zero, otherwise return the 'pos'th rhs.
 		*/
 		Symbol& operator[](std::size_t pos) const;
-
-		//! Number of rhs.
-		std::size_t rhs_count() const;
-
-		//! ID of the production.
-		ProductionID& id();
-		const ProductionID& id() const;
 
 	private:
 
