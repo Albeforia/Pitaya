@@ -2,8 +2,6 @@
 
 #include <unordered_set>
 
-#include <boost\functional\hash\hash.hpp>
-
 #include "Grammar.h"
 #include "ItemSet.h"
 
@@ -34,10 +32,8 @@ namespace pitaya {
 
 		std::shared_ptr<Grammar> m_grammar;		//!< The grammar this builder works on.
 
-		//! All ItemSets.
-		std::unordered_set<ItemSet, boost::hash<ItemSet>> m_item_sets;
-		//! The ItemSet being built currently.
-		ItemSet m_curr_item_set;
+		std::unordered_set<ItemSet, boost::hash<ItemSet>> m_item_sets;	//!< All ItemSets.
+		ItemSet m_curr_item_set;		//!< The ItemSet being built currently.
 
 		std::vector<PLinkNode*> m_plinks;		//!< Maintain all PLinkNodes.
 
