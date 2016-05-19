@@ -7,7 +7,7 @@ using namespace pitaya;
 
 int main() {
 
-	auto pg {std::make_shared<Grammar>("test.gram")};
+	auto pg {std::make_shared<Grammar>("sa.gram")};
 	auto builder {std::make_unique<ItemSetBuilder>(pg)};
 	builder->build();
 	builder->print_all();
