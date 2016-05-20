@@ -153,6 +153,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\source\LA\main.cpp" />
+    <ClCompile Include="..\..\source\LA\State.cpp" />
+    <ClCompile Include="..\..\source\LA\StateBuilder.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\source\LA\State.h" />
+    <ClInclude Include="..\..\source\LA\StateBuilder.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
