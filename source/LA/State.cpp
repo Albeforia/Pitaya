@@ -88,6 +88,7 @@ namespace pitaya {
 		m_basis.clear();
 		m_closure.clear();
 		m_transitions.clear();
+		m_is_final = false;
 	}
 
 	const SymbolSet& State::closure() const {

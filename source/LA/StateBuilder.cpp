@@ -78,7 +78,11 @@ namespace pitaya {
 					std::cout << m_grammar->get_symbol(sid) << " ";
 				}
 			}
-			std::cout << "}" << std::endl;
+			std::cout << "}";
+			if (state.is_final()) {
+				std::cout << " [final]";
+			}
+			std::cout << std::endl;
 			State::ID to;
 			for (SymbolID sid = 0; sid < m_grammar->symbol_count(); sid++) {
 				auto& symbol = m_grammar->get_symbol(sid);
