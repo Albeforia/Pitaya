@@ -38,6 +38,9 @@ namespace pitaya {
 		//! Get a symbol by id.
 		Symbol& get_symbol(SymbolID);
 
+		//! Get a symbol by name.
+		Symbol& get_symbol(std::string);
+
 		//! Get a production by id.
 		Production& get_production(ProductionID);
 

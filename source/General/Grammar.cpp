@@ -31,6 +31,10 @@ namespace pitaya {
 		return *m_symbols[id];
 	}
 
+	Symbol& Grammar::get_symbol(std::string name) {
+		return *Symbol::pool().at(name);
+	}
+
 	Production& Grammar::get_production(ProductionID id) {
 		return m_productions[id];
 	}
