@@ -39,6 +39,10 @@ namespace pitaya {
 		return a.m_id == b.m_id;
 	}
 
+	bool operator!=(const Symbol& a, const Symbol& b) {
+		return !(a.m_id == b.m_id);
+	}
+
 	std::ostream& operator<<(std::ostream& os, const Symbol& s) {
 		return os << s.m_name;
 	}

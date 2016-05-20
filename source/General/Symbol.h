@@ -83,6 +83,7 @@ namespace pitaya {
 
 		//! Equality.
 		friend bool operator==(const Symbol&, const Symbol&);
+		friend bool operator!=(const Symbol&, const Symbol&);
 
 		//! Output.
 		friend std::ostream& operator<<(std::ostream&, const Symbol&);
