@@ -27,6 +27,10 @@ namespace pitaya {
 		return m_precedence;
 	}
 
+	bool& Symbol::is_token() {
+		return m_is_token;
+	}
+
 	bool& Symbol::lambda() {
 		return m_lambda;
 	}

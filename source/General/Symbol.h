@@ -51,6 +51,9 @@ namespace pitaya {
 		//! Precedence of this symbol.
 		int precedence() const;
 
+		//! Whether this symbol is a token.
+		bool& is_token();
+
 		//! Whether this symbol can generate an empty string.
 		bool& lambda();
 
@@ -101,6 +104,7 @@ namespace pitaya {
 		SymbolType m_type;				//!< Type of the symbol.
 		Associativity m_associativity;	//!< Associativity of the symbol.
 		int m_precedence;				//!< Precedence of the symbol.
+		bool m_is_token;				//!< Whether the symbol is a token.
 		bool m_lambda;					//!< True if the symbol can generate an empty string.
 		SymbolSet m_first_set;			//!< First set of the symbol.
 

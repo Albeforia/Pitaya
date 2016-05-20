@@ -94,6 +94,7 @@ namespace pitaya {
 			ProductionID curr_pid;
 			Associativity curr_assc;
 			int curr_prec;
+			bool token_decl;
 
 			void read(std::ifstream&, std::vector<pitaya::Production>&);
 
