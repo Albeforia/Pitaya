@@ -226,7 +226,7 @@ namespace pitaya {
 			std::cout << "state " << set.id() << std::endl;
 			for (auto& item : set.closure()) {
 				auto& p = m_grammar->get_production(item.production_id());
-				std::cout << p[0] << "->";
+				std::cout << "\t" << p[0] << "->";
 				std::size_t i = 0;
 				for (i; i < p.rhs_count(); i++) {
 					if (item.dot() == i) {
@@ -237,7 +237,7 @@ namespace pitaya {
 				if (item.dot() == i) {
 					std::cout << ".";
 				}
-				std::cout << "|";
+				std::cout << "\t" << "|";
 				for (SymbolID i = 0; i < item.lookaheads().size(); i++) {
 					if (item.lookaheads()[i]) {
 						std::cout << m_grammar->get_symbol(i) << " ";
