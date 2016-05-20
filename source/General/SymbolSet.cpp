@@ -41,4 +41,8 @@ namespace pitaya {
 		return m_set[id];
 	}
 
+	void SymbolSet::clear() {
+		m_set.clear();
+	}
+
 }

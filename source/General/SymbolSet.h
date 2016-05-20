@@ -38,6 +38,9 @@ namespace pitaya {
 		//! Whether the symbol of id is in set.
 		bool operator[](std::size_t id) const;
 
+		//! Clear all symbols.
+		void clear();
+
 	private:
 
 		boost::dynamic_bitset<> m_set;		//!< Underlying set representation.
