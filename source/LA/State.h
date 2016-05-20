@@ -35,6 +35,9 @@ namespace pitaya {
 		//! Whether this is a final state.
 		bool& is_final() const;
 
+		//! Token type of the state.
+		SymbolID& token_type() const;
+
 		//! Add a transition.
 		void add_transition(SymbolID, ID) const;
 
@@ -64,6 +67,7 @@ namespace pitaya {
 		std::vector<SymbolID> m_basis;		//!< Basis of the state.
 		SymbolSet m_closure;				//!< Closure of the state.
 		mutable bool m_is_final;			//!< Whether this is a final state.
+		mutable SymbolID m_token_type;		//!< Token type of the state.
 
 		//! State transitions.
 		mutable std::unordered_map<SymbolID, ID> m_transitions;

@@ -8,7 +8,7 @@ namespace pitaya {
 
 	State::State()
 		: m_id {order()}, m_basis {}, m_closure {},
-		m_is_final {false}, m_transitions {} {}
+		m_is_final {false}, m_token_type {}, m_transitions {} {}
 
 	State::State(State&& from) noexcept
 		: m_id {order()}, m_is_final {from.m_is_final},
@@ -64,6 +64,10 @@ namespace pitaya {
 
 	bool& State::is_final() const {
 		return m_is_final;
+	}
+
+	SymbolID& State::token_type() const {
+		return m_token_type;
 	}
 
 	void State::add_transition(SymbolID symbol, State::ID state) const {

@@ -14,6 +14,7 @@ namespace pitaya {
 		// assume the start symbol is the lhs of the first production
 		m_curr_state.add_symbol(m_grammar->get_production(0)[0]);
 		build_state();
+		decide_token_type();
 	}
 
 	const State& StateBuilder::build_state() {
@@ -66,6 +67,24 @@ namespace pitaya {
 			if (has_transition) {
 				auto& new_state = build_state();
 				state.add_transition(symbol.id(), new_state.id());
+			}
+		}
+	}
+
+	void StateBuilder::decide_token_type() {
+		for (auto& state : m_states) {
+			if (!state.is_final()) continue;
+			int prec = -1;
+			// for every nonterminal in the state's closure
+			for (auto i = m_grammar->terminal_count(); i < m_grammar->symbol_count(); i++) {
+				if (state.closure()[i]) {
+					auto& s = m_grammar->get_symbol(i);
+					if (!s.is_token()) continue;
+					if (s.precedence() > prec) {
+						state.token_type() = s.id();
+						prec = s.precedence();
+					}
+				}
 			}
 		}
 	}

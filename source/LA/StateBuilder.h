@@ -34,6 +34,9 @@ namespace pitaya {
 		//! Build all successors of an state.
 		void build_successors(const State&);
 
+		//! Decide token type for all final states.
+		void decide_token_type();
+
 	};
 
 }
