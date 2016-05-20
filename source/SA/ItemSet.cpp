@@ -38,7 +38,7 @@ namespace pitaya {
 		return m_kernels.size();
 	}
 
-	void ItemSet::compute_closure(Grammar& g, ItemSetBuilder& builder) {
+	void ItemSet::compute_closure(Grammar& grammar, ItemSetBuilder& builder) {
 		// copy kernels into closure
 		for (auto& i : m_kernels) {
 			m_closure.emplace(i);
@@ -49,7 +49,7 @@ namespace pitaya {
 			not_fin = false;
 			for (auto& item : m_closure) {
 				if (item.complete) continue;
-				auto& production = g.get_production(item.production_id());
+				auto& production = grammar.get_production(item.production_id());
 				auto dot = item.dot();
 				if (dot >= production.rhs_count()) {
 					// skip item whose dot is at right end
@@ -63,14 +63,14 @@ namespace pitaya {
 					continue;
 				}
 				// for each production with 'symbol' as its lhs
-				auto range = g.productions_by_lhs(symbol.id());
+				auto range = grammar.productions_by_lhs(symbol.id());
 				for (auto pid = range.first; pid <= range.second; pid++) {
-					auto& p = g.get_production(pid);
+					auto& p = grammar.get_production(pid);
 					auto& res = m_closure.emplace(p.id());
 					not_fin = res.second;
 					// update lookaheads generated spontaneously
 					if (res.second) {
-						res.first->lookaheads().resize(g.terminal_count());
+						res.first->lookaheads().resize(grammar.terminal_count());
 					}
 					// A -> α.Bβ, a
 					// B -> γ, b where b ∈ first(βa)

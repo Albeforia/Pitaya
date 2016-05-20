@@ -13,7 +13,7 @@ namespace pitaya {
 	public:
 
 		//! Constructor.
-		ItemSetBuilder(std::shared_ptr<Grammar>&);
+		ItemSetBuilder(Grammar&);
 
 		//! Destructor.
 		~ItemSetBuilder();
@@ -30,7 +30,7 @@ namespace pitaya {
 
 	private:
 
-		std::shared_ptr<Grammar> m_grammar;		//!< The grammar this builder works on.
+		Grammar& m_grammar;		//!< The grammar this builder works on.
 
 		std::unordered_set<ItemSet, boost::hash<ItemSet>> m_item_sets;	//!< All ItemSets.
 		ItemSet m_curr_item_set;		//!< The ItemSet being built currently.

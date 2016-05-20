@@ -11,10 +11,13 @@ namespace pitaya {
 	public:
 
 		//! Constructor.
-		StateBuilder(std::shared_ptr<Grammar>&);
+		StateBuilder(Grammar&);
 
 		//! Build all states.
 		void build();
+
+		//! Get a state by id.
+		const State& get_state(State::ID) const;
 
 		/// @cond test
 		void print_all() const;
@@ -22,10 +25,10 @@ namespace pitaya {
 
 	private:
 
-		std::shared_ptr<Grammar> m_grammar;		//!< The grammar this builder works on.
+		Grammar& m_grammar;		//!< The grammar this builder works on.
 
 		std::unordered_set<State, boost::hash<State>> m_states;	//!< All states.
-
+		std::vector<const State*> m_sorted;		//!< Sorted states for quick access.
 		State m_curr_state;		//!< The State being built currently.
 
 		//! Build a state according to m_curr_state.

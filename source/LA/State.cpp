@@ -27,23 +27,23 @@ namespace pitaya {
 		m_basis.push_back(s.id());
 	}
 
-	void State::compute_closure(Grammar& g) {
+	void State::compute_closure(Grammar& grammar) {
 		// copy basis into closure
-		m_closure.resize(g.symbol_count());
+		m_closure.resize(grammar.symbol_count());
 		for (auto& i : m_basis) {
-			m_closure.add(g.get_symbol(i));
+			m_closure.add(grammar.get_symbol(i));
 		}
 
 		bool not_fin = false;
 		do {
 			not_fin = false;
 			// for every nonterminal in the closure
-			for (auto sid = g.terminal_count(); sid < g.symbol_count(); sid++) {
+			for (auto sid = grammar.terminal_count(); sid < grammar.symbol_count(); sid++) {
 				if (!m_closure[sid]) continue;
 				// for each production with symbol of sid as its lhs
-				auto range = g.productions_by_lhs(sid);
+				auto range = grammar.productions_by_lhs(sid);
 				for (auto pid = range.first; pid <= range.second; pid++) {
-					auto& p = g.get_production(pid);
+					auto& p = grammar.get_production(pid);
 					assert(p.rhs_count() <= 2);		// assert g is a regular grammar
 					if (p.rhs_count() == 1) {
 						auto& rhs = p[1];
@@ -54,7 +54,7 @@ namespace pitaya {
 					}
 					else if (p.rhs_count() == 0) {
 						// this is a final state
-						m_closure.add(g.endmark());
+						m_closure.add(grammar.endmark());
 						m_is_final = true;
 					}
 				}

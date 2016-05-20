@@ -5,7 +5,7 @@
 
 namespace pitaya {
 
-	ItemSetBuilder::ItemSetBuilder(std::shared_ptr<Grammar>& grammar)
+	ItemSetBuilder::ItemSetBuilder(Grammar& grammar)
 		: m_grammar {grammar}, m_item_sets {}, m_curr_item_set {},
 		m_plinks {} {}
 
@@ -21,10 +21,10 @@ namespace pitaya {
 		m_curr_item_set.reset();
 		// assume the first production is the augmented one
 		// it's the only kernel for initial state
-		auto& add = m_curr_item_set.add_kernel(m_grammar->get_production(0));
+		auto& add = m_curr_item_set.add_kernel(m_grammar.get_production(0));
 		// add '$' to the kernel's lookaheads
-		add.lookaheads().resize(m_grammar->terminal_count());
-		add.lookaheads().add(m_grammar->endmark());
+		add.lookaheads().resize(m_grammar.terminal_count());
+		add.lookaheads().add(m_grammar.endmark());
 		build_item_set();
 		fill_lookaheads();
 		fill_actions();
@@ -36,8 +36,8 @@ namespace pitaya {
 		// compute all lambdas
 		do {
 			not_fin = false;
-			for (ProductionID pid = 0; pid < m_grammar->production_count(); pid++) {
-				auto& p = m_grammar->get_production(pid);
+			for (ProductionID pid = 0; pid < m_grammar.production_count(); pid++) {
+				auto& p = m_grammar.get_production(pid);
 				if (p[0].lambda()) continue;
 				std::size_t i = 0;
 				for (i; i < p.rhs_count(); i++) {
@@ -55,8 +55,8 @@ namespace pitaya {
 		// compute all first sets
 		do {
 			not_fin = false;
-			for (ProductionID pid = 0; pid < m_grammar->production_count(); pid++) {
-				auto& p = m_grammar->get_production(pid);
+			for (ProductionID pid = 0; pid < m_grammar.production_count(); pid++) {
+				auto& p = m_grammar.get_production(pid);
 				auto& lhs = p[0];
 				for (std::size_t i = 0; i < p.rhs_count(); i++) {
 					auto& rhs = p[i + 1];
@@ -103,7 +103,7 @@ namespace pitaya {
 		}
 		// a new item-set
 		// compute closure before moving
-		m_curr_item_set.compute_closure(*m_grammar, *this);
+		m_curr_item_set.compute_closure(m_grammar, *this);
 		// 'move' the currently building set into the new set
 		auto& new_item = m_item_sets.emplace(std::move(m_curr_item_set)).first;
 		// compute successors
@@ -117,7 +117,7 @@ namespace pitaya {
 
 		for (auto& item : set.closure()) {
 			if (item.complete) continue;
-			auto& production = m_grammar->get_production(item.production_id());
+			auto& production = m_grammar.get_production(item.production_id());
 			auto dot = item.dot();
 			// skip item whose dot is at right end
 			if (dot >= production.rhs_count()) {
@@ -128,7 +128,7 @@ namespace pitaya {
 			// for each item which has 'symbol' after its dot
 			for (auto& item2 : set.closure()) {
 				if (item2.complete) continue;
-				auto& production2 = m_grammar->get_production(item2.production_id());
+				auto& production2 = m_grammar.get_production(item2.production_id());
 				auto dot2 = item2.dot();
 				if (dot2 >= production2.rhs_count()) {
 					// 'item2' has no successor
@@ -140,7 +140,7 @@ namespace pitaya {
 					// each item becomes complete after contibuting a successor
 					item2.complete = true;
 					auto& add = m_curr_item_set.add_kernel(production2, dot2 + 1);
-					add.lookaheads().resize(m_grammar->terminal_count());
+					add.lookaheads().resize(m_grammar.terminal_count());
 					// add backward propagation link
 					auto& new_node = new_link();
 					new_node->next = add.backward_plink();
@@ -198,10 +198,10 @@ namespace pitaya {
 	void ItemSetBuilder::fill_actions() {
 		for (auto& set : m_item_sets) {
 			for (auto& item : set.closure()) {
-				auto& production = m_grammar->get_production(item.production_id());
+				auto& production = m_grammar.get_production(item.production_id());
 				// for every production whose dot is at right end
 				if (item.dot() == production.rhs_count()) {
-					for (SymbolID i = 0; i < m_grammar->terminal_count(); i++) {
+					for (SymbolID i = 0; i < m_grammar.terminal_count(); i++) {
 						if (item.lookaheads()[i]) {
 							if (production.id() == 0) {
 								set.add_action(i, ActionType::ACCEPT, production.id());
@@ -225,7 +225,7 @@ namespace pitaya {
 		for (auto& set : m_item_sets) {
 			std::cout << "state " << set.id() << std::endl;
 			for (auto& item : set.closure()) {
-				auto& p = m_grammar->get_production(item.production_id());
+				auto& p = m_grammar.get_production(item.production_id());
 				std::cout << "\t" << p[0] << "->";
 				std::size_t i = 0;
 				for (i; i < p.rhs_count(); i++) {
@@ -240,7 +240,7 @@ namespace pitaya {
 				std::cout << "\t" << "|";
 				for (SymbolID i = 0; i < item.lookaheads().size(); i++) {
 					if (item.lookaheads()[i]) {
-						std::cout << m_grammar->get_symbol(i) << " ";
+						std::cout << m_grammar.get_symbol(i) << " ";
 					}
 				}
 				std::cout << std::endl;
