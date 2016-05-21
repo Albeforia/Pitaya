@@ -88,7 +88,8 @@ namespace pitaya {
 		m_nonterminal_start = m_symbols.end();
 		m_nonterminal_end = m_symbols.end();
 
-		// set symbols' index
+		// set symbols' index and symbol iterators
+		// note iterators depend on how symbols are sorted
 		std::size_t index = 0;
 		for (auto it = m_symbols.begin(); it != m_symbols.end(); it++) {
 			(*it)->m_index = index++;
@@ -99,6 +100,10 @@ namespace pitaya {
 			if (m_nonterminal_start == m_symbols.end()
 				&& (*it)->m_type == SymbolType::NONTERMINAL) {
 				m_nonterminal_start = it;
+			}
+			if (m_nonterminal_end == m_symbols.end()
+				&& (*it)->m_type == SymbolType::MULTITERMINAL) {
+				m_nonterminal_end = it;
 			}
 		}
 	}

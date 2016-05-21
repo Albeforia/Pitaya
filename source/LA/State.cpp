@@ -42,21 +42,17 @@ namespace pitaya {
 			// for every nonterminal in the closure
 			for (auto it = grammar.nonterminal_begin(); it != grammar.nonterminal_end(); it++) {
 				if (!m_closure[**it]) continue;
-				// for each production with symbol of sid as its lhs
+				// for each production with this symbol as its lhs
 				auto range = grammar.productions_by_lhs(**it);
 				for (auto pid = range.first; pid <= range.second; pid++) {
 					auto& p = grammar.get_production(pid);
-					assert(p.rhs_count() <= 2);		// assert g is a regular grammar
-					if (p.rhs_count() == 1) {
-						auto& rhs = p[1];
-						if (rhs.type() == SymbolType::NONTERMINAL) {
-							// ε-transition
-							not_fin = m_closure.add(p[1]);
-						}
+					if (p.rhs_count() == 1 && p[1].type() == SymbolType::NONTERMINAL) {
+						// ε-transition
+						not_fin = m_closure.add(p[1]);
 					}
 					else if (p.rhs_count() == 0) {
 						// this is a final state
-						m_closure.add(grammar.endmark());
+						//m_closure.add(grammar.endmark());
 						m_is_final = true;
 					}
 				}

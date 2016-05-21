@@ -17,8 +17,8 @@ namespace pitaya {
 	enum class SymbolType {
 		UNDEFINED,
 		TERMINAL,
-		MULTITERMINAL,
-		NONTERMINAL
+		NONTERMINAL,
+		MULTITERMINAL
 	};
 
 	//! Symbol associativity.

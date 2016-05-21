@@ -46,23 +46,23 @@ namespace pitaya {
 			// for every nonterminal in the closure
 			for (auto it2 = m_grammar.nonterminal_begin(); it2 != m_grammar.nonterminal_end(); it2++) {
 				if (!state.closure()[**it2]) continue;
-				// for each production with symbol of ntid as its lhs
+				// for each production with this symbol as its lhs
 				auto range = m_grammar.productions_by_lhs(**it2);
 				for (auto pid = range.first; pid <= range.second; pid++) {
 					auto& p = m_grammar.get_production(pid);
-					assert(p.rhs_count() <= 2);		// assert g is a regular grammar
+					if (p.rhs_count() < 1) continue;
+					if (p[1] != symbol) continue;
+					has_transition = true;
 					if (p.rhs_count() == 1) {
-						if (p[1] != symbol) continue;
 						// transit to final state
-						m_curr_state.add_symbol(m_grammar.endmark());
+						m_curr_state.add_symbol(symbol);
 						m_curr_state.is_final() = true;
-						has_transition = true;
 					}
-					else if (p.rhs_count() == 2) {
-						if (p[1] != symbol) continue;
-						assert(p[2].type() == SymbolType::NONTERMINAL);
-						m_curr_state.add_symbol(p[2]);
-						has_transition = true;
+					else {
+						if (p[2].type() == SymbolType::NONTERMINAL) {
+							m_curr_state.add_symbol(p[2]);
+							has_transition = true;
+						}
 					}
 				}
 			}
@@ -80,8 +80,8 @@ namespace pitaya {
 			m_sorted[state.id()] = &state;
 			if (!state.is_final()) continue;
 			int prec = -1;
-			// for every nonterminal in the state's closure
-			for (auto it = m_grammar.nonterminal_begin(); it != m_grammar.nonterminal_end(); it++) {
+			// for every !symbol! in the state's closure
+			for (auto it = m_grammar.terminal_begin(); it != m_grammar.nonterminal_end(); it++) {
 				if (state.closure()[**it]) {
 					auto& s = **it;
 					if (!s.is_token()) continue;
@@ -105,7 +105,7 @@ namespace pitaya {
 			if (p == nullptr) continue;
 			auto& state = *p;
 			std::cout << state.id() << ":\t" << "{ ";
-			for (auto it = m_grammar.nonterminal_begin(); it != m_grammar.nonterminal_end(); it++) {
+			for (auto it = m_grammar.terminal_begin(); it != m_grammar.nonterminal_end(); it++) {
 				if (state.closure()[**it]) {
 					std::cout << **it << " ";
 				}

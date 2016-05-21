@@ -14,7 +14,7 @@ int main() {
 	auto la {std::make_unique<Grammar>("la.gram")};
 	auto builder1 {std::make_unique<StateBuilder>(*la)};
 	builder1->build();
-	//builder1->print_all();
+	builder1->print_all();
 
 	auto tokenizer {std::make_unique<Tokenizer>(*la, *builder1)};
 	std::ifstream f;
