@@ -223,13 +223,19 @@ namespace pitaya {
 		}
 	}
 
+	const ItemSet& ItemSetBuilder::get_state(StateID id) const {
+		return *m_sorted[id];
+	}
+
 	PLinkNode*& ItemSetBuilder::new_link() {
 		m_plinks.push_back(new PLinkNode {});
 		return m_plinks.back();
 	}
 
 	void ItemSetBuilder::print_all() const {
-		for (auto& set : m_item_sets) {
+		for (auto& p : m_sorted) {
+			if (p == nullptr) continue;
+			auto& set = *p;
 			std::cout << "state " << set.id() << std::endl;
 			for (auto& item : set.closure()) {
 				auto& p = m_grammar.get_production(item.production_id());

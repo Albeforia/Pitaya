@@ -21,6 +21,9 @@ namespace pitaya {
 		//! Build all item sets.
 		void build();
 
+		//! Get a state by id.
+		const ItemSet& get_state(StateID) const;
+
 		//! Get a new PLinkNode.
 		PLinkNode*& new_link();
 

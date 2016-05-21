@@ -2,6 +2,7 @@
 #include "StateBuilder.h"
 #include "Tokenizer.h"
 #include "ItemSetBuilder.h"
+#include "Parser.h"
 
 #include <memory>
 #include <fstream>
@@ -30,6 +31,9 @@ int main() {
 	auto builder2 {std::make_unique<ItemSetBuilder>(*sa)};
 	builder2->build();
 	builder2->print_all();
+
+	auto parser {std::make_unique<Parser>(*sa,*builder2)};
+	parser->parse(*tokenizer);
 
 	return 0;
 
