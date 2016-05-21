@@ -142,6 +142,13 @@ namespace pitaya {
 
 		/// @endcond
 
+	public:
+
+		//! Clear symbol pool.
+		static void clear() {
+			pool().clear();
+		}
+
 	};
 
 }

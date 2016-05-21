@@ -200,7 +200,10 @@ namespace pitaya {
 	}
 
 	void ItemSetBuilder::fill_actions() {
+		m_sorted.resize(m_item_sets.size() + 1);
+		std::fill(m_sorted.begin(), m_sorted.end(), nullptr);
 		for (auto& set : m_item_sets) {
+			m_sorted[set.id()] = &set;
 			for (auto& item : set.closure()) {
 				auto& production = m_grammar.get_production(item.production_id());
 				// for every production whose dot is at right end

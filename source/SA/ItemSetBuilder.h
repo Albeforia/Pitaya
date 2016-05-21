@@ -33,6 +33,7 @@ namespace pitaya {
 		Grammar& m_grammar;		//!< The grammar this builder works on.
 
 		std::unordered_set<ItemSet, boost::hash<ItemSet>> m_item_sets;	//!< All ItemSets.
+		std::vector<const ItemSet*> m_sorted;		//!< Sorted item-sets for quick access.
 		ItemSet m_curr_item_set;		//!< The ItemSet being built currently.
 
 		std::vector<PLinkNode*> m_plinks;		//!< Maintain all PLinkNodes.

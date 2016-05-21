@@ -91,7 +91,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\source\General\;$(SolutionDir)..\external\boost_1_60_0\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\source\General\;$(SolutionDir)..\source\LA\;$(SolutionDir)..\external\boost_1_60_0\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -128,7 +128,7 @@ copy "$(TargetPath)" "$(SolutionDir)..\lib\"</Command>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\source\General\;$(SolutionDir)..\external\boost_1_60_0\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\source\General\;$(SolutionDir)..\source\LA\;$(SolutionDir)..\external\boost_1_60_0\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -165,12 +165,14 @@ copy "$(TargetPath)" "$(SolutionDir)..\lib\"</Command>
     <ClCompile Include="..\..\source\SA\Item.cpp" />
     <ClCompile Include="..\..\source\SA\ItemSet.cpp" />
     <ClCompile Include="..\..\source\SA\ItemSetBuilder.cpp" />
+    <ClCompile Include="..\..\source\SA\Parser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\source\SA\Action.h" />
     <ClInclude Include="..\..\source\SA\Item.h" />
     <ClInclude Include="..\..\source\SA\ItemSet.h" />
     <ClInclude Include="..\..\source\SA\ItemSetBuilder.h" />
+    <ClInclude Include="..\..\source\SA\Parser.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -7,9 +7,6 @@
 
 namespace pitaya {
 
-	Token::Token(std::size_t index)
-		: token_index {index}, value {} {}
-
 	Tokenizer::Tokenizer(Grammar& grammar, StateBuilder& builder)
 		: m_grammar {grammar}, m_builder {builder}, m_tokens {}, m_current {} {}
 
@@ -64,19 +61,21 @@ namespace pitaya {
 				}
 				else {
 					// recognize a token
-					auto index = m_builder.get_state(last_final).token_index();
-					m_tokens.emplace_back(index);
+					m_tokens.emplace_back();
 					auto& new_token = m_tokens.back();
 					file.seekg(start_pos);
 					while (file.tellg() <= last_final_pos) {
 						new_token.value.append(1, char(file.get()));
 					}
+					auto index = m_builder.get_state(last_final).token_index();
 					auto& self = m_grammar.get_symbol(new_token.value);
+					// check token precedence(e.g. key-words)
 					if (self != m_grammar.endmark() && self.is_token()) {
 						if (self.precedence() > m_grammar.get_symbol(index).precedence()) {
-							new_token.token_index = self.index();
+							index = self.index();
 						}
 					}
+					new_token.type = pool().emplace(m_grammar.get_symbol(index).name()).first->c_str();
 				}
 			}
 		}
@@ -92,7 +91,7 @@ namespace pitaya {
 
 	void Tokenizer::print_all() const {
 		for (auto& token : m_tokens) {
-			std::cout << "(" << m_grammar.get_symbol(token.token_index) << ", ";
+			std::cout << "(" << token.type << ", ";
 			for (auto& c : token.value) {
 				std::cout << c;
 			}

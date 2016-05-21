@@ -6,9 +6,7 @@ namespace pitaya {
 
 	struct Token {
 
-		Token(std::size_t index);
-
-		std::size_t token_index;
+		const char* type;
 		std::string value;
 
 	};
@@ -40,6 +38,13 @@ namespace pitaya {
 		StateBuilder& m_builder;		//!< The state builder.
 		std::vector<Token> m_tokens;	//!< The token stream.
 		std::size_t m_current;			//!< Index of the token stream.
+
+		/// @cond
+		static auto& pool() {
+			static std::unordered_set<std::string> interned_;
+			return interned_;
+		}
+		/// @endcond
 
 	};
 
