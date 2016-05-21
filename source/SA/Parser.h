@@ -3,6 +3,8 @@
 #include "ItemSetBuilder.h"
 #include "Tokenizer.h"
 
+#include <stack>
+
 namespace pitaya {
 
 	class Parser {
@@ -19,6 +21,8 @@ namespace pitaya {
 
 		Grammar& m_grammar;				//!< The grammar.
 		ItemSetBuilder& m_builder;		//!< The item-set builder.
+
+		bool evaluate(Action&, std::stack<StateID>&, Tokenizer&);
 
 	};
 

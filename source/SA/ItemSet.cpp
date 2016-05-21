@@ -122,6 +122,14 @@ namespace pitaya {
 		return act;
 	}
 
+	Action ItemSet::evaluate(const Symbol& symbol) const {
+		auto& find = m_actions.find(symbol.index());
+		if (find != m_actions.end()) {
+			return find->second;
+		}
+		return Action {ActionType::ERROR, 0};
+	}
+
 	void ItemSet::sort() {
 		std::sort(m_kernels.begin(), m_kernels.end(), [](auto& a, auto& b) {
 			if (a.production_id() != b.production_id()) {

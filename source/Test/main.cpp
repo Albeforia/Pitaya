@@ -23,7 +23,7 @@ int main() {
 		tokenizer->parse(f);
 	}
 	f.close();
-	//tokenizer->print_all();
+	tokenizer->print_all();
 
 	Symbol::clear();
 

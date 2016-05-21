@@ -22,8 +22,11 @@ namespace pitaya {
 		//! Parse a source file.
 		void parse(std::ifstream&);
 
-		//! Get next token.
+		//! Get the next token.
 		const Token& next();
+
+		//! Peek the next token.
+		const Token& peek();
 
 		//! Whether there are any tokens left.
 		bool has_next() const;

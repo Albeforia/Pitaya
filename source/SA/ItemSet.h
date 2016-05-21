@@ -55,6 +55,9 @@ namespace pitaya {
 		*/
 		Action& add_action(const Symbol&, ActionType, std::size_t value) const;
 
+		//! Evaluate the action when encounter a symbol.
+		Action evaluate(const Symbol&) const;
+
 		//! Clear all items.
 		void reset();
 

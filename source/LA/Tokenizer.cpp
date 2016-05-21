@@ -85,8 +85,12 @@ namespace pitaya {
 		return m_tokens[m_current++];
 	}
 
+	const Token& Tokenizer::peek() {
+		return m_tokens[m_current];
+	}
+
 	bool Tokenizer::has_next() const {
-		return m_current >= m_tokens.size();
+		return m_current < m_tokens.size();
 	}
 
 	void Tokenizer::print_all() const {
