@@ -155,10 +155,12 @@
     <ClCompile Include="..\..\source\LA\main.cpp" />
     <ClCompile Include="..\..\source\LA\State.cpp" />
     <ClCompile Include="..\..\source\LA\StateBuilder.cpp" />
+    <ClCompile Include="..\..\source\LA\Tokenizer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\source\LA\State.h" />
     <ClInclude Include="..\..\source\LA\StateBuilder.h" />
+    <ClInclude Include="..\..\source\LA\Tokenizer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
