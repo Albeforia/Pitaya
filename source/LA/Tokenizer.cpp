@@ -7,6 +7,9 @@
 
 namespace pitaya {
 
+	Token::Token(std::size_t index)
+		: token_index {index}, value {} {}
+
 	Tokenizer::Tokenizer(Grammar& grammar, StateBuilder& builder)
 		: m_grammar {grammar}, m_builder {builder}, m_tokens {}, m_current {} {}
 
@@ -20,7 +23,7 @@ namespace pitaya {
 				auto state = &m_builder.get_state(1);
 				auto symbol = &m_grammar.get_symbol(std::string(1, char(file.peek())));
 				if (*symbol == m_grammar.endmark()) {
-					// error
+					// error: undefined symbol
 					return;
 				}
 				if (symbol->type() == SymbolType::MULTITERMINAL) {
@@ -48,7 +51,7 @@ namespace pitaya {
 					}
 					symbol = &m_grammar.get_symbol(std::string(1, char(file.peek())));
 					if (*symbol == m_grammar.endmark()) {
-						// error
+						// error: undefined symbol
 						return;
 					}
 					if (symbol->type() == SymbolType::MULTITERMINAL) {
@@ -56,16 +59,23 @@ namespace pitaya {
 					}
 				}
 				if (last_final == 0) {
-					// error
+					// not in a final state
+					return;
 				}
 				else {
 					// recognize a token
-					m_tokens.emplace_back();
+					auto index = m_builder.get_state(last_final).token_index();
+					m_tokens.emplace_back(index);
 					auto& new_token = m_tokens.back();
-					new_token.token_index = m_builder.get_state(last_final).token_index();
 					file.seekg(start_pos);
 					while (file.tellg() <= last_final_pos) {
-						new_token.value.push_back(char(file.get()));
+						new_token.value.append(1, char(file.get()));
+					}
+					auto& self = m_grammar.get_symbol(new_token.value);
+					if (self != m_grammar.endmark() && self.is_token()) {
+						if (self.precedence() > m_grammar.get_symbol(index).precedence()) {
+							new_token.token_index = self.index();
+						}
 					}
 				}
 			}

@@ -6,8 +6,10 @@ namespace pitaya {
 
 	struct Token {
 
+		Token(std::size_t index);
+
 		std::size_t token_index;
-		std::vector<char> value;
+		std::string value;
 
 	};
 

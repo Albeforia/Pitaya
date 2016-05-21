@@ -91,6 +91,7 @@ namespace pitaya {
 					}
 				}
 			}
+			assert(prec != -1);
 		}
 	}
 
