@@ -3,10 +3,7 @@
 #include "Symbol.h"
 
 #include <vector>
-#include <unordered_set>
 #include <unordered_map>
-
-#include <boost\functional\hash\hash.hpp>
 
 namespace pitaya {
 
@@ -36,10 +33,10 @@ namespace pitaya {
 		bool& is_final() const;
 
 		//! Token type of the state.
-		SymbolID& token_type() const;
+		std::size_t& token_index() const;
 
 		//! Add a transition.
-		void add_transition(SymbolID, ID) const;
+		void add_transition(const Symbol& symbol, const State&) const;
 
 		//! Query a transition.
 		/*!
@@ -63,14 +60,14 @@ namespace pitaya {
 
 	private:
 
-		ID m_id;							//!< ID of the state.
-		std::vector<SymbolID> m_basis;		//!< Basis of the state.
-		SymbolSet m_closure;				//!< Closure of the state.
-		mutable bool m_is_final;			//!< Whether this is a final state.
-		mutable SymbolID m_token_type;		//!< Token type of the state.
+		ID m_id;								//!< ID of the state.
+		std::vector<std::size_t> m_basis;		//!< Basis of the state.
+		SymbolSet m_closure;					//!< Closure of the state.
+		mutable bool m_is_final;				//!< Whether this is a final state.
+		mutable std::size_t m_token_index;		//!< Token type of the state.
 
 		//! State transitions.
-		mutable std::unordered_map<SymbolID, ID> m_transitions;
+		mutable std::unordered_map<Rank, ID> m_transitions;
 
 		/// @cond
 		//! Unique ID marking the first appearance of a state.

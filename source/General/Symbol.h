@@ -10,13 +10,15 @@
 namespace pitaya {
 
 	using SharedSymbol = std::shared_ptr<Symbol>;
-	using SymbolID = std::size_t;
+	//using SymbolID = std::size_t;
+	using Rank = std::size_t;
 
 	//! Symbol type.
 	enum class SymbolType {
 		UNDEFINED,
 		TERMINAL,
-		NONTERMINAL,
+		MULTITERMINAL,
+		NONTERMINAL
 	};
 
 	//! Symbol associativity.
@@ -27,6 +29,14 @@ namespace pitaya {
 		NONE
 	};
 
+	/// @cond
+	// convert any enum class to its underlying integral type
+	template<typename E>
+	constexpr auto to_integral(E e) -> typename std::underlying_type<E>::type {
+		return static_cast<typename std::underlying_type<E>::type>(e);
+	}
+	/// @endcond
+
 	//! Symbol class.
 	class Symbol : public std::enable_shared_from_this<Symbol> {
 
@@ -36,11 +46,14 @@ namespace pitaya {
 
 		using SymbolName = const char*;
 
+		//!
+		const Rank rank;
+
 		//! Name of this symbol.
 		SymbolName name() const;
 
-		//! ID of this symbol.
-		SymbolID id() const;
+		//! Index of this symbol.
+		std::size_t index() const;
 
 		//! Type of this symbol.
 		SymbolType type() const;
@@ -59,6 +72,9 @@ namespace pitaya {
 
 		//! First set of this symbol.
 		SymbolSet& first_set();
+
+		//!
+		Symbol& shared_terminal();
 
 		//! Use this factory function to 'create' symbols.
 		/*!
@@ -97,9 +113,8 @@ namespace pitaya {
 		/*!
 			Use create() instead.
 		*/
-		Symbol(SymbolName, SymbolID);
+		Symbol(SymbolName, Rank);
 
-		SymbolID m_id;					//!< ID of the symbol.
 		SymbolName m_name;				//!< Name of the symbol.
 		SymbolType m_type;				//!< Type of the symbol.
 		Associativity m_associativity;	//!< Associativity of the symbol.
@@ -107,6 +122,9 @@ namespace pitaya {
 		bool m_is_token;				//!< Whether the symbol is a token.
 		bool m_lambda;					//!< True if the symbol can generate an empty string.
 		SymbolSet m_first_set;			//!< First set of the symbol.
+		Symbol* m_shared_terminal;
+
+		std::size_t m_index;			//!< Index of the symbol.
 
 		/// @cond
 
@@ -116,9 +134,9 @@ namespace pitaya {
 			return interned_;
 		}
 
-		// unique ID marking the first appearance of a symbol
-		static std::size_t order() {
-			static std::size_t interned_ = 0;
+		// unique number marking the first appearance of a symbol
+		static Rank order() {
+			static Rank interned_ = 0;
 			return interned_++;
 		}
 

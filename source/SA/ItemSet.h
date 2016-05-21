@@ -53,7 +53,7 @@ namespace pitaya {
 		/*!
 			\return The added action(a conflict may have occurred).
 		*/
-		Action& add_action(SymbolID, ActionType, std::size_t value) const;
+		Action& add_action(const Symbol&, ActionType, std::size_t value) const;
 
 		//! Clear all items.
 		void reset();

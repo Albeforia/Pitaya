@@ -4,11 +4,13 @@
 #include <cassert>
 #include <algorithm>
 
+#include <boost\functional\hash\hash.hpp>
+
 namespace pitaya {
 
 	State::State()
 		: m_id {order()}, m_basis {}, m_closure {},
-		m_is_final {false}, m_token_type {}, m_transitions {} {}
+		m_is_final {false}, m_token_index {}, m_transitions {} {}
 
 	State::State(State&& from) noexcept
 		: m_id {order()}, m_is_final {from.m_is_final},
@@ -24,7 +26,7 @@ namespace pitaya {
 	}
 
 	void State::add_symbol(const Symbol& s) {
-		m_basis.push_back(s.id());
+		m_basis.push_back(s.index());
 	}
 
 	void State::compute_closure(Grammar& grammar) {
@@ -38,10 +40,10 @@ namespace pitaya {
 		do {
 			not_fin = false;
 			// for every nonterminal in the closure
-			for (auto sid = grammar.terminal_count(); sid < grammar.symbol_count(); sid++) {
-				if (!m_closure[sid]) continue;
+			for (auto it = grammar.nonterminal_begin(); it != grammar.nonterminal_end(); it++) {
+				if (!m_closure[**it]) continue;
 				// for each production with symbol of sid as its lhs
-				auto range = grammar.productions_by_lhs(sid);
+				auto range = grammar.productions_by_lhs(**it);
 				for (auto pid = range.first; pid <= range.second; pid++) {
 					auto& p = grammar.get_production(pid);
 					assert(p.rhs_count() <= 2);		// assert g is a regular grammar
@@ -66,17 +68,17 @@ namespace pitaya {
 		return m_is_final;
 	}
 
-	SymbolID& State::token_type() const {
-		return m_token_type;
+	std::size_t& State::token_index() const {
+		return m_token_index;
 	}
 
-	void State::add_transition(SymbolID symbol, State::ID state) const {
-		auto& res = m_transitions.emplace(symbol, state);
+	void State::add_transition(const Symbol& symbol, const State& state) const {
+		auto& res = m_transitions.emplace(symbol.rank, state.m_id);
 		assert(res.second);		// DFA assertion
 	}
 
 	bool State::transit(const Symbol& symbol, ID& to) const {
-		auto& find = m_transitions.find(symbol.id());
+		auto& find = m_transitions.find(symbol.rank);
 		if (find != m_transitions.end()) {
 			to = find->second;
 			return true;

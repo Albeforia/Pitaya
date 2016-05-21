@@ -25,18 +25,18 @@ namespace pitaya {
 
 		//! Add a symbol.
 		/*!
-			\return False if s is already in the set.
+			\return False if the symbol is already in the set.
 		*/
-		bool add(const Symbol& s);
+		bool add(const Symbol&);
 
 		//! Union with another set.
 		/*!
 			\return False if this set does not change after union.
 		*/
-		bool union_with(const SymbolSet& s);
+		bool union_with(const SymbolSet&);
 
-		//! Whether the symbol of id is in set.
-		bool operator[](std::size_t id) const;
+		//! Whether the symbol is in set.
+		bool operator[](const Symbol&) const;
 
 		//! Clear all symbols.
 		void clear();

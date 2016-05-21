@@ -1,7 +1,10 @@
 #pragma once
 
-#include "Grammar.h"
 #include "State.h"
+
+#include <unordered_set>
+
+#include <boost\functional\hash\hash.hpp>
 
 namespace pitaya {
 

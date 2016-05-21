@@ -63,14 +63,14 @@ namespace pitaya {
 					continue;
 				}
 				// for each production with 'symbol' as its lhs
-				auto range = grammar.productions_by_lhs(symbol.id());
+				auto range = grammar.productions_by_lhs(symbol);
 				for (auto pid = range.first; pid <= range.second; pid++) {
 					auto& p = grammar.get_production(pid);
 					auto& res = m_closure.emplace(p.id());
 					not_fin = res.second;
 					// update lookaheads generated spontaneously
 					if (res.second) {
-						res.first->lookaheads().resize(grammar.terminal_count());
+						res.first->lookaheads().resize(grammar.symbol_count());
 					}
 					// A -> α.Bβ, a
 					// B -> γ, b where b ∈ first(βa)
@@ -100,8 +100,8 @@ namespace pitaya {
 		} while (not_fin);
 	}
 
-	Action& ItemSet::add_action(SymbolID symbol, ActionType type, std::size_t value) const {
-		auto& res = m_actions.emplace(symbol, Action {type, value});
+	Action& ItemSet::add_action(const Symbol& symbol, ActionType type, std::size_t value) const {
+		auto& res = m_actions.emplace(symbol.index(), Action {type, value});
 		Action& act = res.first->second;
 		if (!res.second) {
 			// a conflict has occurred

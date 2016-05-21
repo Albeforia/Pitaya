@@ -2,17 +2,18 @@
 
 namespace pitaya {
 
-	Symbol::Symbol(SymbolName name, SymbolID id)
-		: m_name {name}, m_id {id}, m_type {SymbolType::UNDEFINED},
+	Symbol::Symbol(SymbolName name, Rank rank)
+		: rank {rank}, m_name {name}, m_type {SymbolType::UNDEFINED},
 		m_associativity {Associativity::UNDEFINED}, m_precedence {-1},
-		m_lambda {false}, m_first_set {} {}
+		m_is_token {false}, m_lambda {false}, m_first_set {},
+		m_shared_terminal {nullptr} {}
 
 	Symbol::SymbolName Symbol::name() const {
 		return m_name;
 	}
 
-	SymbolID Symbol::id() const {
-		return m_id;
+	std::size_t Symbol::index() const {
+		return m_index;
 	}
 
 	SymbolType Symbol::type() const {
@@ -39,12 +40,16 @@ namespace pitaya {
 		return m_first_set;
 	}
 
+	Symbol& Symbol::shared_terminal() {
+		return *m_shared_terminal;
+	}
+
 	bool operator==(const Symbol& a, const Symbol& b) {
-		return a.m_id == b.m_id;
+		return a.rank == b.rank;
 	}
 
 	bool operator!=(const Symbol& a, const Symbol& b) {
-		return !(a.m_id == b.m_id);
+		return !(a == b);
 	}
 
 	std::ostream& operator<<(std::ostream& os, const Symbol& s) {

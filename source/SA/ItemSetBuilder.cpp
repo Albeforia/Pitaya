@@ -23,7 +23,7 @@ namespace pitaya {
 		// it's the only kernel for initial state
 		auto& add = m_curr_item_set.add_kernel(m_grammar.get_production(0));
 		// add '$' to the kernel's lookaheads
-		add.lookaheads().resize(m_grammar.terminal_count());
+		add.lookaheads().resize(m_grammar.symbol_count());
 		add.lookaheads().add(m_grammar.endmark());
 		build_item_set();
 		fill_lookaheads();
@@ -31,6 +31,10 @@ namespace pitaya {
 	}
 
 	void ItemSetBuilder::compute_first_sets() {
+		for (auto it = m_grammar.nonterminal_begin(); it != m_grammar.nonterminal_end(); it++) {
+			(*it)->first_set().resize(m_grammar.symbol_count());
+		}
+
 		bool not_fin = false;
 
 		// compute all lambdas
@@ -140,7 +144,7 @@ namespace pitaya {
 					// each item becomes complete after contibuting a successor
 					item2.complete = true;
 					auto& add = m_curr_item_set.add_kernel(production2, dot2 + 1);
-					add.lookaheads().resize(m_grammar.terminal_count());
+					add.lookaheads().resize(m_grammar.symbol_count());
 					// add backward propagation link
 					auto& new_node = new_link();
 					new_node->next = add.backward_plink();
@@ -150,7 +154,7 @@ namespace pitaya {
 			}
 			// build set from new kernels
 			auto& new_set = build_item_set();
-			auto& act = set.add_action(symbol.id(), ActionType::SHIFT, new_set.id());
+			auto& act = set.add_action(symbol, ActionType::SHIFT, new_set.id());
 			assert(act.type != ActionType::SSCONFLICT);
 		}
 	}
@@ -201,13 +205,13 @@ namespace pitaya {
 				auto& production = m_grammar.get_production(item.production_id());
 				// for every production whose dot is at right end
 				if (item.dot() == production.rhs_count()) {
-					for (SymbolID i = 0; i < m_grammar.terminal_count(); i++) {
-						if (item.lookaheads()[i]) {
+					for (auto it = m_grammar.terminal_begin(); it != m_grammar.terminal_end(); it++) {
+						if (item.lookaheads()[**it]) {
 							if (production.id() == 0) {
-								set.add_action(i, ActionType::ACCEPT, production.id());
+								set.add_action(**it, ActionType::ACCEPT, production.id());
 							}
 							else {
-								set.add_action(i, ActionType::REDUCE, production.id());
+								set.add_action(**it, ActionType::REDUCE, production.id());
 							}
 						}
 					}
@@ -238,9 +242,9 @@ namespace pitaya {
 					std::cout << ".";
 				}
 				std::cout << "\t" << "|";
-				for (SymbolID i = 0; i < item.lookaheads().size(); i++) {
-					if (item.lookaheads()[i]) {
-						std::cout << m_grammar.get_symbol(i) << " ";
+				for (auto it = m_grammar.terminal_begin(); it != m_grammar.terminal_end(); it++) {
+					if (item.lookaheads()[**it]) {
+						std::cout << **it << " ";
 					}
 				}
 				std::cout << std::endl;

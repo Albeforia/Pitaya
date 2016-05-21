@@ -17,6 +17,7 @@ namespace pitaya {
 	class Grammar {
 
 		using PP = std::pair<ProductionID, ProductionID>;
+		using SymbolIterator = std::vector<SharedSymbol>::iterator;
 
 	public:
 
@@ -29,14 +30,11 @@ namespace pitaya {
 		//! Number of symbols in this grammar.
 		std::size_t symbol_count() const;
 
-		//! Number of terminals in this grammar.
-		std::size_t terminal_count() const;
-
 		//! Number of productions in this grammar.
 		std::size_t production_count() const;
 
-		//! Get a symbol by id.
-		Symbol& get_symbol(SymbolID);
+		//! Get a symbol by index.
+		Symbol& get_symbol(std::size_t);
 
 		//! Get a symbol by name.
 		Symbol& get_symbol(std::string);
@@ -46,13 +44,24 @@ namespace pitaya {
 
 		//! Get productions with same lhs.
 		/*!
-			\param id ID of the lhs.
 			\return A pair indicating the start and the end production id.
 		*/
-		PP productions_by_lhs(SymbolID id);
+		PP productions_by_lhs(const Symbol&);
 
 		//! Get the end-mark symbol.
 		Symbol& endmark();
+
+		//! Get an iterator to the beginning of terminals.
+		SymbolIterator terminal_begin();
+
+		//! Get an iterator to the end of terminals.
+		SymbolIterator terminal_end();
+
+		//! Get an iterator to the beginning of nonterminals.
+		SymbolIterator nonterminal_begin();
+
+		//! Get an iterator to the end of nonterminals.
+		SymbolIterator nonterminal_end();
 
 		/// @cond
 		void print_first_sets() const;
@@ -62,10 +71,14 @@ namespace pitaya {
 
 		std::vector<SharedSymbol> m_symbols;	//!< All symbols in this grammar.
 		std::vector<Production> m_productions;	//!< All productions in this grammar.
-		std::size_t m_terminal_count;			//!< Number of terminals in this grammar.
+
+		SymbolIterator m_terminal_start;
+		SymbolIterator m_terminal_end;
+		SymbolIterator m_nonterminal_start;
+		SymbolIterator m_nonterminal_end;
 
 		//! Productions grouped by their lhs.
-		std::unordered_map<SymbolID, PP> m_productions_by_lhs;
+		std::unordered_map<Rank, PP> m_productions_by_lhs;
 
 		//! Parse a grammar file.
 		void read(const char* file);
@@ -98,6 +111,8 @@ namespace pitaya {
 			Associativity curr_assc;
 			int curr_prec;
 			bool token_decl;
+			bool multi_decl;
+			Symbol* curr_multi;
 
 			void read(std::ifstream&, std::vector<pitaya::Production>&);
 
@@ -122,6 +137,7 @@ namespace pitaya {
 				sc::custom_reaction<EvGetSymbol>,
 				sc::transition<EvNextProduction, WaitForLHS>
 			>;
+
 			sc::result react(const EvGetSymbol&);
 
 		};

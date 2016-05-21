@@ -7,8 +7,8 @@ using namespace pitaya;
 
 int main() {
 
-	auto pg {std::make_unique<Grammar>("sa.gram")};
-	auto builder {std::make_unique<ItemSetBuilder>(*pg)};
+	auto grammar {std::make_unique<Grammar>("sa.gram")};
+	auto builder {std::make_unique<ItemSetBuilder>(*grammar)};
 	builder->build();
 	builder->print_all();
 
