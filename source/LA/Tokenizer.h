@@ -16,11 +16,19 @@ namespace pitaya {
 
 	public:
 
+		struct ParseResult {
+
+			bool success;
+			std::size_t err_line;
+			char err_input;
+
+		};
+
 		//! Constructor.
 		Tokenizer(Grammar&, StateBuilder&);
 
 		//! Parse a source file.
-		void parse(std::ifstream&);
+		ParseResult parse(std::ifstream&);
 
 		//! Get the next token.
 		const Token& next();
@@ -41,6 +49,7 @@ namespace pitaya {
 		StateBuilder& m_builder;		//!< The state builder.
 		std::vector<Token> m_tokens;	//!< The token stream.
 		std::size_t m_current;			//!< Index of the token stream.
+		std::size_t m_curr_line;		//!< Current line number.
 
 		/// @cond
 		static auto& pool() {

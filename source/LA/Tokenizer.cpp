@@ -9,20 +9,26 @@
 namespace pitaya {
 
 	Tokenizer::Tokenizer(Grammar& grammar, StateBuilder& builder)
-		: m_grammar {grammar}, m_builder {builder}, m_tokens {}, m_current {} {}
+		: m_grammar {grammar}, m_builder {builder}, m_tokens {},
+		m_current {}, m_curr_line {1} {}
 
-	void Tokenizer::parse(std::ifstream& file) {
+	Tokenizer::ParseResult Tokenizer::parse(std::ifstream& file) {
 		while (file.peek() != std::ifstream::traits_type::eof()) {
-			while (file.peek() == '\n' || isspace(file.peek())) {
+			// eat whitespace characters
+			while (isspace(file.peek())) {
+				if (file.peek() == '\n') {
+					m_curr_line++;
+				}
 				file.get();
 			}
 			if (file.peek() != std::ifstream::traits_type::eof()) {
 				// restart
 				auto state = &m_builder.get_state(1);
-				auto symbol = &m_grammar.get_symbol(std::string(1, char(file.peek())));
+				char input = file.peek();
+				auto symbol = &m_grammar.get_symbol(std::string(1, input));
 				if (*symbol == m_grammar.endmark()) {
 					// error: undefined symbol
-					return;
+					return ParseResult {false, m_curr_line, input};
 				}
 				if (symbol->type() == SymbolType::MULTITERMINAL) {
 					symbol = &symbol->shared_terminal();
@@ -43,22 +49,22 @@ namespace pitaya {
 					// next symbol
 					parse_pos += 1;
 					file.seekg(parse_pos);
-					if (file.peek() == std::ifstream::traits_type::eof()
-						|| file.peek() == '\n' || isspace(file.peek())) {
+					if (file.peek() == std::ifstream::traits_type::eof() || isspace(file.peek())) {
 						break;
 					}
-					symbol = &m_grammar.get_symbol(std::string(1, char(file.peek())));
+					input = file.peek();
+					symbol = &m_grammar.get_symbol(std::string(1, input));
 					if (*symbol == m_grammar.endmark()) {
 						// error: undefined symbol
-						return;
+						return ParseResult {false, m_curr_line, input};
 					}
 					if (symbol->type() == SymbolType::MULTITERMINAL) {
 						symbol = &symbol->shared_terminal();
 					}
 				}
 				if (last_final == 0) {
-					// not in a final state
-					return;
+					// err: not in a final state
+					return ParseResult {false, m_curr_line, input};
 				}
 				else {
 					// recognize a token
@@ -76,11 +82,12 @@ namespace pitaya {
 							index = self.index();
 						}
 					}
-					assert(index != 0);
+					assert(index != 0);		// token must be defined
 					new_token.type = pool().emplace(m_grammar.get_symbol(index).name()).first->c_str();
 				}
 			}
 		}
+		return ParseResult {true};
 	}
 
 	const Token& Tokenizer::next() {
@@ -97,11 +104,8 @@ namespace pitaya {
 
 	void Tokenizer::print_all() const {
 		for (auto& token : m_tokens) {
-			std::cout << "(" << token.type << "\t";
-			for (auto& c : token.value) {
-				std::cout << c;
-			}
-			std::cout << ")" << std::endl;
+			std::cout << "(" << token.type << "\t"
+				<< token.value << ")" << std::endl;
 		}
 	}
 
