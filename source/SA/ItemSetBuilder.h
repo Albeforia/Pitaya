@@ -41,6 +41,8 @@ namespace pitaya {
 
 		std::vector<PLinkNode*> m_plinks;		//!< Maintain all PLinkNodes.
 
+		std::size_t m_conflict_count;			//!< Number of conflicts.
+
 		//! Compute the first sets of every nonterminal.
 		void compute_first_sets();
 

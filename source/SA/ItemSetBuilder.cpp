@@ -7,7 +7,7 @@ namespace pitaya {
 
 	ItemSetBuilder::ItemSetBuilder(Grammar& grammar)
 		: m_grammar {grammar}, m_item_sets {}, m_curr_item_set {},
-		m_plinks {} {}
+		m_plinks {}, m_conflict_count {} {}
 
 	ItemSetBuilder::~ItemSetBuilder() {
 		for (auto& p : m_plinks) {
@@ -214,7 +214,11 @@ namespace pitaya {
 								set.add_action(**it, ActionType::ACCEPT, production.id());
 							}
 							else {
-								set.add_action(**it, ActionType::REDUCE, production.id());
+								auto& act = set.add_action(**it, ActionType::REDUCE, production.id());
+								if (act.type == ActionType::SRCONFLICT
+									|| act.type == ActionType::RRCONFLICT) {
+									m_conflict_count++;
+								}
 							}
 						}
 					}
@@ -260,6 +264,7 @@ namespace pitaya {
 			}
 			std::cout << std::endl;
 		}
+		std::cout << "conflicts: " << m_conflict_count << std::endl;
 	}
 
 }
