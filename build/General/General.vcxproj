@@ -19,12 +19,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\source\General\BasicItem.h" />
     <ClInclude Include="..\..\source\General\Grammar.h" />
     <ClInclude Include="..\..\source\General\Production.h" />
     <ClInclude Include="..\..\source\General\Symbol.h" />
     <ClInclude Include="..\..\source\General\SymbolSet.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\source\General\BasicItem.cpp" />
     <ClCompile Include="..\..\source\General\Grammar.cpp" />
     <ClCompile Include="..\..\source\General\Production.cpp" />
     <ClCompile Include="..\..\source\General\Symbol.cpp" />
