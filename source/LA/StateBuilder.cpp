@@ -61,7 +61,6 @@ namespace pitaya {
 					else {
 						if (p[2].type() == SymbolType::NONTERMINAL) {
 							m_curr_state.add_symbol(p[2]);
-							has_transition = true;
 						}
 					}
 				}
