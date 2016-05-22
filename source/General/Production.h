@@ -34,6 +34,9 @@ namespace pitaya {
 		*/
 		Symbol& operator[](std::size_t pos) const;
 
+		//! Output.
+		friend std::ostream& operator<<(std::ostream&, const Production&);
+
 	private:
 
 		ProductionID m_id;					//!< ID of the production.

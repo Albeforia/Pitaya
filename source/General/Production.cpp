@@ -20,4 +20,12 @@ namespace pitaya {
 		return *m_rhs[pos - 1];
 	}
 
+	std::ostream& operator<<(std::ostream& os, const Production& p) {
+		os << *p.m_lhs << "->";
+		for (auto& s : p.m_rhs) {
+			os << *s << " ";
+		}
+		return os;
+	}
+
 }
