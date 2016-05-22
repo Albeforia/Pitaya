@@ -13,7 +13,7 @@ namespace pitaya {
 	Parser::Parser(Grammar& grammar, ItemSetBuilder& builder)
 		: m_grammar {grammar}, m_builder {builder} {}
 
-	void Parser::parse(Tokenizer& tokenizer) {
+	bool Parser::parse(Tokenizer& tokenizer) {
 		std::stack<StateID> state_stack {};
 		state_stack.push(1);
 		auto state = &m_builder.get_state(state_stack.top());
@@ -27,14 +27,14 @@ namespace pitaya {
 			auto action = state->evaluate(*symbol);
 			bool stop = evaluate(action, state_stack, tokenizer);
 			if (stop) {
-				break;
+				return action.type != ActionType::ERROR;
 			}
 #ifdef REPORT
 			if (action.type == ActionType::SHIFT) {
 				std::cout << "SHIFT\t" << token.value << std::endl;
 			}
 			else if (action.type == ActionType::REDUCE) {
-				std::cout << "REDUCE\t" << action.value << std::endl;
+				std::cout << "REDUCE\t" << m_grammar.get_production(action.value) << std::endl;
 			}
 #endif
 			state = &m_builder.get_state(state_stack.top());
@@ -43,11 +43,11 @@ namespace pitaya {
 			auto action = state->evaluate(m_grammar.endmark());
 			while (action.type != ActionType::ACCEPT) {
 				if (action.type == ActionType::ERROR) {
-					break;
+					return false;
 				}
 				assert(action.type == ActionType::REDUCE);
 #ifdef REPORT
-				std::cout << "REDUCE\t" << action.value << std::endl;
+				std::cout << "REDUCE\t" << m_grammar.get_production(action.value) << std::endl;
 #endif
 				auto& p = m_grammar.get_production(action.value);
 				for (size_t i = 0; i < p.rhs_count(); i++) {
@@ -55,12 +55,16 @@ namespace pitaya {
 				}
 				auto& top = m_builder.get_state(state_stack.top());
 				auto act = top.evaluate(p[0]);
+				if (act.type == ActionType::ERROR) {
+					return false;
+				}
 				assert(act.type == ActionType::SHIFT);
 				state_stack.push(act.value);
 				state = &m_builder.get_state(state_stack.top());
 				action = state->evaluate(m_grammar.endmark());
 			}
 		}
+		return true;
 	}
 
 	bool Parser::evaluate(Action& action, std::stack<StateID>& stack, Tokenizer& tokenizer) {

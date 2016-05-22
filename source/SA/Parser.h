@@ -15,7 +15,7 @@ namespace pitaya {
 		Parser(Grammar&, ItemSetBuilder&);
 
 		//! Parse token stream.
-		void parse(Tokenizer&);
+		bool parse(Tokenizer&);
 
 	private:
 
