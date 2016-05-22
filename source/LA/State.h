@@ -1,9 +1,12 @@
 #pragma once
 
-#include "Symbol.h"
+#include "BasicItem.h"
 
 #include <vector>
+#include <unordered_set>
 #include <unordered_map>
+
+#include <boost\functional\hash\hash.hpp>
 
 namespace pitaya {
 
@@ -23,8 +26,8 @@ namespace pitaya {
 		//! ID of the state.
 		ID id() const;
 
-		//! Add a symbol to basis.
-		void add_symbol(const Symbol&);
+		//! Add an item to the basis.
+		void add_base(const Production&, BasicItem::Dot = 0);
 
 		//! Compute the closure of basis.
 		void compute_closure(Grammar&);
@@ -61,8 +64,11 @@ namespace pitaya {
 	private:
 
 		ID m_id;								//!< ID of the state.
-		std::vector<std::size_t> m_basis;		//!< Basis of the state.
-		SymbolSet m_closure;					//!< Closure of the state.
+		std::vector<BasicItem> m_basis;			//!< Basis of the state.
+
+		//!< Closure of the state.
+		std::unordered_set<BasicItem, boost::hash<BasicItem>> m_closure;
+
 		mutable bool m_is_final;				//!< Whether this is a final state.
 		mutable std::size_t m_token_index;		//!< Token type of the state.
 

@@ -19,9 +19,12 @@ namespace pitaya {
 		auto state = &m_builder.get_state(state_stack.top());
 		while (tokenizer.has_next()) {
 			auto& token = tokenizer.peek();
-			auto& symbol = m_grammar.get_symbol(token.type);
-			assert(symbol != m_grammar.endmark());
-			auto action = state->evaluate(symbol);
+			auto symbol = &m_grammar.get_symbol(token.type);
+			assert(*symbol != m_grammar.endmark());
+			if (symbol->type() == SymbolType::MULTITERMINAL) {
+				symbol = &symbol->shared_terminal();
+			}
+			auto action = state->evaluate(*symbol);
 			bool stop = evaluate(action, state_stack, tokenizer);
 			if (stop) {
 				break;

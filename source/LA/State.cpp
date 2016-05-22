@@ -13,7 +13,7 @@ namespace pitaya {
 		m_is_final {false}, m_token_index {}, m_transitions {} {}
 
 	State::State(State&& from) noexcept
-		: m_id {order()}, m_is_final {from.m_is_final},
+		: m_id {order()}, m_is_final {from.m_is_final}, m_token_index {from.m_token_index},
 		m_basis {std::move(from.m_basis)},
 		m_closure {std::move(from.m_closure)},
 		m_transitions {std::move(from.m_transitions)} {
@@ -25,37 +25,39 @@ namespace pitaya {
 		return m_id;
 	}
 
-	void State::add_symbol(const Symbol& s) {
-		m_basis.push_back(s.index());
+	void State::add_base(const Production& p, BasicItem::Dot dot) {
+		m_basis.emplace_back(p.id(), dot);
 	}
 
 	void State::compute_closure(Grammar& grammar) {
 		// copy basis into closure
-		m_closure.resize(grammar.symbol_count());
 		for (auto& i : m_basis) {
-			m_closure.add(grammar.get_symbol(i));
+			m_closure.emplace(i.production_id(), i.dot());
 		}
-
 		bool not_fin = false;
 		do {
 			not_fin = false;
-			// for every nonterminal in the closure
-			for (auto it = grammar.nonterminal_begin(); it != grammar.nonterminal_end(); it++) {
-				if (!m_closure[**it]) continue;
-				// for each production with this symbol as its lhs
-				auto range = grammar.productions_by_lhs(**it);
+			for (auto& item : m_closure) {
+				auto& production = grammar.get_production(item.production_id());
+				auto dot = item.dot();
+				if (dot >= production.rhs_count()) {
+					// this is a final state
+					m_is_final = true;
+					continue;
+				}
+				auto& symbol = production[dot + 1];				// symbol after dot
+				if (symbol.type() == SymbolType::TERMINAL) {
+					// 'symbol' is a terminal, cannot contribute any more items
+					continue;
+				}
+				// for each production with 'symbol' as its lhs
+				auto range = grammar.productions_by_lhs(symbol);
 				for (auto pid = range.first; pid <= range.second; pid++) {
 					auto& p = grammar.get_production(pid);
-					if (p.rhs_count() == 1 && p[1].type() == SymbolType::NONTERMINAL) {
-						// ε-transition
-						not_fin = m_closure.add(p[1]);
-					}
-					else if (p.rhs_count() == 0) {
-						// this is a final state
-						//m_closure.add(grammar.endmark());
-						m_is_final = true;
-					}
+					auto& res = m_closure.emplace(p.id());
+					not_fin = res.second;
 				}
+				if (not_fin) break;
 			}
 		} while (not_fin);
 	}
@@ -83,7 +85,14 @@ namespace pitaya {
 	}
 
 	void State::sort() {
-		std::sort(m_basis.begin(), m_basis.end());
+		std::sort(m_basis.begin(), m_basis.end(), [](auto& a, auto& b) {
+			if (a.production_id() != b.production_id()) {
+				return a.production_id() < b.production_id();
+			}
+			else {
+				return a.dot() < b.dot();
+			}
+		});
 	}
 
 	void State::reset() {
@@ -93,7 +102,7 @@ namespace pitaya {
 		m_is_final = false;
 	}
 
-	const SymbolSet& State::closure() const {
+	const std::unordered_set<BasicItem, boost::hash<BasicItem>>& State::closure() const {
 		return m_closure;
 	}
 

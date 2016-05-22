@@ -2,6 +2,7 @@
 #include "Grammar.h"
 
 #include <cctype>
+#include <cassert>
 #include <fstream>
 #include <iostream>
 
@@ -75,6 +76,7 @@ namespace pitaya {
 							index = self.index();
 						}
 					}
+					assert(index != 0);
 					new_token.type = pool().emplace(m_grammar.get_symbol(index).name()).first->c_str();
 				}
 			}
@@ -95,7 +97,7 @@ namespace pitaya {
 
 	void Tokenizer::print_all() const {
 		for (auto& token : m_tokens) {
-			std::cout << "(" << token.type << ", ";
+			std::cout << "(" << token.type << "\t";
 			for (auto& c : token.value) {
 				std::cout << c;
 			}
