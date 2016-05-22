@@ -63,6 +63,14 @@ namespace pitaya {
 		return m_nonterminal_end;
 	}
 
+	Grammar::SymbolIterator Grammar::symbol_begin() {
+		return m_symbols.begin();
+	}
+
+	Grammar::SymbolIterator Grammar::symbol_end() {
+		return m_symbols.end();
+	}
+
 	void Grammar::rearrange_symbols() {
 		// after reading grammar file, every nonterminal has been determined
 		for (const auto& p : Symbol::pool()) {

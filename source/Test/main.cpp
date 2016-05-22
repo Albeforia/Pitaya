@@ -6,6 +6,7 @@
 
 #include <memory>
 #include <fstream>
+#include <iostream>
 
 using namespace pitaya;
 
@@ -20,7 +21,10 @@ int main() {
 	std::ifstream f;
 	f.open("source.any");
 	if (f.is_open()) {
-		tokenizer->parse(f);
+		auto res = tokenizer->parse(f);
+		if (!res.success) {
+			std::cout << "[error] line " << res.err_line << ": " << res.err_input << std::endl;
+		}
 	}
 	f.close();
 	tokenizer->print_all();
@@ -33,7 +37,13 @@ int main() {
 	builder2->print_all();
 
 	auto parser {std::make_unique<Parser>(*sa,*builder2)};
-	parser->parse(*tokenizer);
+	auto acc = parser->parse(*tokenizer);
+	if (!acc) {
+		std::cout << "syntax error!";
+	}
+	else {
+		std::cout << "accept!";
+	}
 
 	return 0;
 

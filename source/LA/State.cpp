@@ -46,8 +46,8 @@ namespace pitaya {
 					continue;
 				}
 				auto& symbol = production[dot + 1];				// symbol after dot
-				if (symbol.type() == SymbolType::TERMINAL) {
-					// 'symbol' is a terminal, cannot contribute any more items
+				if (symbol.type() != SymbolType::NONTERMINAL) {
+					// 'symbol' is not a nonterminal, cannot contribute any more items
 					continue;
 				}
 				// for each production with 'symbol' as its lhs
@@ -82,6 +82,11 @@ namespace pitaya {
 			return true;
 		}
 		return false;
+	}
+
+	bool State::transit(const Symbol& symbol) const {
+		auto& find = m_transitions.find(symbol.rank);
+		return find != m_transitions.end();
 	}
 
 	void State::sort() {

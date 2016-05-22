@@ -39,8 +39,8 @@ namespace pitaya {
 
 	void StateBuilder::build_successors(const State& state) {
 		bool has_transition = false;
-		// for every terminal
-		for (auto it = m_grammar.terminal_begin(); it != m_grammar.terminal_end(); it++) {
+		// for every symbol(include multi-terminal)
+		for (auto it = m_grammar.symbol_begin(); it != m_grammar.symbol_end(); it++) {
 			has_transition = false;
 			auto& eat = **it;
 			// for every item in the closure
@@ -98,7 +98,7 @@ namespace pitaya {
 			std::cout << state.id() << ":" << std::endl;
 			for (auto& item : state.closure()) {
 				auto& p = m_grammar.get_production(item.production_id());
-				std::cout << "\t" << p[0] << "->";
+				std::cout << "\t" << p[0] << " -> ";
 				std::size_t i = 0;
 				for (i; i < p.rhs_count(); i++) {
 					if (item.dot() == i) {

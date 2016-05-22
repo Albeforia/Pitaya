@@ -63,6 +63,12 @@ namespace pitaya {
 		//! Get an iterator to the end of nonterminals.
 		SymbolIterator nonterminal_end();
 
+		//! Get an iterator to the beginning of symbols.
+		SymbolIterator symbol_begin();
+
+		//! Get an iterator to the end of symbols.
+		SymbolIterator symbol_end();
+
 		/// @cond
 		void print_first_sets() const;
 		/// @endcond

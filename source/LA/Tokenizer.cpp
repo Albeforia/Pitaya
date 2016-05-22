@@ -30,8 +30,11 @@ namespace pitaya {
 					// error: undefined symbol
 					return ParseResult {false, m_curr_line, input};
 				}
-				if (symbol->type() == SymbolType::MULTITERMINAL) {
-					symbol = &symbol->shared_terminal();
+				if (!state->transit(*symbol)) {
+					// fallback
+					if (symbol->type() == SymbolType::MULTITERMINAL) {
+						symbol = &symbol->shared_terminal();
+					}
 				}
 				auto start_pos = file.tellg();
 				auto parse_pos = start_pos;
@@ -58,8 +61,11 @@ namespace pitaya {
 						// error: undefined symbol
 						return ParseResult {false, m_curr_line, input};
 					}
-					if (symbol->type() == SymbolType::MULTITERMINAL) {
-						symbol = &symbol->shared_terminal();
+					if (!state->transit(*symbol)) {
+						// fallback
+						if (symbol->type() == SymbolType::MULTITERMINAL) {
+							symbol = &symbol->shared_terminal();
+						}
 					}
 				}
 				if (last_final == 0) {

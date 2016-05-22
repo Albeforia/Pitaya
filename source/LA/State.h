@@ -49,6 +49,13 @@ namespace pitaya {
 		*/
 		bool transit(const Symbol& symbol, ID& to) const;
 
+		//! Query a transition.
+		/*!
+			\param symbol Input symbol.
+			\return Whether the transition exists.
+		*/
+		bool transit(const Symbol&) const;
+
 		//! Sort the basis.
 		void sort();
 
