@@ -1,0 +1,119 @@
+## __start
+
+__start identifier
+__start int_const
+__start float_const
+__start unary_operator
+__start binary_operator
+__start assignment_operator
+__start relational_operator
+__start logical_operator
+__start limiter
+
+identifier letter identifier_
+identifier _ identifier_
+identifier_ letter identifier_
+identifier_ _ identifier_
+identifier_ 0 identifier_
+identifier_ digit_nz identifier_
+identifier_
+
+int_const 0
+int_const digit_nz int_const_
+int_const_ 0 int_const_
+int_const_ digit_nz int_const_
+int_const_
+
+float_const 0 float_const_0
+float_const digit_nz float_const_1
+float_const . float_const_2
+float_const_0 . float_const_2
+float_const_1 0 float_const_1
+float_const_1 digit_nz float_const_1
+float_const_1 . float_const_2
+float_const_2 0 float_const_2
+float_const_2 digit_nz float_const_2
+float_const_2 0 float_const_3
+float_const_2 digit_nz float_const_3
+float_const_3 e float_const_4
+float_const_3 E float_const_4
+float_const_3
+float_const_4 + float_const_5
+float_const_4 - float_const_5
+float_const_4 float_const_5
+float_const_5 0
+float_const_5 digit_nz float_const_6
+float_const_6 0 float_const_6
+float_const_6 digit_nz float_const_6
+float_const_6
+
+%% unary operators %%
+unary_operator &
+unary_operator *
+unary_operator +
+unary_operator -
+unary_operator ~
+unary_operator !
+unary_operator + +
+unary_operator - -
+unary_operator .
+
+%% binary operators %%
+binary_operator /
+binary_operator %
+binary_operator - >
+
+%% assignment operators %%
+assignment_operator =
+assignment_operator * =
+assignment_operator / =
+assignment_operator % =
+assignment_operator + =
+assignment_operator - =
+assignment_operator < < =
+assignment_operator > > =
+assignment_operator & =
+assignment_operator ^ =
+assignment_operator =
+
+%% relational operators %%
+relational_operator = =
+relational_operator = = =
+relational_operator ! =
+relational_operator ! = =
+relational_operator <
+relational_operator >
+relational_operator < =
+relational_operator > =
+
+%% logical operators %%
+logical_operator & &
+logical_operator | |
+
+%% limiters %%
+limiter ;
+limiter ,
+limiter :
+limiter . . .
+limiter (
+limiter )
+limiter [
+limiter ]
+limiter {
+limiter }
+
+%multi digit_nz 1 2 3 4 5 6 7 8 9
+%multi letter a b c d e f g h i j k l m n o p q r s t u v w x y z
+%multi letter A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
+
+%% operators declaration %%
+%token & * + - ~ ! ++ -- . / % -> == === != !== < > <= >= && ||
+
+%% limiters declaration %%
+%token ; , : ... ( ) [ ] { }
+
+%% keywords declaration %%
+%token auto register static extern typedef
+%token void char short int long float double signed unsigned
+%token const volatile struct union enum
+%token if while do for switch continue break return goto
