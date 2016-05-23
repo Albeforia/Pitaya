@@ -184,7 +184,7 @@ exp							exp , assignment_exp
 assignment_exp				conditional_exp
 assignment_exp				unary_exp assignment_operator assignment_exp
 
-%multi assignment_operator	= *= /= %= += -= <<= >>= &= ^= =
+%multi assignment_operator	= *= /= %= += -= <<= >>= &= ^= |=
 
 conditional_exp				logical_or_exp
 conditional_exp				logical_or_exp ? exp : conditional_exp
