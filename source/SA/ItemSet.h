@@ -15,12 +15,13 @@ namespace pitaya {
 
 	class Production;
 	class Grammar;
-	class ItemSetBuilder;
 
 	//! ItemSet class.
 	class ItemSet {
 
 	public:
+
+		friend class ItemSetBuilder;
 
 		//! Constructor.
 		ItemSet();
@@ -89,11 +90,6 @@ namespace pitaya {
 			return interned_++;
 		}
 		/// @endcond
-
-	public:
-
-		//! Getter for m_closure.
-		const decltype(m_closure)& closure() const;
 
 	};
 

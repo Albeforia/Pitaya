@@ -69,9 +69,9 @@ namespace pitaya {
 			// copy all the backward propagation links
 			for (std::size_t i = 0; i < m_curr_item_set.kernel_count(); i++) {
 				auto& from_item = m_curr_item_set.get_kernel(i);
-				auto& res = find->closure().find(from_item);
+				auto& res = find->m_closure.find(from_item);
 				// the closure must have been computed
-				assert(res != find->closure().end());
+				assert(res != find->m_closure.end());
 				auto from = from_item.backward_plink();
 				auto* to = &(res->backward_plink());
 				PLinkNode* next;
@@ -98,9 +98,9 @@ namespace pitaya {
 
 	void ItemSetBuilder::build_successors(const ItemSet& set) {
 		// reset
-		for (auto& item : set.closure()) item.complete = false;
+		for (auto& item : set.m_closure) item.complete = false;
 
-		for (auto& item : set.closure()) {
+		for (auto& item : set.m_closure) {
 			if (item.complete) continue;
 			auto& production = m_grammar.get_production(item.production_id());
 			auto dot = item.dot();
@@ -111,7 +111,7 @@ namespace pitaya {
 			}
 			auto& symbol = production[dot + 1];		// symbol after dot
 			// for each item which has 'symbol' after its dot
-			for (auto& item2 : set.closure()) {
+			for (auto& item2 : set.m_closure) {
 				if (item2.complete) continue;
 				auto& production2 = m_grammar.get_production(item2.production_id());
 				auto dot2 = item2.dot();
@@ -143,7 +143,7 @@ namespace pitaya {
 	void ItemSetBuilder::fill_lookaheads() {
 		// convert all backward links into forward links
 		for (auto& set : m_item_sets) {
-			for (auto& item : set.closure()) {
+			for (auto& item : set.m_closure) {
 				for (auto bpl = item.backward_plink(); bpl != nullptr; bpl = bpl->next) {
 					auto& fpl = bpl->item->forward_plink();
 					auto& new_node = new_link();
@@ -156,7 +156,7 @@ namespace pitaya {
 
 		// reset
 		for (auto& set : m_item_sets) {
-			for (auto& item : set.closure()) {
+			for (auto& item : set.m_closure) {
 				item.complete = false;
 			}
 		}
@@ -165,7 +165,7 @@ namespace pitaya {
 		do {
 			not_fin = false;
 			for (auto& set : m_item_sets) {
-				for (auto& item : set.closure()) {
+				for (auto& item : set.m_closure) {
 					if (item.complete) continue;
 					for (auto fpl = item.forward_plink(); fpl != nullptr; fpl = fpl->next) {
 						bool change = fpl->item->lookaheads().union_with(item.lookaheads());
@@ -185,7 +185,7 @@ namespace pitaya {
 		std::fill(m_sorted.begin(), m_sorted.end(), nullptr);
 		for (auto& set : m_item_sets) {
 			m_sorted[set.id()] = &set;
-			for (auto& item : set.closure()) {
+			for (auto& item : set.m_closure) {
 				auto& production = m_grammar.get_production(item.production_id());
 				// for every production whose dot is at right end
 				if (item.dot() == production.rhs_count()) {
@@ -222,7 +222,7 @@ namespace pitaya {
 			if (p == nullptr) continue;
 			auto& set = *p;
 			std::cout << "state " << set.id() << std::endl;
-			for (auto& item : set.closure()) {
+			for (auto& item : set.m_closure) {
 				auto& p = m_grammar.get_production(item.production_id());
 				std::cout << "\t" << p[0] << "->";
 				std::size_t i = 0;

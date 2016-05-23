@@ -147,10 +147,6 @@ namespace pitaya {
 		m_actions.clear();
 	}
 
-	const std::unordered_set<Item, boost::hash<Item>>& ItemSet::closure() const {
-		return m_closure;
-	}
-
 	bool operator==(const ItemSet& a, const ItemSet& b) {
 		// sort m_kernels so that the order does not matter here
 		return a.m_kernels == b.m_kernels;
