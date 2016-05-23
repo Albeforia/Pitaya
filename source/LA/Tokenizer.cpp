@@ -110,8 +110,8 @@ namespace pitaya {
 
 	void Tokenizer::print_all() const {
 		for (auto& token : m_tokens) {
-			std::cout << "(" << token.type << "\t"
-				<< token.value << ")" << std::endl;
+			std::cout << "\t" << token.type << "\t"
+				<< token.value << std::endl;
 		}
 	}
 

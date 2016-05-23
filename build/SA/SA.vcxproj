@@ -162,6 +162,7 @@ copy "$(TargetPath)" "$(SolutionDir)..\lib\"</Command>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\source\SA\Action.cpp" />
     <ClCompile Include="..\..\source\SA\Item.cpp" />
     <ClCompile Include="..\..\source\SA\ItemSet.cpp" />
     <ClCompile Include="..\..\source\SA\ItemSetBuilder.cpp" />

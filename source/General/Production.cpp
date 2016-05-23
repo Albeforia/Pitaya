@@ -21,7 +21,7 @@ namespace pitaya {
 	}
 
 	std::ostream& operator<<(std::ostream& os, const Production& p) {
-		os << *p.m_lhs << "->";
+		os << *p.m_lhs << " ==> ";
 		for (auto& s : p.m_rhs) {
 			os << *s << " ";
 		}

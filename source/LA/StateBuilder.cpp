@@ -84,7 +84,6 @@ namespace pitaya {
 						for (size_t i = 1; i < p.rhs_count(); i++) {
 							name += p[i + 1].name();
 							p_symbol = &m_grammar.get_symbol(name);
-							assert(*p_symbol != m_grammar.endmark());	// must be defined
 							State tmp {};
 							tmp.add_base(*p_symbol, item.second);
 							tmp.m_closure.emplace(p_symbol->index(), item.second);
