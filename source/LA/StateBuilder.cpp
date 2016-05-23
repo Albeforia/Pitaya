@@ -55,6 +55,7 @@ namespace pitaya {
 					if (p.rhs_count() == 0) continue;
 					if (p[1] != symbol) continue;
 					has_transition = true;
+					/*
 					if (p.rhs_count() == 1) {
 						// A -> a, transit to a final state
 						m_curr_state.is_final() = true;
@@ -67,9 +68,36 @@ namespace pitaya {
 							m_curr_state.add_base(p[2], item.second);
 						}
 					}
+					*/
+					// FIXME so tricky
+					// A -> aB
+					if (p.rhs_count() == 2 && p[2].type() == SymbolType::NONTERMINAL) {
+						m_curr_state.add_base(p[2], item.second);
+					}
+					// assert all left productions have the form A -> a[b...x]
+					else {
+						m_curr_state.add_base(p[1], item.second);
+						const State* p_state = &m_curr_state;
+						auto p_symbol = &p[1];
+						std::string name(p[1].name());		// name = "a"
+						// from b to x
+						for (size_t i = 1; i < p.rhs_count(); i++) {
+							name += p[i + 1].name();
+							p_symbol = &m_grammar.get_symbol(name);
+							assert(*p_symbol != m_grammar.endmark());	// must be defined
+							State tmp {};
+							tmp.add_base(*p_symbol, item.second);
+							tmp.m_closure.emplace(p_symbol->index(), item.second);
+							auto& ns = *m_states.emplace(std::move(tmp)).first;
+							p_state->add_transition(p[i + 1], ns);
+							p_state = &ns;
+						}
+						p_state->m_is_final = true;
+						p_state->m_final_index = p_symbol->index();
+					}
 				}
 			}
-			if (has_transition) {
+			if (has_transition && m_curr_state.m_basis.size() > 0) {
 				auto& new_state = build_state();
 				state.add_transition(symbol, new_state);
 			}
@@ -77,10 +105,8 @@ namespace pitaya {
 	}
 
 	void StateBuilder::decide_token_type() {
-		m_sorted.resize(m_states.size() + 1);
-		std::fill(m_sorted.begin(), m_sorted.end(), nullptr);
 		for (auto& state : m_states) {
-			m_sorted[state.id()] = &state;
+			m_sorted.emplace(state.m_id, &state);
 			if (!state.is_final()) continue;
 			for (auto& item : state.m_closure) {
 				if (state.m_final_index == item.first) {
@@ -93,14 +119,12 @@ namespace pitaya {
 	}
 
 	const State& StateBuilder::get_state(State::ID id) const {
-		assert(id > 0);		// avoid nullptr
-		return *m_sorted[id];
+		return *m_sorted.at(id);
 	}
 
 	void StateBuilder::print_all() const {
 		for (auto& p : m_sorted) {
-			if (p == nullptr) continue;
-			auto& state = *p;
+			auto& state = *p.second;
 			std::cout << state.id() << ":\t" << std::endl;
 			for (auto& item : state.m_closure) {
 				std::cout << "<" << m_grammar.get_symbol(item.first) << "\t"
