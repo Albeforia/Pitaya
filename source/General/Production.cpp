@@ -3,7 +3,7 @@
 namespace pitaya {
 
 	Production::Production(ProductionID id, SharedSymbol lhs)
-		: m_id {id}, m_lhs {std::move(lhs)}, m_rhs {} {}
+		: m_id {id}, m_lhs {std::move(lhs)}, m_rhs {}, m_rhs_has_nonterminal {false} {}
 
 	ProductionID Production::id() const {
 		return m_id;
@@ -18,6 +18,10 @@ namespace pitaya {
 			return *m_lhs;
 		}
 		return *m_rhs[pos - 1];
+	}
+
+	bool Production::rhs_has_nonterminal() const {
+		return m_rhs_has_nonterminal;
 	}
 
 	std::ostream& operator<<(std::ostream& os, const Production& p) {

@@ -130,6 +130,15 @@ namespace pitaya {
 			}
 		});
 
+		for (auto& p : m_productions) {
+			for (size_t i = 0; i < p.rhs_count(); i++) {
+				if (p[i + 1].type() == SymbolType::NONTERMINAL) {
+					p.m_rhs_has_nonterminal = true;
+					break;
+				}
+			}
+		}
+
 		auto curr_lhs = m_productions[0][0].rank;
 		std::size_t start = 0;
 		for (std::size_t i = 0; i < m_productions.size(); i++) {
