@@ -10,10 +10,12 @@ namespace pitaya {
 
 	State::State()
 		: m_id {order()}, m_basis {}, m_closure {},
-		m_is_final {false}, m_token_index {}, m_transitions {} {}
+		m_is_final {false}, m_transitions {},
+		m_token_index {}, m_final_index {} {}
 
 	State::State(State&& from) noexcept
-		: m_id {order()}, m_is_final {from.m_is_final}, m_token_index {from.m_token_index},
+		: m_id {order()}, m_is_final {from.m_is_final},
+		m_token_index {from.m_token_index}, m_final_index {from.m_final_index},
 		m_basis {std::move(from.m_basis)},
 		m_closure {std::move(from.m_closure)},
 		m_transitions {std::move(from.m_transitions)} {
@@ -25,39 +27,36 @@ namespace pitaya {
 		return m_id;
 	}
 
-	void State::add_base(const Production& p, BasicItem::Dot dot) {
-		m_basis.emplace_back(p.id(), dot);
+	void State::add_base(const Symbol& symbol, std::size_t token_index) {
+		m_basis.emplace_back(symbol.index(), token_index);
 	}
 
 	void State::compute_closure(Grammar& grammar) {
 		// copy basis into closure
 		for (auto& i : m_basis) {
-			m_closure.emplace(i.production_id(), i.dot());
+			m_closure.emplace(i.first, i.second);
 		}
+
 		bool not_fin = false;
 		do {
 			not_fin = false;
 			for (auto& item : m_closure) {
-				auto& production = grammar.get_production(item.production_id());
-				auto dot = item.dot();
-				if (dot >= production.rhs_count()) {
-					// this is a final state
-					m_is_final = true;
-					continue;
-				}
-				auto& symbol = production[dot + 1];				// symbol after dot
-				if (symbol.type() != SymbolType::NONTERMINAL) {
-					// 'symbol' is not a nonterminal, cannot contribute any more items
-					continue;
-				}
-				// for each production with 'symbol' as its lhs
+				// item: <symbol_index, token_index>
+				auto& symbol = grammar.get_symbol(item.first);
+				if (symbol.type() != SymbolType::NONTERMINAL) continue;
 				auto range = grammar.productions_by_lhs(symbol);
 				for (auto pid = range.first; pid <= range.second; pid++) {
 					auto& p = grammar.get_production(pid);
-					auto& res = m_closure.emplace(p.id());
-					not_fin = res.second;
+					// A -> B
+					if (p.rhs_count() == 1 && p[1].type() == SymbolType::NONTERMINAL) {
+						not_fin = m_closure.emplace(p[1].index(), p[1].index()).second;
+					}
+					// A -> ε, this is a final state
+					else if (p.rhs_count() == 0) {
+						m_is_final = true;
+						m_final_index = p[0].index();
+					}
 				}
-				if (not_fin) break;
 			}
 		} while (not_fin);
 	}
@@ -90,14 +89,7 @@ namespace pitaya {
 	}
 
 	void State::sort() {
-		std::sort(m_basis.begin(), m_basis.end(), [](auto& a, auto& b) {
-			if (a.production_id() != b.production_id()) {
-				return a.production_id() < b.production_id();
-			}
-			else {
-				return a.dot() < b.dot();
-			}
-		});
+		std::sort(m_basis.begin(), m_basis.end());
 	}
 
 	void State::reset() {
@@ -105,10 +97,8 @@ namespace pitaya {
 		m_closure.clear();
 		m_transitions.clear();
 		m_is_final = false;
-	}
-
-	const std::unordered_set<BasicItem, boost::hash<BasicItem>>& State::closure() const {
-		return m_closure;
+		m_token_index = 0;
+		m_final_index = 0;
 	}
 
 	bool operator==(const State& a, const State& b) {

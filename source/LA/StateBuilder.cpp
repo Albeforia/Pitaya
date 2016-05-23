@@ -14,7 +14,7 @@ namespace pitaya {
 		// initial state
 		m_curr_state.reset();
 		// assume the start symbol is the lhs of the start production
-		m_curr_state.add_base(m_grammar.get_production(0));
+		m_curr_state.add_base(m_grammar.get_production(0)[0], 0);
 		build_state();
 		decide_token_type();
 	}
@@ -42,23 +42,36 @@ namespace pitaya {
 		// for every symbol(include multi-terminal)
 		for (auto it = m_grammar.symbol_begin(); it != m_grammar.symbol_end(); it++) {
 			has_transition = false;
-			auto& eat = **it;
+			auto& symbol = **it;
+			if (symbol.type() == SymbolType::NONTERMINAL) continue;
 			// for every item in the closure
-			for (auto& item : state.closure()) {
-				auto& production = m_grammar.get_production(item.production_id());
-				auto dot = item.dot();
-				// skip item whose dot is at right end
-				if (dot >= production.rhs_count()) {
-					continue;
+			for (auto& item : state.m_closure) {
+				// item: <symbol_index, token_index>
+				auto& left = m_grammar.get_symbol(item.first);
+				if (left.type() != SymbolType::NONTERMINAL) continue;
+				auto range = m_grammar.productions_by_lhs(left);
+				for (auto pid = range.first; pid <= range.second; pid++) {
+					auto& p = m_grammar.get_production(pid);
+					if (p.rhs_count() == 0) continue;
+					if (p[1] != symbol) continue;
+					has_transition = true;
+					if (p.rhs_count() == 1) {
+						// A -> a, transit to a final state
+						m_curr_state.is_final() = true;
+						m_curr_state.add_base(symbol, item.second);
+						m_curr_state.m_final_index = symbol.index();
+					}
+					else {
+						// A -> aB
+						if (p[2].type() == SymbolType::NONTERMINAL) {
+							m_curr_state.add_base(p[2], item.second);
+						}
+					}
 				}
-				auto& symbol = production[dot + 1];		// symbol after dot
-				if (symbol != eat) continue;
-				has_transition = true;
-				m_curr_state.add_base(production, dot + 1);
 			}
 			if (has_transition) {
 				auto& new_state = build_state();
-				state.add_transition(eat, new_state);
+				state.add_transition(symbol, new_state);
 			}
 		}
 	}
@@ -69,17 +82,10 @@ namespace pitaya {
 		for (auto& state : m_states) {
 			m_sorted[state.id()] = &state;
 			if (!state.is_final()) continue;
-			int prec = -1;
-			// for every item in the state's closure
-			for (auto& item : state.closure()) {
-				auto& p = m_grammar.get_production(item.production_id());
-				if (item.dot() >= p.rhs_count()) {
-					auto& s = p[0];
-					if (!s.is_token()) continue;
-					if (s.precedence() > prec) {
-						state.token_index() = s.index();
-						prec = s.precedence();
-					}
+			for (auto& item : state.m_closure) {
+				if (state.m_final_index == item.first) {
+					state.token_index() = item.second;
+					break;
 				}
 			}
 			//assert(prec != -1);
@@ -95,29 +101,17 @@ namespace pitaya {
 		for (auto& p : m_sorted) {
 			if (p == nullptr) continue;
 			auto& state = *p;
-			std::cout << state.id() << ":" << std::endl;
-			for (auto& item : state.closure()) {
-				auto& p = m_grammar.get_production(item.production_id());
-				std::cout << "\t" << p[0] << " -> ";
-				std::size_t i = 0;
-				for (i; i < p.rhs_count(); i++) {
-					if (item.dot() == i) {
-						std::cout << ".";
-					}
-					std::cout << p[i + 1] << " ";
-				}
-				if (item.dot() == i) {
-					std::cout << ".";
-				}
-				std::cout << std::endl;
+			std::cout << state.id() << ":\t" << std::endl;
+			for (auto& item : state.m_closure) {
+				std::cout << "<" << m_grammar.get_symbol(item.first) << "\t"
+					<< m_grammar.get_symbol(item.second) << ">" << std::endl;
 			}
-			std::cout << ">>";
 			if (state.is_final()) {
-				std::cout << " [final]";
+				std::cout << "[final]\t" << m_grammar.get_symbol(state.token_index());
 			}
 			std::cout << std::endl;
 			State::ID to;
-			for (auto it = m_grammar.terminal_begin(); it != m_grammar.terminal_end(); it++) {
+			for (auto it = m_grammar.symbol_begin(); it != m_grammar.symbol_end(); it++) {
 				if (state.transit(**it, to)) {
 					std::cout << "\t" << **it << " --> " << to << std::endl;
 				}

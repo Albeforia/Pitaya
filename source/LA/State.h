@@ -15,7 +15,11 @@ namespace pitaya {
 
 	public:
 
+		friend class StateBuilder;
+
 		using ID = std::size_t;
+		// <symbol_index, token_index>
+		using Item = std::pair<std::size_t, std::size_t>;
 
 		//! Constructor.
 		State();
@@ -27,7 +31,10 @@ namespace pitaya {
 		ID id() const;
 
 		//! Add an item to the basis.
-		void add_base(const Production&, BasicItem::Dot = 0);
+		//void add_base(const Production&, BasicItem::Dot = 0);
+
+		//! Add a symbol to basis.
+		void add_base(const Symbol&, std::size_t token_index);
 
 		//! Compute the closure of basis.
 		void compute_closure(Grammar&);
@@ -71,13 +78,16 @@ namespace pitaya {
 	private:
 
 		ID m_id;								//!< ID of the state.
-		std::vector<BasicItem> m_basis;			//!< Basis of the state.
+		//std::vector<BasicItem> m_basis;			//!< Basis of the state.
+		std::vector<Item> m_basis;			//!< Basis of the state.
 
 		//!< Closure of the state.
-		std::unordered_set<BasicItem, boost::hash<BasicItem>> m_closure;
+		//SymbolSet m_closure;
+		std::unordered_set<Item, boost::hash<Item>> m_closure;
 
 		mutable bool m_is_final;				//!< Whether this is a final state.
 		mutable std::size_t m_token_index;		//!< Token type of the state.
+		mutable std::size_t m_final_index;		//!< Used in token type decision.
 
 		//! State transitions.
 		mutable std::unordered_map<Rank, ID> m_transitions;
@@ -89,11 +99,6 @@ namespace pitaya {
 			return interned_++;
 		}
 		/// @endcond
-
-	public:
-
-		//! Getter for m_closure.
-		const decltype(m_closure)& closure() const;
 
 	};
 
