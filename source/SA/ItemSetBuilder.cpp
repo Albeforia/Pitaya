@@ -225,7 +225,7 @@ namespace pitaya {
 			for (auto& p : m_sorted) {
 				auto& set = *p.second;
 				file << "[state " << set.m_id << "]\n";
-				/*
+				///*
 				for (auto& item : set.m_closure) {
 					auto& p = m_grammar.get_production(item.production_id());
 					file << ">\t" << std::setw(20) << std::left << p[0] << "==>\t";
@@ -246,7 +246,7 @@ namespace pitaya {
 					file << "\n";
 				}
 				file << '\n';
-				*/
+				//*/
 				for (auto& action : set.m_actions) {
 					file << ">\t" << std::setw(30)
 						<< std::left << m_grammar.get_symbol(action.first)
