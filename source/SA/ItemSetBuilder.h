@@ -59,6 +59,9 @@ namespace pitaya {
 		//! Generate all actions.
 		void fill_actions();
 
+		//! Try resolving a conflict.
+		bool resolve_conflict(Action& origin, Action& conflict, const Symbol&);
+
 	};
 
 }

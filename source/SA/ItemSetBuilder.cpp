@@ -37,30 +37,32 @@ namespace pitaya {
 			(*it)->first_set().resize(m_grammar.symbol_count());
 		}
 
-		bool not_fin = false;
-
-		// compute all first sets
+		auto progress = 0;
 		do {
-			not_fin = false;
+			progress = 0;
 			for (ProductionID pid = 0; pid < m_grammar.production_count(); pid++) {
 				auto& p = m_grammar.get_production(pid);
 				auto& lhs = p[0];
 				for (std::size_t i = 0; i < p.rhs_count(); i++) {
 					auto& rhs = p[i + 1];
 					if (rhs.type() != SymbolType::NONTERMINAL) {
-						not_fin = lhs.first_set().add(rhs);
+						if (lhs.first_set().add(rhs)) {
+							progress++;
+						}
 						break;		// encounter a (multi)terminal, add to first set and stop
 					}
 					else if (lhs == rhs) {
 						if (!lhs.lambda()) break;	// recurrence happened, should compute in another production
 					}
 					else {
-						not_fin = lhs.first_set().union_with(rhs.first_set());
+						if (lhs.first_set().union_with(rhs.first_set())) {
+							progress++;
+						}
 						if (!rhs.lambda()) break;	// stop if a rhs cannot generate empty string
 					}
 				}
 			}
-		} while (not_fin);
+		} while (progress != 0);
 	}
 
 	const ItemSet& ItemSetBuilder::build_item_set() {
@@ -137,8 +139,13 @@ namespace pitaya {
 			}
 			// build set from new kernels
 			auto& new_set = build_item_set();
-			auto& act = set.add_action(symbol, ActionType::SHIFT, new_set.id());
-			assert(act.type != ActionType::SSCONFLICT);
+			if (symbol.type() == SymbolType::NONTERMINAL) {
+				auto& act = set.add_action(symbol, ActionType::GOTO, new_set.id());
+			}
+			else {
+				auto& act = set.add_action(symbol, ActionType::SHIFT, new_set.id());
+				assert(act.type != ActionType::SSCONFLICT);
+			}
 		}
 	}
 
@@ -189,16 +196,32 @@ namespace pitaya {
 				auto& production = m_grammar.get_production(item.production_id());
 				// for every production whose dot is at right end
 				if (item.dot() == production.rhs_count()) {
-					for (auto it = m_grammar.terminal_begin(); it != m_grammar.terminal_end(); it++) {
+					for (auto it = m_grammar.symbol_begin(); it != m_grammar.symbol_end(); it++) {
 						if (item.lookaheads()[**it]) {
 							if (production.id() == 0) {
 								set.add_action(**it, ActionType::ACCEPT, production.id());
 							}
 							else {
-								auto& act = set.add_action(**it, ActionType::REDUCE, production.id());
+								Action new_act(ActionType::REDUCE, production.id());
+								auto& act = set.add_action(**it, new_act.type, new_act.value);
 								if (act.type == ActionType::SRCONFLICT
 									|| act.type == ActionType::RRCONFLICT) {
+									if (act.type == ActionType::SRCONFLICT) {
+										std::cout << "[SR-CONFLICT] "
+											<< set.m_id << std::endl
+											<< '\t' << **it << std::endl
+											<< '\t' << m_grammar.get_production(new_act.value) << std::endl;
+									}
+									else {
+										std::cout << "[RR-CONFLICT] "
+											<< set.m_id << std::endl
+											<< '\t' << m_grammar.get_production(act.value) << std::endl
+											<< '\t' << m_grammar.get_production(new_act.value) << std::endl;
+									}
 									m_conflict_count++;
+									if (resolve_conflict(act, new_act, **it)) {
+										m_conflict_count--;
+									}
 								}
 							}
 						}
@@ -206,6 +229,15 @@ namespace pitaya {
 				}
 			}
 		}
+	}
+
+	bool ItemSetBuilder::resolve_conflict(Action& origin, Action& conflict, const Symbol& sym) {
+		if (origin.type == ActionType::SRCONFLICT) {
+			origin.type = ActionType::REDUCE;
+			origin.value = conflict.value;
+			return true;
+		}
+		return false;
 	}
 
 	const ItemSet& ItemSetBuilder::get_state(StateID id) const {
@@ -251,7 +283,8 @@ namespace pitaya {
 					file << ">\t" << std::setw(30)
 						<< std::left << m_grammar.get_symbol(action.first)
 						<< std::right << action.second.type;
-					if (action.second.type == ActionType::SHIFT) {
+					if (action.second.type == ActionType::SHIFT
+						|| action.second.type == ActionType::GOTO) {
 						file << std::setw(10) << "[ state " << action.second.value << " ]";
 					}
 					else if (action.second.type == ActionType::REDUCE) {

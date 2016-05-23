@@ -21,10 +21,14 @@ namespace pitaya {
 			auto& token = tokenizer.peek();
 			auto symbol = &m_grammar.get_symbol(token.type);
 			assert(*symbol != m_grammar.endmark());
-			if (symbol->type() == SymbolType::MULTITERMINAL) {
-				symbol = &symbol->shared_terminal();
-			}
 			auto action = state->evaluate(*symbol);
+			if (action.type == ActionType::ERROR) {
+				// fallback
+				if (symbol->type() == SymbolType::MULTITERMINAL) {
+					symbol = &symbol->shared_terminal();
+					action = state->evaluate(*symbol);
+				}
+			}
 			bool stop = evaluate(action, state_stack, tokenizer);
 			if (stop) {
 				return action.type != ActionType::ERROR;
@@ -34,7 +38,8 @@ namespace pitaya {
 				std::cout << "SHIFT\t" << token.value << '(' << action.value << ')' << std::endl;
 			}
 			else if (action.type == ActionType::REDUCE) {
-				std::cout << "REDUCE\t" << m_grammar.get_production(action.value) << std::endl;
+				std::cout << "REDUCE\t" << m_grammar.get_production(action.value)
+					<< '(' << state_stack.top() << ')' << std::endl;
 			}
 #endif
 			state = &m_builder.get_state(state_stack.top());
@@ -47,7 +52,8 @@ namespace pitaya {
 				}
 				assert(action.type == ActionType::REDUCE);
 #ifdef REPORT
-				std::cout << "REDUCE\t" << m_grammar.get_production(action.value) << std::endl;
+				std::cout << "REDUCE\t" << m_grammar.get_production(action.value)
+					<< '(' << state_stack.top() << ')' << std::endl;
 #endif
 				auto& p = m_grammar.get_production(action.value);
 				for (size_t i = 0; i < p.rhs_count(); i++) {
@@ -58,7 +64,7 @@ namespace pitaya {
 				if (act.type == ActionType::ERROR) {
 					return false;
 				}
-				assert(act.type == ActionType::SHIFT);
+				assert(act.type == ActionType::GOTO);
 				state_stack.push(act.value);
 				state = &m_builder.get_state(state_stack.top());
 				action = state->evaluate(m_grammar.endmark());
@@ -81,7 +87,7 @@ namespace pitaya {
 				}
 				auto& top = m_builder.get_state(stack.top());
 				auto act = top.evaluate(p[0]);
-				assert(act.type == ActionType::SHIFT);
+				assert(act.type == ActionType::GOTO);
 				stack.push(act.value);
 			}
 			break;

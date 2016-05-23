@@ -8,6 +8,7 @@ namespace pitaya {
 
 		SHIFT,
 		REDUCE,
+		GOTO,
 		ACCEPT,
 		ERROR,
 		SSCONFLICT,		//!< A shift-shift conflict

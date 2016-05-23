@@ -193,17 +193,16 @@ namespace pitaya {
 	}
 
 	void Grammar::print_first_sets() const {
-		std::cout << "FIRST sets:" << std::endl;
 		for (const auto& s : m_symbols) {
 			if (s->type() == SymbolType::NONTERMINAL) {
-				std::cout << *s << ":\t";
+				std::cout << "[ " << *s << " ]\n";
 				for (const auto& s2 : m_symbols) {
 					if (s->first_set()[*s2]) {
-						std::cout << *s2 << " ";
+						std::cout << '\t' << *s2;
 					}
 				}
 				if (s->lambda()) {
-					std::cout << "(empty)";
+					std::cout << "\t(empty)";
 				}
 				std::cout << std::endl;
 			}

@@ -37,9 +37,9 @@ namespace pitaya {
 			m_closure.emplace(i.first, i.second);
 		}
 
-		bool not_fin = false;
+		auto progress = 0;
 		do {
-			not_fin = false;
+			progress = 0;
 			for (auto& item : m_closure) {
 				// item: <symbol_index, token_index>
 				auto& symbol = grammar.get_symbol(item.first);
@@ -49,7 +49,9 @@ namespace pitaya {
 					auto& p = grammar.get_production(pid);
 					// A -> B
 					if (p.rhs_count() == 1 && p[1].type() == SymbolType::NONTERMINAL) {
-						not_fin = m_closure.emplace(p[1].index(), p[1].index()).second;
+						if (m_closure.emplace(p[1].index(), p[1].index()).second) {
+							progress++;
+						}
 					}
 					// A -> ε, this is a final state
 					else if (p.rhs_count() == 0) {
@@ -58,7 +60,7 @@ namespace pitaya {
 					}
 				}
 			}
-		} while (not_fin);
+		} while (progress != 0);
 	}
 
 	bool& State::is_final() const {

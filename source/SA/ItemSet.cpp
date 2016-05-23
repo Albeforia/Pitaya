@@ -44,9 +44,9 @@ namespace pitaya {
 			m_closure.emplace(i);
 		}
 
-		bool not_fin = false;
+		auto progress = 0;
 		do {
-			not_fin = false;
+			progress = 0;
 			for (auto& item : m_closure) {
 				if (item.complete) continue;
 				auto& production = grammar.get_production(item.production_id());
@@ -67,7 +67,9 @@ namespace pitaya {
 				for (auto pid = range.first; pid <= range.second; pid++) {
 					auto& p = grammar.get_production(pid);
 					auto& res = m_closure.emplace(p.id());
-					not_fin = res.second;
+					if (res.second) {
+						progress++;
+					}
 					// update lookaheads generated spontaneously
 					if (res.second) {
 						res.first->lookaheads().resize(grammar.symbol_count());
@@ -95,9 +97,14 @@ namespace pitaya {
 					}
 				}
 				item.complete = true;
-				if (not_fin) break;
+				if (progress != 0) {
+					// closure has changed
+					// if rehashing occurs due to the insertion, all iterators are invalidated
+					// so re-iterate for safety
+					break;
+				}
 			}
-		} while (not_fin);
+		} while (progress != 0);
 	}
 
 	Action& ItemSet::add_action(const Symbol& symbol, ActionType type, std::size_t value) const {

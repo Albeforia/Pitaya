@@ -14,6 +14,7 @@ namespace pitaya {
 #define INSERT_ELEMENT(p) strings[p] = std::string(#p).substr(12)
 			INSERT_ELEMENT(ActionType::SHIFT);
 			INSERT_ELEMENT(ActionType::REDUCE);
+			INSERT_ELEMENT(ActionType::GOTO);
 			INSERT_ELEMENT(ActionType::ACCEPT);
 			INSERT_ELEMENT(ActionType::ERROR);
 			INSERT_ELEMENT(ActionType::SSCONFLICT);
