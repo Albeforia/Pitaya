@@ -37,25 +37,6 @@ namespace pitaya {
 
 		bool not_fin = false;
 
-		// compute all lambdas
-		do {
-			not_fin = false;
-			for (ProductionID pid = 0; pid < m_grammar.production_count(); pid++) {
-				auto& p = m_grammar.get_production(pid);
-				if (p[0].lambda()) continue;
-				std::size_t i = 0;
-				for (i; i < p.rhs_count(); i++) {
-					auto& rhs = p[i + 1];
-					assert(rhs.type() == SymbolType::NONTERMINAL || !rhs.lambda());
-					if (!rhs.lambda()) break;		// lhs is lambda <=> all rhs are lambda
-				}
-				if (i == p.rhs_count()) {				// including zero rhs
-					p[0].lambda() = true;
-					not_fin = true;					// find a new lambda, continue computing
-				}
-			}
-		} while (not_fin);
-
 		// compute all first sets
 		do {
 			not_fin = false;

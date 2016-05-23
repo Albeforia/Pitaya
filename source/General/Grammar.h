@@ -92,6 +92,7 @@ namespace pitaya {
 		/// @cond
 		void rearrange_symbols();
 		void rearrange_productions();
+		void compute_lambdas();
 		/// @endcond
 
 		/// @cond boost

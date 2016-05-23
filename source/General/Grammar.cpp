@@ -13,6 +13,7 @@ namespace pitaya {
 		read(file);
 		rearrange_symbols();
 		rearrange_productions();
+		compute_lambdas();
 	}
 
 	std::size_t Grammar::symbol_count() const {
@@ -141,6 +142,27 @@ namespace pitaya {
 		}
 		// the last group
 		m_productions_by_lhs.emplace(curr_lhs, PP {start, m_productions.size() - 1});
+	}
+
+	void Grammar::compute_lambdas() {
+		bool not_fin = false;
+		// compute all lambdas
+		do {
+			not_fin = false;
+			for (auto& p : m_productions) {
+				if (p[0].lambda()) continue;
+				std::size_t i = 0;
+				for (i; i < p.rhs_count(); i++) {
+					auto& rhs = p[i + 1];
+					assert(rhs.type() == SymbolType::NONTERMINAL || !rhs.lambda());
+					if (!rhs.lambda()) break;		// lhs is lambda <=> all rhs are lambda
+				}
+				if (i == p.rhs_count()) {				// including zero rhs
+					p[0].lambda() = true;
+					not_fin = true;					// find a new lambda, continue computing
+				}
+			}
+		} while (not_fin);
 	}
 
 	void Grammar::read(const char* file) {
