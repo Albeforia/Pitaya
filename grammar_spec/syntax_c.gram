@@ -69,7 +69,7 @@ struct_declarator			const_exp
 
 enum_spec					enum identifier { enumerator_list }
 enum_spec					enum { enumerator_list }
-enum_spec					num identifier
+enum_spec					enum identifier
 
 enumerator_list				enumerator
 enumerator_list				enumerator_list , enumerator
