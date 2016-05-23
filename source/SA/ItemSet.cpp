@@ -57,8 +57,8 @@ namespace pitaya {
 					continue;
 				}
 				auto& symbol = production[dot + 1];				// symbol after dot
-				if (symbol.type() == SymbolType::TERMINAL) {
-					// 'symbol' is a terminal, cannot contribute any more items
+				if (symbol.type() != SymbolType::NONTERMINAL) {
+					// not a nonterminal, cannot contribute any more items
 					item.complete = true;
 					continue;
 				}
@@ -77,7 +77,7 @@ namespace pitaya {
 					std::size_t i = dot + 1;
 					for (i; i < production.rhs_count(); i++) {
 						auto& rhs = production[i + 1];
-						if (rhs.type() == SymbolType::TERMINAL) {
+						if (rhs.type() != SymbolType::NONTERMINAL) {
 							res.first->lookaheads().add(rhs);
 							break;
 						}

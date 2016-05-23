@@ -3,6 +3,7 @@
 #include "State.h"
 
 #include <unordered_set>
+#include <map>
 
 #include <boost\functional\hash\hash.hpp>
 
@@ -31,7 +32,7 @@ namespace pitaya {
 		Grammar& m_grammar;		//!< The grammar this builder works on.
 
 		std::unordered_set<State, boost::hash<State>> m_states;	//!< All states.
-		std::vector<const State*> m_sorted;		//!< Sorted states for quick access.
+		std::map<State::ID, const State*> m_sorted;		//!< Sorted states for quick access.
 		State m_curr_state;		//!< The State being built currently.
 
 		//! Build a state according to m_curr_state.

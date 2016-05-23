@@ -71,7 +71,10 @@ namespace pitaya {
 
 	void State::add_transition(const Symbol& symbol, const State& state) const {
 		auto& res = m_transitions.emplace(symbol.rank, state.m_id);
-		assert(res.second);		// DFA assertion
+		if (!res.second) {
+			// duplicate transition
+			assert(res.first->second == state.m_id);		// DFA assertion
+		}
 	}
 
 	bool State::transit(const Symbol& symbol, ID& to) const {

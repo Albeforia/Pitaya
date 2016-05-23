@@ -1,8 +1,6 @@
 #pragma once
 
-#include "Symbol.h"
-#include "Production.h"
-#include "ItemSet.h"
+#include <iostream>
 
 namespace pitaya {
 
@@ -12,21 +10,22 @@ namespace pitaya {
 		REDUCE,
 		ACCEPT,
 		ERROR,
-		SSCONFLICT,		//! A shift-shift conflict
-		SRCONFLICT,		//! A shift-reduce conflict
-		RRCONFLICT,		//! A reduce-reduce conflict
+		SSCONFLICT,		//!< A shift-shift conflict
+		SRCONFLICT,		//!< A shift-reduce conflict
+		RRCONFLICT,		//!< A reduce-reduce conflict
 
 	};
 
 	struct Action {
 
 		ActionType type;
-		//! StateID when type is SHIFT, ProductionID when type is REDUCE
-		std::size_t value;
 
-		Action(ActionType t, std::size_t v)
-			: type {t}, value {v} {}
+		std::size_t value;	//!< StateID when type is SHIFT, ProductionID when type is REDUCE
+
+		Action(ActionType, std::size_t value);
 
 	};
+
+	std::ostream& operator<<(std::ostream&, ActionType);
 
 }

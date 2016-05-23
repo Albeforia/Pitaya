@@ -31,7 +31,7 @@ namespace pitaya {
 			}
 #ifdef REPORT
 			if (action.type == ActionType::SHIFT) {
-				std::cout << "SHIFT\t" << token.value << std::endl;
+				std::cout << "SHIFT\t" << token.value << '(' << action.value << ')' << std::endl;
 			}
 			else if (action.type == ActionType::REDUCE) {
 				std::cout << "REDUCE\t" << m_grammar.get_production(action.value) << std::endl;

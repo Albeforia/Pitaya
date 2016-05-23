@@ -1,7 +1,9 @@
 #include "ItemSetBuilder.h"
 
 #include <cassert>
+#include <fstream>
 #include <iostream>
+#include <iomanip>
 
 namespace pitaya {
 
@@ -45,9 +47,9 @@ namespace pitaya {
 				auto& lhs = p[0];
 				for (std::size_t i = 0; i < p.rhs_count(); i++) {
 					auto& rhs = p[i + 1];
-					if (rhs.type() == SymbolType::TERMINAL) {
+					if (rhs.type() != SymbolType::NONTERMINAL) {
 						not_fin = lhs.first_set().add(rhs);
-						break;		// encounter a terminal, add to first set and stop
+						break;		// encounter a (multi)terminal, add to first set and stop
 					}
 					else if (lhs == rhs) {
 						if (!lhs.lambda()) break;	// recurrence happened, should compute in another production
@@ -181,10 +183,8 @@ namespace pitaya {
 	}
 
 	void ItemSetBuilder::fill_actions() {
-		m_sorted.resize(m_item_sets.size() + 1);
-		std::fill(m_sorted.begin(), m_sorted.end(), nullptr);
 		for (auto& set : m_item_sets) {
-			m_sorted[set.id()] = &set;
+			m_sorted.emplace(set.m_id, &set);
 			for (auto& item : set.m_closure) {
 				auto& production = m_grammar.get_production(item.production_id());
 				// for every production whose dot is at right end
@@ -209,7 +209,7 @@ namespace pitaya {
 	}
 
 	const ItemSet& ItemSetBuilder::get_state(StateID id) const {
-		return *m_sorted[id];
+		return *m_sorted.at(id);
 	}
 
 	PLinkNode*& ItemSetBuilder::new_link() {
@@ -218,34 +218,55 @@ namespace pitaya {
 	}
 
 	void ItemSetBuilder::print_all() const {
-		for (auto& p : m_sorted) {
-			if (p == nullptr) continue;
-			auto& set = *p;
-			std::cout << "state " << set.id() << std::endl;
-			for (auto& item : set.m_closure) {
-				auto& p = m_grammar.get_production(item.production_id());
-				std::cout << "\t" << p[0] << "->";
-				std::size_t i = 0;
-				for (i; i < p.rhs_count(); i++) {
-					if (item.dot() == i) {
-						std::cout << ".";
+		std::ofstream file;
+		file.open("report\\lalr_states", std::ios::trunc);
+		if (file.is_open()) {
+			std::string dot = "[>";
+			for (auto& p : m_sorted) {
+				auto& set = *p.second;
+				file << "[state " << set.m_id << "]\n";
+				/*
+				for (auto& item : set.m_closure) {
+					auto& p = m_grammar.get_production(item.production_id());
+					file << ">\t" << std::setw(20) << std::left << p[0] << "==>\t";
+					for (std::size_t i = 0; i <= p.rhs_count(); i++) {
+						if (item.dot() == i) {
+							file << dot;
+						}
+						if (0 <= i && i < p.rhs_count()) {
+							file << p[i + 1] << " ";
+						}
 					}
-					std::cout << p[i + 1] << " ";
-				}
-				if (item.dot() == i) {
-					std::cout << ".";
-				}
-				std::cout << "\t" << "|";
-				for (auto it = m_grammar.terminal_begin(); it != m_grammar.terminal_end(); it++) {
-					if (item.lookaheads()[**it]) {
-						std::cout << **it << " ";
+					file << "\n\t\t";
+					for (auto it = m_grammar.symbol_begin(); it != m_grammar.symbol_end(); it++) {
+						if (item.lookaheads()[**it]) {
+							file << **it << "\t";
+						}
 					}
+					file << "\n";
 				}
-				std::cout << std::endl;
+				file << '\n';
+				*/
+				for (auto& action : set.m_actions) {
+					file << ">\t" << std::setw(30)
+						<< std::left << m_grammar.get_symbol(action.first)
+						<< std::right << action.second.type;
+					if (action.second.type == ActionType::SHIFT) {
+						file << std::setw(10) << "[ state " << action.second.value << " ]";
+					}
+					else if (action.second.type == ActionType::REDUCE) {
+						file << std::setw(10) << "[ " << m_grammar.get_production(action.second.value) << " ]";
+					}
+					file << '\n';
+				}
+				file << '\n';
 			}
-			std::cout << std::endl;
+			file << "conflicts: " << m_conflict_count << '\n';
 		}
-		std::cout << "conflicts: " << m_conflict_count << std::endl;
+		else {
+			std::cout << "fail opening file!" << std::endl;
+		}
+		file.close();
 	}
 
 }
