@@ -2,6 +2,7 @@
 
 #include <cassert>
 #include <fstream>
+#include <iomanip>
 
 namespace pitaya {
 
@@ -29,15 +30,28 @@ namespace pitaya {
 			}
 			bool stop = evaluate(action, state_stack, tokenizer);
 			if (stop) {
-				return action.type != ActionType::ERROR;
+				bool error = action.type != ActionType::ERROR;
+				if (file.is_open()) {
+					if (error) {
+						file << "ERROR\n";
+					}
+					else {
+						file << "ACCEPT\n";
+					}
+				}
+				return error;
 			}
 			if (file.is_open()) {
 				if (action.type == ActionType::SHIFT) {
-					file << "SHIFT\t" << token.value << '(' << action.value << ")\n";
+					file << "SHIFT\t" << std::setw(21)
+						<< std::left << token.value
+						<< std::right << '(' << action.value << ")\n";
 				}
 				else if (action.type == ActionType::REDUCE) {
-					file << "REDUCE\t" << m_grammar.get_production(action.value)
-						<< '(' << state_stack.top() << ")\n";
+					std::string s = "(" + std::to_string(state_stack.top()) + ")";
+					file << "REDUCE\t" << std::setw(20) << std::left
+						<< m_grammar.get_production(action.value)
+						<< std::setw(8) << std::right << s << '\n';
 				}
 			}
 			state = &m_builder.get_state(state_stack.top());
@@ -46,12 +60,16 @@ namespace pitaya {
 			auto action = state->evaluate(m_grammar.endmark());
 			while (action.type != ActionType::ACCEPT) {
 				if (action.type == ActionType::ERROR) {
-					return false;
+					if (file.is_open()) {
+						file << "ERROR\n";
+					}
 				}
 				assert(action.type == ActionType::REDUCE);
 				if (file.is_open()) {
-					file << "REDUCE\t" << m_grammar.get_production(action.value)
-						<< '(' << state_stack.top() << ")\n";
+					std::string s = "(" + std::to_string(state_stack.top()) + ")";
+					file << "REDUCE\t" << std::setw(20) << std::left
+						<< m_grammar.get_production(action.value)
+						<< std::setw(8) << std::right << s << '\n';
 				}
 				auto& p = m_grammar.get_production(action.value);
 				for (size_t i = 0; i < p.rhs_count(); i++) {
@@ -67,6 +85,7 @@ namespace pitaya {
 				state = &m_builder.get_state(state_stack.top());
 				action = state->evaluate(m_grammar.endmark());
 			}
+			file << "ACCEPT\n";
 		}
 
 		file.close();
