@@ -243,13 +243,20 @@ namespace pitaya {
 		}
 		else if (origin.type == ActionType::RRCONFLICT) {
 			m_conflict_count++;
-			// simply keep the origin
+			auto p1 = &m_grammar.get_production(origin.value);
+			auto p2 = &m_grammar.get_production(conflict.value);
+			auto p3 = p1;
+			// resolve to the one whose rank is higher
+			if (p1->rank() < p2->rank()) {
+				origin.value = conflict.value;
+				p3 = p2;
+			}
 			origin.type = ActionType::REDUCE;
 			if (file.is_open()) {
 				file << "[ RRCONFLICT in " << state.m_id << " ]\n"
-					<< '\t' << m_grammar.get_production(origin.value) << '\n'
-					<< '\t' << m_grammar.get_production(conflict.value) << '\n'
-					<< "resolved to\t" << m_grammar.get_production(origin.value) << "\n\n";
+					<< '\t' << *p1 << '\n'
+					<< '\t' << *p2 << '\n'
+					<< "resolved to\t" << *p3 << "\n\n";
 			}
 			m_conflict_count--;
 			return true;
