@@ -5,6 +5,7 @@
 #include <cassert>
 #include <fstream>
 #include <iostream>
+#include <iomanip>
 
 namespace pitaya {
 
@@ -109,9 +110,17 @@ namespace pitaya {
 	}
 
 	void Tokenizer::print_all() const {
+		std::ofstream file;
+		file.open("report\\token_stream", std::ios::trunc);
+		auto cols = 5, col = 0;
 		for (auto& token : m_tokens) {
-			std::cout << "\t" << token.type << "\t"
-				<< token.value << std::endl;
+			std::string t(token.type);
+			t.insert(0, "( ").append("  ").append(token.value).append(" )");
+			file << std::setw(30) << std::left << t;
+			if (++col == cols) {
+				col = 0;
+				file << '\n';
+			}
 		}
 	}
 
