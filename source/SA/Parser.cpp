@@ -1,12 +1,7 @@
 #include "Parser.h"
 
 #include <cassert>
-
-#define REPORT
-
-#ifdef REPORT
-#include <iostream>
-#endif
+#include <fstream>
 
 namespace pitaya {
 
@@ -14,6 +9,9 @@ namespace pitaya {
 		: m_grammar {grammar}, m_builder {builder} {}
 
 	bool Parser::parse(Tokenizer& tokenizer) {
+		std::ofstream file;
+		file.open("report\\parse", std::ios::trunc);
+
 		std::stack<StateID> state_stack {};
 		state_stack.push(1);
 		auto state = &m_builder.get_state(state_stack.top());
@@ -33,15 +31,15 @@ namespace pitaya {
 			if (stop) {
 				return action.type != ActionType::ERROR;
 			}
-#ifdef REPORT
-			if (action.type == ActionType::SHIFT) {
-				std::cout << "SHIFT\t" << token.value << '(' << action.value << ')' << std::endl;
+			if (file.is_open()) {
+				if (action.type == ActionType::SHIFT) {
+					file << "SHIFT\t" << token.value << '(' << action.value << ")\n";
+				}
+				else if (action.type == ActionType::REDUCE) {
+					file << "REDUCE\t" << m_grammar.get_production(action.value)
+						<< '(' << state_stack.top() << ")\n";
+				}
 			}
-			else if (action.type == ActionType::REDUCE) {
-				std::cout << "REDUCE\t" << m_grammar.get_production(action.value)
-					<< '(' << state_stack.top() << ')' << std::endl;
-			}
-#endif
 			state = &m_builder.get_state(state_stack.top());
 		}
 		if (!tokenizer.has_next()) {
@@ -51,10 +49,10 @@ namespace pitaya {
 					return false;
 				}
 				assert(action.type == ActionType::REDUCE);
-#ifdef REPORT
-				std::cout << "REDUCE\t" << m_grammar.get_production(action.value)
-					<< '(' << state_stack.top() << ')' << std::endl;
-#endif
+				if (file.is_open()) {
+					file << "REDUCE\t" << m_grammar.get_production(action.value)
+						<< '(' << state_stack.top() << ")\n";
+				}
 				auto& p = m_grammar.get_production(action.value);
 				for (size_t i = 0; i < p.rhs_count(); i++) {
 					state_stack.pop();
@@ -70,6 +68,8 @@ namespace pitaya {
 				action = state->evaluate(m_grammar.endmark());
 			}
 		}
+
+		file.close();
 		return true;
 	}
 
