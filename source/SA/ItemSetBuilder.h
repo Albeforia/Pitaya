@@ -60,7 +60,8 @@ namespace pitaya {
 		void fill_actions();
 
 		//! Try resolving a conflict.
-		bool resolve_conflict(Action& origin, Action& conflict, const Symbol&);
+		bool resolve_conflict(Action& origin, Action& conflict,
+							  const Symbol&, const ItemSet&);
 
 	};
 

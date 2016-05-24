@@ -190,39 +190,21 @@ namespace pitaya {
 	}
 
 	void ItemSetBuilder::fill_actions() {
-		for (auto& set : m_item_sets) {
-			m_sorted.emplace(set.m_id, &set);
-			for (auto& item : set.m_closure) {
+		for (auto& state : m_item_sets) {
+			m_sorted.emplace(state.m_id, &state);
+			for (auto& item : state.m_closure) {
 				auto& production = m_grammar.get_production(item.production_id());
 				// for every production whose dot is at right end
 				if (item.dot() == production.rhs_count()) {
 					for (auto it = m_grammar.symbol_begin(); it != m_grammar.symbol_end(); it++) {
 						if (item.lookaheads()[**it]) {
 							if (production.id() == 0) {
-								set.add_action(**it, ActionType::ACCEPT, production.id());
+								state.add_action(**it, ActionType::ACCEPT, production.id());
 							}
 							else {
-								Action new_act(ActionType::REDUCE, production.id());
-								auto& act = set.add_action(**it, new_act.type, new_act.value);
-								if (act.type == ActionType::SRCONFLICT
-									|| act.type == ActionType::RRCONFLICT) {
-									if (act.type == ActionType::SRCONFLICT) {
-										std::cout << "[SR-CONFLICT] "
-											<< set.m_id << std::endl
-											<< '\t' << **it << std::endl
-											<< '\t' << m_grammar.get_production(new_act.value) << std::endl;
-									}
-									else {
-										std::cout << "[RR-CONFLICT] "
-											<< set.m_id << std::endl
-											<< '\t' << m_grammar.get_production(act.value) << std::endl
-											<< '\t' << m_grammar.get_production(new_act.value) << std::endl;
-									}
-									m_conflict_count++;
-									if (resolve_conflict(act, new_act, **it)) {
-										m_conflict_count--;
-									}
-								}
+								Action new_act {ActionType::REDUCE, production.id()};
+								auto& act = state.add_action(**it, new_act.type, new_act.value);
+								resolve_conflict(act, new_act, **it, state);
 							}
 						}
 					}
@@ -231,13 +213,49 @@ namespace pitaya {
 		}
 	}
 
-	bool ItemSetBuilder::resolve_conflict(Action& origin, Action& conflict, const Symbol& sym) {
+	bool ItemSetBuilder::resolve_conflict(Action& origin, Action& conflict,
+										  const Symbol& sym, const ItemSet& state) {
+		static auto first_time = true;
+		static auto mode = std::ios::trunc;
+		if (first_time) {
+			first_time = false;
+		}
+		else {
+			mode = std::ios::app;
+		}
+
+		std::ofstream file;
+		file.open("report\\conflicts", mode);
+		// TODO use precedence and associativity to resolve conflicts
 		if (origin.type == ActionType::SRCONFLICT) {
+			m_conflict_count++;
+			// simply discard SHIFT
 			origin.type = ActionType::REDUCE;
 			origin.value = conflict.value;
+			if (file.is_open()) {
+				file << "[ SRCONFLICT in " << state.m_id << " ]\n"
+					<< '\t' << sym << '\n'
+					<< '\t' << m_grammar.get_production(conflict.value) << '\n'
+					<< "resolved to\t" << sym << "\n\n";
+			}
+			m_conflict_count--;
 			return true;
 		}
-		return false;
+		else if (origin.type == ActionType::RRCONFLICT) {
+			m_conflict_count++;
+			// simply keep the origin
+			origin.type = ActionType::REDUCE;
+			if (file.is_open()) {
+				file << "[ RRCONFLICT in " << state.m_id << " ]\n"
+					<< '\t' << m_grammar.get_production(origin.value) << '\n'
+					<< '\t' << m_grammar.get_production(conflict.value) << '\n'
+					<< "resolved to\t" << m_grammar.get_production(origin.value) << "\n\n";
+			}
+			m_conflict_count--;
+			return true;
+		}
+		file.close();
+		return true;
 	}
 
 	const ItemSet& ItemSetBuilder::get_state(StateID id) const {
@@ -259,6 +277,7 @@ namespace pitaya {
 				file << "[state " << set.m_id << "]\n";
 				///*
 				for (auto& item : set.m_closure) {
+					if (!item.is_kernel()) continue;
 					auto& p = m_grammar.get_production(item.production_id());
 					file << ">\t" << std::setw(20) << std::left << p[0] << "==>\t";
 					for (std::size_t i = 0; i <= p.rhs_count(); i++) {
@@ -294,7 +313,7 @@ namespace pitaya {
 				}
 				file << '\n';
 			}
-			file << "conflicts: " << m_conflict_count << '\n';
+			file << "Total conflicts: " << m_conflict_count << '\n';
 		}
 		else {
 			std::cout << "fail opening file!" << std::endl;
