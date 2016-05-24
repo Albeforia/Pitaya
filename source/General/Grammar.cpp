@@ -120,24 +120,15 @@ namespace pitaya {
 	void Grammar::rearrange_productions() {
 		assert(m_productions.size() > 0);
 
-		// sort productions by lhs then by id
+		// sort productions by lhs then by rank
 		std::sort(m_productions.begin(), m_productions.end(), [](auto& a, auto& b) {
 			if (a[0] == b[0]) {
-				return a.id() < b.id();
+				return a.m_rank < b.m_rank;
 			}
 			else {
 				return a[0].rank < b[0].rank;
 			}
 		});
-
-		for (auto& p : m_productions) {
-			for (size_t i = 0; i < p.rhs_count(); i++) {
-				if (p[i + 1].type() == SymbolType::NONTERMINAL) {
-					p.m_rhs_has_nonterminal = true;
-					break;
-				}
-			}
-		}
 
 		auto curr_lhs = m_productions[0][0].rank;
 		std::size_t start = 0;

@@ -16,14 +16,13 @@ namespace pitaya {
 	public:
 
 		//! Constructor.
-		/*!
-			\param id ID of the production.
-			\param lhs Left-hand side of the production.
-		*/
-		Production(ProductionID id, SharedSymbol lhs);
+		Production(Rank, SharedSymbol lhs);
 
 		//! ID of the production.
 		ProductionID id() const;
+
+		//! Rank of the production.
+		Rank rank() const;
 
 		//! Number of rhs.
 		std::size_t rhs_count() const;
@@ -34,18 +33,17 @@ namespace pitaya {
 		*/
 		Symbol& operator[](std::size_t pos) const;
 
-		//! Whether right-hand side contains any nonterminals.
-		bool rhs_has_nonterminal() const;
-
 		//! Output.
 		friend std::ostream& operator<<(std::ostream&, const Production&);
 
 	private:
 
+		//! Unique number marking the first appearance of the production.
+		Rank m_rank;
+
 		ProductionID m_id;					//!< ID of the production.
 		SharedSymbol m_lhs;					//!< Left-hand side of the production.
 		std::vector<SharedSymbol> m_rhs;	//!< Right-hand side of the production.
-		bool m_rhs_has_nonterminal;			//!< Whether right-hand side contains any nonterminals.
 
 	};
 
