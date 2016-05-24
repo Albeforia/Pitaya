@@ -3,7 +3,9 @@
 
 #include <cassert>
 #include <algorithm>
+#include <fstream>
 #include <iostream>
+#include <iomanip>
 
 namespace pitaya {
 
@@ -122,24 +124,42 @@ namespace pitaya {
 	}
 
 	void StateBuilder::print_all() const {
-		for (auto& p : m_sorted) {
-			auto& state = *p.second;
-			std::cout << state.id() << ":\t" << std::endl;
-			for (auto& item : state.m_closure) {
-				std::cout << "<" << m_grammar.get_symbol(item.first) << "\t"
-					<< m_grammar.get_symbol(item.second) << ">" << std::endl;
-			}
-			if (state.is_final()) {
-				std::cout << "[final]\t" << m_grammar.get_symbol(state.token_index());
-			}
-			std::cout << std::endl;
-			State::ID to;
-			for (auto it = m_grammar.symbol_begin(); it != m_grammar.symbol_end(); it++) {
-				if (state.transit(**it, to)) {
-					std::cout << "\t" << **it << " --> " << to << std::endl;
+		std::ofstream file;
+		file.open("report\\lexical_states", std::ios::trunc);
+		if (file.is_open()) {
+			for (auto& p : m_sorted) {
+				auto& state = *p.second;
+				file << "[state " << state.m_id << "]";
+				if (state.is_final()) {
+					file << " FIN> " << m_grammar.get_symbol(state.token_index());
 				}
+				file << '\n';
+
+				auto cols = 3, col = 0;
+				for (auto& item : state.m_closure) {
+					std::string it;
+					it.append("( ").append(m_grammar.get_symbol(item.first).name())
+						.append("  ").append(m_grammar.get_symbol(item.second).name())
+						.append(" )");
+					file << std::setw(40) << std::left << it;
+					if (++col == cols) {
+						col = 0;
+						file << '\n';
+					}
+				}
+				if (col != 0) {
+					file << '\n';
+				}
+
+				State::ID to;
+				for (auto it = m_grammar.symbol_begin(); it != m_grammar.symbol_end(); it++) {
+					if (state.transit(**it, to)) {
+						file << ">\t" << std::setw(20)
+							<< **it << "-->\t" << to << '\n';
+					}
+				}
+				file << '\n';
 			}
-			std::cout << std::endl;
 		}
 	}
 
