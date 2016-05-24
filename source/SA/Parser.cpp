@@ -63,6 +63,7 @@ namespace pitaya {
 					if (file.is_open()) {
 						file << "ERROR\n";
 					}
+					return false;
 				}
 				assert(action.type == ActionType::REDUCE);
 				if (file.is_open()) {
