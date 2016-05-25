@@ -18,7 +18,7 @@ namespace pitaya {
 		friend class StateBuilder;
 
 		using ID = std::size_t;
-		// <symbol_index, token_index>
+		//! <symbol_index, token_index>
 		using Item = std::pair<std::size_t, std::size_t>;
 
 		//! Constructor.
@@ -30,10 +30,7 @@ namespace pitaya {
 		//! ID of the state.
 		ID id() const;
 
-		//! Add an item to the basis.
-		//void add_base(const Production&, BasicItem::Dot = 0);
-
-		//! Add a symbol to basis.
+		//! Add an item to basis.
 		void add_base(const Symbol&, std::size_t token_index);
 
 		//! Compute the closure of basis.
@@ -42,7 +39,7 @@ namespace pitaya {
 		//! Whether this is a final state.
 		bool& is_final() const;
 
-		//! Token type of the state.
+		//! Token index of the state.
 		std::size_t& token_index() const;
 
 		//! Add a transition.
@@ -78,15 +75,13 @@ namespace pitaya {
 	private:
 
 		ID m_id;								//!< ID of the state.
-		//std::vector<BasicItem> m_basis;			//!< Basis of the state.
-		std::vector<Item> m_basis;			//!< Basis of the state.
+		std::vector<Item> m_basis;				//!< Basis of the state.
 
-		//!< Closure of the state.
-		//SymbolSet m_closure;
+		//! Closure of the state.
 		std::unordered_set<Item, boost::hash<Item>> m_closure;
 
 		mutable bool m_is_final;				//!< Whether this is a final state.
-		mutable std::size_t m_token_index;		//!< Token type of the state.
+		mutable std::size_t m_token_index;		//!< Token index of the state.
 		mutable std::size_t m_final_index;		//!< Used in token type decision.
 
 		//! State transitions.

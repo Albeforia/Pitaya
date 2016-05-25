@@ -79,7 +79,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="functions.html"><span>All</span></a></li>
       <li><a href="functions_func.html"><span>Functions</span></a></li>
       <li class="current"><a href="functions_vars.html"><span>Variables</span></a></li>
+      <li><a href="functions_type.html"><span>Typedefs</span></a></li>
       <li><a href="functions_rela.html"><span>Related&#160;Functions</span></a></li>
+    </ul>
+  </div>
+  <div id="navrow4" class="tabs3">
+    <ul class="tablist">
+      <li><a href="#index_c"><span>c</span></a></li>
+      <li><a href="#index_m"><span>m</span></a></li>
+      <li><a href="#index_r"><span>r</span></a></li>
+      <li class="current"><a href="#index_v"><span>v</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -112,10 +121,16 @@ $(document).ready(function(){initNavTree('functions_vars.html','');});
 </div>
 
 <div class="contents">
-&#160;<ul>
+&#160;
+
+<h3><a class="anchor" id="index_c"></a>- c -</h3><ul>
 <li>complete
 : <a class="el" href="classpitaya_1_1_item.html#ab68d342ea762ce99b04034391185c128">pitaya::Item</a>
 </li>
+</ul>
+
+
+<h3><a class="anchor" id="index_m"></a>- m -</h3><ul>
 <li>m_actions
 : <a class="el" href="classpitaya_1_1_item_set.html#a634d043b14f0ab428d8b1017a7b619e1">pitaya::ItemSet</a>
 </li>
@@ -125,14 +140,37 @@ $(document).ready(function(){initNavTree('functions_vars.html','');});
 <li>m_backward_plink
 : <a class="el" href="classpitaya_1_1_item.html#ad0ad1b0d8d374fbcdc999fa643d38f77">pitaya::Item</a>
 </li>
+<li>m_basis
+: <a class="el" href="classpitaya_1_1_state.html#ae555346731e2f87a42ade12d865a38b8">pitaya::State</a>
+</li>
+<li>m_builder
+: <a class="el" href="classpitaya_1_1_parser.html#a71eca8cb54d9e2c17e12b691aa046bc2">pitaya::Parser</a>
+, <a class="el" href="classpitaya_1_1_tokenizer.html#ad29a9c590e1bda3fe4b7e284fda6844b">pitaya::Tokenizer</a>
+</li>
 <li>m_closure
 : <a class="el" href="classpitaya_1_1_item_set.html#a46dcb8acbdff45750db300e0cb2b0cb4">pitaya::ItemSet</a>
+, <a class="el" href="classpitaya_1_1_state.html#a9f62706b0ceb17d683836bff57a49cdf">pitaya::State</a>
+</li>
+<li>m_conflict_count
+: <a class="el" href="classpitaya_1_1_item_set_builder.html#a2a2585c28812480eb6f1aa8a3f500e88">pitaya::ItemSetBuilder</a>
 </li>
 <li>m_curr_item_set
 : <a class="el" href="classpitaya_1_1_item_set_builder.html#afa82f2c9e792ce4d9d02d4d2de802100">pitaya::ItemSetBuilder</a>
 </li>
+<li>m_curr_line
+: <a class="el" href="classpitaya_1_1_tokenizer.html#afc656fd5933d4ca364c1de7ff9762d5d">pitaya::Tokenizer</a>
+</li>
+<li>m_curr_state
+: <a class="el" href="classpitaya_1_1_state_builder.html#a2234e6bbcac278e05717f0768a900251">pitaya::StateBuilder</a>
+</li>
+<li>m_current
+: <a class="el" href="classpitaya_1_1_tokenizer.html#a105d3f109a61f4440cbfe23879243e8f">pitaya::Tokenizer</a>
+</li>
 <li>m_dot
-: <a class="el" href="classpitaya_1_1_item.html#ac1e7282abf352fcfaa6a090505278f1c">pitaya::Item</a>
+: <a class="el" href="classpitaya_1_1_basic_item.html#af2f1996b5b64b67305b3d2f8f9a1b939">pitaya::BasicItem</a>
+</li>
+<li>m_final_index
+: <a class="el" href="classpitaya_1_1_state.html#a6e9781e2f268995c8d2b88d3af649232">pitaya::State</a>
 </li>
 <li>m_first_set
 : <a class="el" href="classpitaya_1_1_symbol.html#a8a67a1243ed92efb4d1ca0115d285801">pitaya::Symbol</a>
@@ -141,12 +179,24 @@ $(document).ready(function(){initNavTree('functions_vars.html','');});
 : <a class="el" href="classpitaya_1_1_item.html#a951c6d85972d1537985264c3c0be1ce7">pitaya::Item</a>
 </li>
 <li>m_grammar
-: <a class="el" href="classpitaya_1_1_item_set_builder.html#ac53ab36de91af329dc086e97ba7d02a1">pitaya::ItemSetBuilder</a>
+: <a class="el" href="classpitaya_1_1_item_set_builder.html#ae1f3cd3633cae47604730bd0d25c29a0">pitaya::ItemSetBuilder</a>
+, <a class="el" href="classpitaya_1_1_parser.html#a9bb8037cac53916e5b5050b9c82df7fd">pitaya::Parser</a>
+, <a class="el" href="classpitaya_1_1_state_builder.html#a3772968bf3d2f6a51062144c974b3164">pitaya::StateBuilder</a>
+, <a class="el" href="classpitaya_1_1_tokenizer.html#a68c543cbf1ab7bad1cc8e164cc4c8efd">pitaya::Tokenizer</a>
 </li>
 <li>m_id
 : <a class="el" href="classpitaya_1_1_item_set.html#a934fc0a1e7b56e1ec9c5ea9c976640ed">pitaya::ItemSet</a>
 , <a class="el" href="classpitaya_1_1_production.html#a67fa3bb2695d36e2e6d3b23f0ffb476a">pitaya::Production</a>
-, <a class="el" href="classpitaya_1_1_symbol.html#a3412b9a0b45a63de80bd51d86c457f41">pitaya::Symbol</a>
+, <a class="el" href="classpitaya_1_1_state.html#afbbdb95fc74a0cbe68caaa88f3caa1a6">pitaya::State</a>
+</li>
+<li>m_index
+: <a class="el" href="classpitaya_1_1_symbol.html#aaa432d2dfc6429cd5d0b753790a91c3c">pitaya::Symbol</a>
+</li>
+<li>m_is_final
+: <a class="el" href="classpitaya_1_1_state.html#a5adfd8061fcdd0cb3d6ccbd8cc5fb4cd">pitaya::State</a>
+</li>
+<li>m_is_token
+: <a class="el" href="classpitaya_1_1_symbol.html#a194ca5b5a39c7b25edd3112238f6c248">pitaya::Symbol</a>
 </li>
 <li>m_item_sets
 : <a class="el" href="classpitaya_1_1_item_set_builder.html#ae3db21a1023de574862e5b5c92b1cb48">pitaya::ItemSetBuilder</a>
@@ -166,6 +216,12 @@ $(document).ready(function(){initNavTree('functions_vars.html','');});
 <li>m_name
 : <a class="el" href="classpitaya_1_1_symbol.html#a338096e60b05a8691c9ff4b57e217882">pitaya::Symbol</a>
 </li>
+<li>m_nonterminal_end
+: <a class="el" href="classpitaya_1_1_grammar.html#a1481a9f66d7b26cbc29200793b3dc035">pitaya::Grammar</a>
+</li>
+<li>m_nonterminal_start
+: <a class="el" href="classpitaya_1_1_grammar.html#a593ce7dac69e423038c89f493134b573">pitaya::Grammar</a>
+</li>
 <li>m_plinks
 : <a class="el" href="classpitaya_1_1_item_set_builder.html#a1afe1bb640e345574200918ac80c435b">pitaya::ItemSetBuilder</a>
 </li>
@@ -173,13 +229,16 @@ $(document).ready(function(){initNavTree('functions_vars.html','');});
 : <a class="el" href="classpitaya_1_1_symbol.html#a85826e2dce767934eb149c81f97a9971">pitaya::Symbol</a>
 </li>
 <li>m_production
-: <a class="el" href="classpitaya_1_1_item.html#a234b3597ffca85e2beaa23c2fa098d23">pitaya::Item</a>
+: <a class="el" href="classpitaya_1_1_basic_item.html#a700b9d1c7b02132d1539463535c45ee7">pitaya::BasicItem</a>
 </li>
 <li>m_productions
 : <a class="el" href="classpitaya_1_1_grammar.html#a35e5b3fce0e5f41eb499cfef55577eb3">pitaya::Grammar</a>
 </li>
 <li>m_productions_by_lhs
-: <a class="el" href="classpitaya_1_1_grammar.html#a3d2e545b2958b9a830d436f6e4d28cee">pitaya::Grammar</a>
+: <a class="el" href="classpitaya_1_1_grammar.html#a26b5db059ff708fe907ab98d6259f227">pitaya::Grammar</a>
+</li>
+<li>m_rank
+: <a class="el" href="classpitaya_1_1_production.html#ad98b55483642ee28ba02c220dcbfb663">pitaya::Production</a>
 </li>
 <li>m_rhs
 : <a class="el" href="classpitaya_1_1_production.html#ab88457a784b493f998775f99f3ee73d4">pitaya::Production</a>
@@ -187,15 +246,48 @@ $(document).ready(function(){initNavTree('functions_vars.html','');});
 <li>m_set
 : <a class="el" href="classpitaya_1_1_symbol_set.html#a50feb3ce1134273afcd27cd040a0c114">pitaya::SymbolSet</a>
 </li>
+<li>m_shared_terminal
+: <a class="el" href="classpitaya_1_1_symbol.html#a1f2c96e2dffdd47bf6ebe01f61be40ea">pitaya::Symbol</a>
+</li>
+<li>m_sorted
+: <a class="el" href="classpitaya_1_1_item_set_builder.html#a96b052102f8ec7e563f5c137361ed2bb">pitaya::ItemSetBuilder</a>
+, <a class="el" href="classpitaya_1_1_state_builder.html#a62d3a398b96127948ed2839b5dfd1f65">pitaya::StateBuilder</a>
+</li>
+<li>m_states
+: <a class="el" href="classpitaya_1_1_state_builder.html#a19c136654667847f383fab964f1a6ad6">pitaya::StateBuilder</a>
+</li>
 <li>m_symbols
 : <a class="el" href="classpitaya_1_1_grammar.html#addb4dce8a623f97fa1c94f4fe713e05c">pitaya::Grammar</a>
 </li>
-<li>m_terminal_count
-: <a class="el" href="classpitaya_1_1_grammar.html#ad9b0031b4b291ac5eb0a0b4eac10fbcd">pitaya::Grammar</a>
+<li>m_terminal_end
+: <a class="el" href="classpitaya_1_1_grammar.html#af458b57dfadff50e618e71c2cab098cc">pitaya::Grammar</a>
+</li>
+<li>m_terminal_start
+: <a class="el" href="classpitaya_1_1_grammar.html#a181a65306b4c60e349c2bc6dac17fe22">pitaya::Grammar</a>
+</li>
+<li>m_token_index
+: <a class="el" href="classpitaya_1_1_state.html#ab46206327d5e2cd0bab9f9a45e95936c">pitaya::State</a>
+</li>
+<li>m_tokens
+: <a class="el" href="classpitaya_1_1_tokenizer.html#a2ee142a7684bbcc482c42d7b0decd17d">pitaya::Tokenizer</a>
+</li>
+<li>m_transitions
+: <a class="el" href="classpitaya_1_1_state.html#aa836b9bb77a7504873109f695adbdf9f">pitaya::State</a>
 </li>
 <li>m_type
 : <a class="el" href="classpitaya_1_1_symbol.html#a49021f0ffae4f57c836b8c9a1d945d96">pitaya::Symbol</a>
 </li>
+</ul>
+
+
+<h3><a class="anchor" id="index_r"></a>- r -</h3><ul>
+<li>rank
+: <a class="el" href="classpitaya_1_1_symbol.html#a0dd114319cfc5c9dd2e810720199bbff">pitaya::Symbol</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_v"></a>- v -</h3><ul>
 <li>value
 : <a class="el" href="structpitaya_1_1_action.html#a010d8e0487e9dabea7485292b661689d">pitaya::Action</a>
 </li>

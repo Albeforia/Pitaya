@@ -10,7 +10,6 @@
 namespace pitaya {
 
 	using SharedSymbol = std::shared_ptr<Symbol>;
-	//using SymbolID = std::size_t;
 	using Rank = std::size_t;
 
 	//! Symbol type.
@@ -46,7 +45,7 @@ namespace pitaya {
 
 		using SymbolName = const char*;
 
-		//!
+		//! Unique number marking the first appearance of the symbol.
 		const Rank rank;
 
 		//! Name of this symbol.
@@ -73,7 +72,7 @@ namespace pitaya {
 		//! First set of this symbol.
 		SymbolSet& first_set();
 
-		//!
+		//! The shared symbol of this multi-terminal.
 		Symbol& shared_terminal();
 
 		//! Use this factory function to 'create' symbols.
@@ -122,7 +121,7 @@ namespace pitaya {
 		bool m_is_token;				//!< Whether the symbol is a token.
 		bool m_lambda;					//!< True if the symbol can generate an empty string.
 		SymbolSet m_first_set;			//!< First set of the symbol.
-		Symbol* m_shared_terminal;
+		Symbol* m_shared_terminal;		//!< The shared symbol of this multi-terminal.
 
 		std::size_t m_index;			//!< Index of the symbol.
 

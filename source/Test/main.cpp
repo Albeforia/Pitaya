@@ -39,10 +39,10 @@ int main() {
 	auto parser {std::make_unique<Parser>(*sa,*builder2)};
 	auto acc = parser->parse(*tokenizer);
 	if (!acc) {
-		std::cout << "syntax error!";
+		std::cout << "ERROR";
 	}
 	else {
-		std::cout << "accept!";
+		std::cout << "ACCEPT";
 	}
 
 	return 0;

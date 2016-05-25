@@ -119,13 +119,18 @@ $(document).ready(function(){initNavTree('classpitaya_1_1_production.html','');}
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a76d8a2118a2913e9264aeb5a07df1524"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_production.html#a76d8a2118a2913e9264aeb5a07df1524">Production</a> (ProductionID <a class="el" href="classpitaya_1_1_production.html#a1494cb492042267e39eeaa43eb49fe8e">id</a>, SharedSymbol lhs)</td></tr>
-<tr class="memdesc:a76d8a2118a2913e9264aeb5a07df1524"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a76d8a2118a2913e9264aeb5a07df1524">More...</a><br /></td></tr>
-<tr class="separator:a76d8a2118a2913e9264aeb5a07df1524"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9eac5a151492cddb361786761a0d7d52"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9eac5a151492cddb361786761a0d7d52"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_production.html#a9eac5a151492cddb361786761a0d7d52">Production</a> (Rank, SharedSymbol lhs)</td></tr>
+<tr class="memdesc:a9eac5a151492cddb361786761a0d7d52"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. <br /></td></tr>
+<tr class="separator:a9eac5a151492cddb361786761a0d7d52"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1494cb492042267e39eeaa43eb49fe8e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1494cb492042267e39eeaa43eb49fe8e"></a>
 ProductionID&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_production.html#a1494cb492042267e39eeaa43eb49fe8e">id</a> () const </td></tr>
 <tr class="memdesc:a1494cb492042267e39eeaa43eb49fe8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">ID of the production. <br /></td></tr>
 <tr class="separator:a1494cb492042267e39eeaa43eb49fe8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5890c6b9ae62c218c9c86fa554c65860"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5890c6b9ae62c218c9c86fa554c65860"></a>
+Rank&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_production.html#a5890c6b9ae62c218c9c86fa554c65860">rank</a> () const </td></tr>
+<tr class="memdesc:a5890c6b9ae62c218c9c86fa554c65860"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rank of the production. <br /></td></tr>
+<tr class="separator:a5890c6b9ae62c218c9c86fa554c65860"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a650aabc78b6cd74821a93a9a4a83a40c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a650aabc78b6cd74821a93a9a4a83a40c"></a>
 std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_production.html#a650aabc78b6cd74821a93a9a4a83a40c">rhs_count</a> () const </td></tr>
 <tr class="memdesc:a650aabc78b6cd74821a93a9a4a83a40c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of rhs. <br /></td></tr>
@@ -136,6 +141,10 @@ std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
+<tr class="memitem:ad98b55483642ee28ba02c220dcbfb663"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad98b55483642ee28ba02c220dcbfb663"></a>
+Rank&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_production.html#ad98b55483642ee28ba02c220dcbfb663">m_rank</a></td></tr>
+<tr class="memdesc:ad98b55483642ee28ba02c220dcbfb663"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unique number marking the first appearance of the production. <br /></td></tr>
+<tr class="separator:ad98b55483642ee28ba02c220dcbfb663"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a67fa3bb2695d36e2e6d3b23f0ffb476a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a67fa3bb2695d36e2e6d3b23f0ffb476a"></a>
 ProductionID&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_production.html#a67fa3bb2695d36e2e6d3b23f0ffb476a">m_id</a></td></tr>
 <tr class="memdesc:a67fa3bb2695d36e2e6d3b23f0ffb476a"><td class="mdescLeft">&#160;</td><td class="mdescRight">ID of the production. <br /></td></tr>
@@ -154,46 +163,14 @@ Friends</h2></td></tr>
 <tr class="memitem:ae2c7ea266c37c6ff2db73d83084a20d9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae2c7ea266c37c6ff2db73d83084a20d9"></a>
 class&#160;</td><td class="memItemRight" valign="bottom"><b>Grammar</b></td></tr>
 <tr class="separator:ae2c7ea266c37c6ff2db73d83084a20d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abde4321a10d0b05f27509ed1bc56d20a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abde4321a10d0b05f27509ed1bc56d20a"></a>
+std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_production.html#abde4321a10d0b05f27509ed1bc56d20a">operator&lt;&lt;</a> (std::ostream &amp;, const <a class="el" href="classpitaya_1_1_production.html">Production</a> &amp;)</td></tr>
+<tr class="memdesc:abde4321a10d0b05f27509ed1bc56d20a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output. <br /></td></tr>
+<tr class="separator:abde4321a10d0b05f27509ed1bc56d20a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classpitaya_1_1_production.html" title="Production class. ">Production</a> class. </p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a76d8a2118a2913e9264aeb5a07df1524"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">pitaya::Production::Production </td>
-          <td>(</td>
-          <td class="paramtype">ProductionID&#160;</td>
-          <td class="paramname"><em>id</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">SharedSymbol&#160;</td>
-          <td class="paramname"><em>lhs</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Constructor. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">id</td><td>ID of the production. </td></tr>
-    <tr><td class="paramname">lhs</td><td>Left-hand side of the production. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="a8318a22a97488c532c0349174d7724ad"></a>
 <div class="memitem">
 <div class="memproto">

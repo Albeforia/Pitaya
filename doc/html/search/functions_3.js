@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['dot',['dot',['../classpitaya_1_1_item.html#a51c7db062abfe70a04a405d21ff8a8d0',1,'pitaya::Item']]]
+  ['decide_5ftoken_5ftype',['decide_token_type',['../classpitaya_1_1_state_builder.html#abdb955f8d26772ed1dfde445e00ab60b',1,'pitaya::StateBuilder']]],
+  ['dot',['dot',['../classpitaya_1_1_basic_item.html#ad200adb6cf41aa37e1b918883d3a288a',1,'pitaya::BasicItem']]]
 ];

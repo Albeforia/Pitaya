@@ -14,7 +14,7 @@ namespace pitaya {
 		//! Constructor.
 		BasicItem(ProductionID, Dot = 0);
 
-		//! The id of the production upon which the item is based.
+		//! The id of the production upon which this item is based.
 		ProductionID production_id() const;
 
 		//! The parse point.
@@ -28,7 +28,7 @@ namespace pitaya {
 
 	protected:
 
-		ProductionID m_production;	//!< The id of the production upon which the item is based.
+		ProductionID m_production;	//!< The id of the production upon which this item is based.
 		Dot m_dot;					//!< The parse point.
 
 	};

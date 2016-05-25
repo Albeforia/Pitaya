@@ -71,8 +71,7 @@ namespace pitaya {
 		if (find != m_item_sets.end()) {
 			// a set with the same kernels already exists
 			// copy all the backward propagation links
-			for (std::size_t i = 0; i < m_curr_item_set.kernel_count(); i++) {
-				auto& from_item = m_curr_item_set.get_kernel(i);
+			for (auto& from_item : m_curr_item_set.m_kernels) {
 				auto& res = find->m_closure.find(from_item);
 				// the closure must have been computed
 				assert(res != find->m_closure.end());

@@ -119,10 +119,10 @@ $(document).ready(function(){initNavTree('classpitaya_1_1_item_set_builder.html'
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:af2549c593533af55cbe10a7fe4ff2bf7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af2549c593533af55cbe10a7fe4ff2bf7"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_item_set_builder.html#af2549c593533af55cbe10a7fe4ff2bf7">ItemSetBuilder</a> (std::shared_ptr&lt; <a class="el" href="classpitaya_1_1_grammar.html">Grammar</a> &gt; &amp;)</td></tr>
-<tr class="memdesc:af2549c593533af55cbe10a7fe4ff2bf7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. <br /></td></tr>
-<tr class="separator:af2549c593533af55cbe10a7fe4ff2bf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abcd73f995ddfb40b589eef0dd844e919"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abcd73f995ddfb40b589eef0dd844e919"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_item_set_builder.html#abcd73f995ddfb40b589eef0dd844e919">ItemSetBuilder</a> (<a class="el" href="classpitaya_1_1_grammar.html">Grammar</a> &amp;)</td></tr>
+<tr class="memdesc:abcd73f995ddfb40b589eef0dd844e919"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. <br /></td></tr>
+<tr class="separator:abcd73f995ddfb40b589eef0dd844e919"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8920476a8eea4d4342adc6fb1df9df99"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8920476a8eea4d4342adc6fb1df9df99"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_item_set_builder.html#a8920476a8eea4d4342adc6fb1df9df99">~ItemSetBuilder</a> ()</td></tr>
 <tr class="memdesc:a8920476a8eea4d4342adc6fb1df9df99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
@@ -131,6 +131,10 @@ Public Member Functions</h2></td></tr>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_item_set_builder.html#a3d50f37173ce5a99dc461fb350505209">build</a> ()</td></tr>
 <tr class="memdesc:a3d50f37173ce5a99dc461fb350505209"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build all item sets. <br /></td></tr>
 <tr class="separator:a3d50f37173ce5a99dc461fb350505209"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f0f7ffe7dcae1d0e44b44c015753276"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3f0f7ffe7dcae1d0e44b44c015753276"></a>
+const <a class="el" href="classpitaya_1_1_item_set.html">ItemSet</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_item_set_builder.html#a3f0f7ffe7dcae1d0e44b44c015753276">get_state</a> (StateID) const </td></tr>
+<tr class="memdesc:a3f0f7ffe7dcae1d0e44b44c015753276"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a state by id. <br /></td></tr>
+<tr class="separator:a3f0f7ffe7dcae1d0e44b44c015753276"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a56914dc3b680ede6858d90bab8ab62bb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a56914dc3b680ede6858d90bab8ab62bb"></a>
 <a class="el" href="structpitaya_1_1_p_link_node.html">PLinkNode</a> *&amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_item_set_builder.html#a56914dc3b680ede6858d90bab8ab62bb">new_link</a> ()</td></tr>
 <tr class="memdesc:a56914dc3b680ede6858d90bab8ab62bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a new <a class="el" href="structpitaya_1_1_p_link_node.html" title="Node on propagation links. ">PLinkNode</a>. <br /></td></tr>
@@ -158,17 +162,25 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_item_set_builder.html#a52431e8ce0d419a20adbfc8d1545ee55">fill_actions</a> ()</td></tr>
 <tr class="memdesc:a52431e8ce0d419a20adbfc8d1545ee55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate all actions. <br /></td></tr>
 <tr class="separator:a52431e8ce0d419a20adbfc8d1545ee55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66f59764956eb975219e583f6c2829d1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a66f59764956eb975219e583f6c2829d1"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_item_set_builder.html#a66f59764956eb975219e583f6c2829d1">resolve_conflict</a> (<a class="el" href="structpitaya_1_1_action.html">Action</a> &amp;origin, <a class="el" href="structpitaya_1_1_action.html">Action</a> &amp;conflict, const <a class="el" href="classpitaya_1_1_symbol.html">Symbol</a> &amp;, const <a class="el" href="classpitaya_1_1_item_set.html">ItemSet</a> &amp;)</td></tr>
+<tr class="memdesc:a66f59764956eb975219e583f6c2829d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Try resolving a conflict. <br /></td></tr>
+<tr class="separator:a66f59764956eb975219e583f6c2829d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:ac53ab36de91af329dc086e97ba7d02a1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac53ab36de91af329dc086e97ba7d02a1"></a>
-std::shared_ptr&lt; <a class="el" href="classpitaya_1_1_grammar.html">Grammar</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_item_set_builder.html#ac53ab36de91af329dc086e97ba7d02a1">m_grammar</a></td></tr>
-<tr class="memdesc:ac53ab36de91af329dc086e97ba7d02a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">The grammar this builder works on. <br /></td></tr>
-<tr class="separator:ac53ab36de91af329dc086e97ba7d02a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1f3cd3633cae47604730bd0d25c29a0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae1f3cd3633cae47604730bd0d25c29a0"></a>
+<a class="el" href="classpitaya_1_1_grammar.html">Grammar</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_item_set_builder.html#ae1f3cd3633cae47604730bd0d25c29a0">m_grammar</a></td></tr>
+<tr class="memdesc:ae1f3cd3633cae47604730bd0d25c29a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">The grammar this builder works on. <br /></td></tr>
+<tr class="separator:ae1f3cd3633cae47604730bd0d25c29a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae3db21a1023de574862e5b5c92b1cb48"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae3db21a1023de574862e5b5c92b1cb48"></a>
 std::unordered_set&lt; <a class="el" href="classpitaya_1_1_item_set.html">ItemSet</a>, boost::hash&lt; <a class="el" href="classpitaya_1_1_item_set.html">ItemSet</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_item_set_builder.html#ae3db21a1023de574862e5b5c92b1cb48">m_item_sets</a></td></tr>
 <tr class="memdesc:ae3db21a1023de574862e5b5c92b1cb48"><td class="mdescLeft">&#160;</td><td class="mdescRight">All ItemSets. <br /></td></tr>
 <tr class="separator:ae3db21a1023de574862e5b5c92b1cb48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96b052102f8ec7e563f5c137361ed2bb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a96b052102f8ec7e563f5c137361ed2bb"></a>
+std::map&lt; StateID, const <a class="el" href="classpitaya_1_1_item_set.html">ItemSet</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_item_set_builder.html#a96b052102f8ec7e563f5c137361ed2bb">m_sorted</a></td></tr>
+<tr class="memdesc:a96b052102f8ec7e563f5c137361ed2bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sorted item-sets for quick access. <br /></td></tr>
+<tr class="separator:a96b052102f8ec7e563f5c137361ed2bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afa82f2c9e792ce4d9d02d4d2de802100"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afa82f2c9e792ce4d9d02d4d2de802100"></a>
 <a class="el" href="classpitaya_1_1_item_set.html">ItemSet</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_item_set_builder.html#afa82f2c9e792ce4d9d02d4d2de802100">m_curr_item_set</a></td></tr>
 <tr class="memdesc:afa82f2c9e792ce4d9d02d4d2de802100"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="classpitaya_1_1_item_set.html" title="ItemSet class. ">ItemSet</a> being built currently. <br /></td></tr>
@@ -177,6 +189,10 @@ std::unordered_set&lt; <a class="el" href="classpitaya_1_1_item_set.html">ItemSe
 std::vector&lt; <a class="el" href="structpitaya_1_1_p_link_node.html">PLinkNode</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_item_set_builder.html#a1afe1bb640e345574200918ac80c435b">m_plinks</a></td></tr>
 <tr class="memdesc:a1afe1bb640e345574200918ac80c435b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maintain all PLinkNodes. <br /></td></tr>
 <tr class="separator:a1afe1bb640e345574200918ac80c435b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a2585c28812480eb6f1aa8a3f500e88"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2a2585c28812480eb6f1aa8a3f500e88"></a>
+std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_item_set_builder.html#a2a2585c28812480eb6f1aa8a3f500e88">m_conflict_count</a></td></tr>
+<tr class="memdesc:a2a2585c28812480eb6f1aa8a3f500e88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of conflicts. <br /></td></tr>
+<tr class="separator:a2a2585c28812480eb6f1aa8a3f500e88"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classpitaya_1_1_item_set_builder.html" title="ItemSetBuilder class. ">ItemSetBuilder</a> class. </p>

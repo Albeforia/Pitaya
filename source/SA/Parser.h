@@ -14,7 +14,7 @@ namespace pitaya {
 		//! Constructor.
 		Parser(Grammar&, ItemSetBuilder&);
 
-		//! Parse token stream.
+		//! Parse the token stream.
 		bool parse(Tokenizer&);
 
 	private:
@@ -22,6 +22,7 @@ namespace pitaya {
 		Grammar& m_grammar;				//!< The grammar.
 		ItemSetBuilder& m_builder;		//!< The item-set builder.
 
+		//! Evaluate state transition against an action.
 		bool evaluate(Action&, std::stack<StateID>&, Tokenizer&);
 
 	};

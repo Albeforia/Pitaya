@@ -79,6 +79,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="functions.html"><span>All</span></a></li>
       <li class="current"><a href="functions_func.html"><span>Functions</span></a></li>
       <li><a href="functions_vars.html"><span>Variables</span></a></li>
+      <li><a href="functions_type.html"><span>Typedefs</span></a></li>
       <li><a href="functions_rela.html"><span>Related&#160;Functions</span></a></li>
     </ul>
   </div>
@@ -91,8 +92,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="#index_e"><span>e</span></a></li>
       <li><a href="#index_f"><span>f</span></a></li>
       <li><a href="#index_g"><span>g</span></a></li>
+      <li><a href="#index_h"><span>h</span></a></li>
       <li><a href="#index_i"><span>i</span></a></li>
-      <li><a href="#index_k"><span>k</span></a></li>
       <li><a href="#index_l"><span>l</span></a></li>
       <li><a href="#index_n"><span>n</span></a></li>
       <li><a href="#index_o"><span>o</span></a></li>
@@ -138,13 +139,19 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 
 <h3><a class="anchor" id="index_a"></a>- a -</h3><ul>
 <li>add()
-: <a class="el" href="classpitaya_1_1_symbol_set.html#a0007709e0a617e7ca0e0a7916e7ca623">pitaya::SymbolSet</a>
+: <a class="el" href="classpitaya_1_1_symbol_set.html#a8852083dad44d3bc190cfaf192f96c35">pitaya::SymbolSet</a>
 </li>
 <li>add_action()
-: <a class="el" href="classpitaya_1_1_item_set.html#aee1954c3b16fb0c7beddb81fde08c896">pitaya::ItemSet</a>
+: <a class="el" href="classpitaya_1_1_item_set.html#a1d438563423a22bd2811e592eb6bde95">pitaya::ItemSet</a>
+</li>
+<li>add_base()
+: <a class="el" href="classpitaya_1_1_state.html#a23bad0434d2bf2c783ffdd2dad817469">pitaya::State</a>
 </li>
 <li>add_kernel()
 : <a class="el" href="classpitaya_1_1_item_set.html#af83fc73a145eb8e576980ec133188462">pitaya::ItemSet</a>
+</li>
+<li>add_transition()
+: <a class="el" href="classpitaya_1_1_state.html#a3ccb23dd52ea020c1df7fa82a883f64b">pitaya::State</a>
 </li>
 <li>associativity()
 : <a class="el" href="classpitaya_1_1_symbol.html#ac836eb64715a5789d471f859fbf1261c">pitaya::Symbol</a>
@@ -156,24 +163,34 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 <li>backward_plink()
 : <a class="el" href="classpitaya_1_1_item.html#abe6ded1ae72ce169b0881649d7007366">pitaya::Item</a>
 </li>
+<li>BasicItem()
+: <a class="el" href="classpitaya_1_1_basic_item.html#a8eb6f479a2fa3a2523f610d3de378c93">pitaya::BasicItem</a>
+</li>
 <li>build()
 : <a class="el" href="classpitaya_1_1_item_set_builder.html#a3d50f37173ce5a99dc461fb350505209">pitaya::ItemSetBuilder</a>
+, <a class="el" href="classpitaya_1_1_state_builder.html#a98cd147ce0e1542c45952752cc021b47">pitaya::StateBuilder</a>
 </li>
 <li>build_item_set()
 : <a class="el" href="classpitaya_1_1_item_set_builder.html#a3a3a373227fdfc2b2fd2fbc7146afbdc">pitaya::ItemSetBuilder</a>
 </li>
+<li>build_state()
+: <a class="el" href="classpitaya_1_1_state_builder.html#a6516c474f53f3eabc2492b7c751107fe">pitaya::StateBuilder</a>
+</li>
 <li>build_successors()
 : <a class="el" href="classpitaya_1_1_item_set_builder.html#a10d872bf6fc086877477b5df26e27d10">pitaya::ItemSetBuilder</a>
+, <a class="el" href="classpitaya_1_1_state_builder.html#a1196a6b7a05dcdd83fe38b8b9fea406a">pitaya::StateBuilder</a>
 </li>
 </ul>
 
 
 <h3><a class="anchor" id="index_c"></a>- c -</h3><ul>
-<li>closure()
-: <a class="el" href="classpitaya_1_1_item_set.html#a0f6539893840596e6180e67812ed06fa">pitaya::ItemSet</a>
+<li>clear()
+: <a class="el" href="classpitaya_1_1_symbol.html#aae7bcb086012618f2a526c17b1e8d0d7">pitaya::Symbol</a>
+, <a class="el" href="classpitaya_1_1_symbol_set.html#ad7f09a906c6d2d9f54c498a54ece5a09">pitaya::SymbolSet</a>
 </li>
 <li>compute_closure()
 : <a class="el" href="classpitaya_1_1_item_set.html#a38d4fc434256efda626f772efe915c4a">pitaya::ItemSet</a>
+, <a class="el" href="classpitaya_1_1_state.html#aa9ca3e9ab1766bf55f333d3ceafe18a4">pitaya::State</a>
 </li>
 <li>compute_first_sets()
 : <a class="el" href="classpitaya_1_1_item_set_builder.html#a76c1502fb70534031219be28eadba6ee">pitaya::ItemSetBuilder</a>
@@ -185,8 +202,11 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 
 
 <h3><a class="anchor" id="index_d"></a>- d -</h3><ul>
+<li>decide_token_type()
+: <a class="el" href="classpitaya_1_1_state_builder.html#abdb955f8d26772ed1dfde445e00ab60b">pitaya::StateBuilder</a>
+</li>
 <li>dot()
-: <a class="el" href="classpitaya_1_1_item.html#a51c7db062abfe70a04a405d21ff8a8d0">pitaya::Item</a>
+: <a class="el" href="classpitaya_1_1_basic_item.html#ad200adb6cf41aa37e1b918883d3a288a">pitaya::BasicItem</a>
 </li>
 </ul>
 
@@ -194,6 +214,10 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 <h3><a class="anchor" id="index_e"></a>- e -</h3><ul>
 <li>endmark()
 : <a class="el" href="classpitaya_1_1_grammar.html#a06d4bb2a5ef95a634d4f5247c4d394f1">pitaya::Grammar</a>
+</li>
+<li>evaluate()
+: <a class="el" href="classpitaya_1_1_item_set.html#a772ef08fbf73ae7bb3ea62ebb3630295">pitaya::ItemSet</a>
+, <a class="el" href="classpitaya_1_1_parser.html#aac9c78bc16ea3f18e79fdb032deae045">pitaya::Parser</a>
 </li>
 </ul>
 
@@ -215,17 +239,25 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 
 
 <h3><a class="anchor" id="index_g"></a>- g -</h3><ul>
-<li>get_kernel()
-: <a class="el" href="classpitaya_1_1_item_set.html#ab48f53184476b8c0fe0b40ffe85a9fb0">pitaya::ItemSet</a>
-</li>
 <li>get_production()
 : <a class="el" href="classpitaya_1_1_grammar.html#a0740160e95d10d68a7d806af010154f2">pitaya::Grammar</a>
 </li>
+<li>get_state()
+: <a class="el" href="classpitaya_1_1_item_set_builder.html#a3f0f7ffe7dcae1d0e44b44c015753276">pitaya::ItemSetBuilder</a>
+, <a class="el" href="classpitaya_1_1_state_builder.html#a9c19e0ffcae6637fbbef52dade3f7133">pitaya::StateBuilder</a>
+</li>
 <li>get_symbol()
-: <a class="el" href="classpitaya_1_1_grammar.html#a812ef05fde4b3d40159a5711575f1d5a">pitaya::Grammar</a>
+: <a class="el" href="classpitaya_1_1_grammar.html#a9130e9871d27b70e83759c11b89ef366">pitaya::Grammar</a>
 </li>
 <li>Grammar()
 : <a class="el" href="classpitaya_1_1_grammar.html#a2635ab7fd749974729473500db670736">pitaya::Grammar</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_h"></a>- h -</h3><ul>
+<li>has_next()
+: <a class="el" href="classpitaya_1_1_tokenizer.html#a6c845e58f86c1074bc7251a986334d5d">pitaya::Tokenizer</a>
 </li>
 </ul>
 
@@ -234,26 +266,28 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 <li>id()
 : <a class="el" href="classpitaya_1_1_item_set.html#a3a4270a1af9d443ed7ddd5dde10cb2cf">pitaya::ItemSet</a>
 , <a class="el" href="classpitaya_1_1_production.html#a1494cb492042267e39eeaa43eb49fe8e">pitaya::Production</a>
-, <a class="el" href="classpitaya_1_1_symbol.html#a4f00f335ec0b170bdbf6b5fde45f1877">pitaya::Symbol</a>
+, <a class="el" href="classpitaya_1_1_state.html#acdd0565a07e4801deda2ceff0bf2ace3">pitaya::State</a>
+</li>
+<li>index()
+: <a class="el" href="classpitaya_1_1_symbol.html#ae95944c0859f0ad9646837f0a7dc3368">pitaya::Symbol</a>
+</li>
+<li>is_final()
+: <a class="el" href="classpitaya_1_1_state.html#a5f13cbcd1c8ea5dd47d5a83793c752c7">pitaya::State</a>
 </li>
 <li>is_kernel()
 : <a class="el" href="classpitaya_1_1_item.html#ae70bd4b3c44d2ba299a13f40d47e45db">pitaya::Item</a>
+</li>
+<li>is_token()
+: <a class="el" href="classpitaya_1_1_symbol.html#a69fc2a9a81758972f6912f58f98aa8ec">pitaya::Symbol</a>
 </li>
 <li>Item()
 : <a class="el" href="classpitaya_1_1_item.html#af17d9a78d151d9943e86db5fb324ab35">pitaya::Item</a>
 </li>
 <li>ItemSet()
-: <a class="el" href="classpitaya_1_1_item_set.html#a0c62f019c2cbf2e77a7d6da9d64268e7">pitaya::ItemSet</a>
+: <a class="el" href="classpitaya_1_1_item_set.html#abe4fd12ef93d4a30dd8e0010c86a1758">pitaya::ItemSet</a>
 </li>
 <li>ItemSetBuilder()
-: <a class="el" href="classpitaya_1_1_item_set_builder.html#af2549c593533af55cbe10a7fe4ff2bf7">pitaya::ItemSetBuilder</a>
-</li>
-</ul>
-
-
-<h3><a class="anchor" id="index_k"></a>- k -</h3><ul>
-<li>kernel_count()
-: <a class="el" href="classpitaya_1_1_item_set.html#aff744455fbe992ccf036f4ceca9d128b">pitaya::ItemSet</a>
+: <a class="el" href="classpitaya_1_1_item_set_builder.html#abcd73f995ddfb40b589eef0dd844e919">pitaya::ItemSetBuilder</a>
 </li>
 </ul>
 
@@ -275,6 +309,15 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 <li>new_link()
 : <a class="el" href="classpitaya_1_1_item_set_builder.html#a56914dc3b680ede6858d90bab8ab62bb">pitaya::ItemSetBuilder</a>
 </li>
+<li>next()
+: <a class="el" href="classpitaya_1_1_tokenizer.html#a91158edd7cf27e6f4d085830c2fef512">pitaya::Tokenizer</a>
+</li>
+<li>nonterminal_begin()
+: <a class="el" href="classpitaya_1_1_grammar.html#a034b1474ac0d2c425fa0676152434f5e">pitaya::Grammar</a>
+</li>
+<li>nonterminal_end()
+: <a class="el" href="classpitaya_1_1_grammar.html#aa97b7b8f92c31e0c6b07098dfd70896a">pitaya::Grammar</a>
+</li>
 </ul>
 
 
@@ -284,39 +327,56 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 </li>
 <li>operator[]()
 : <a class="el" href="classpitaya_1_1_production.html#a8318a22a97488c532c0349174d7724ad">pitaya::Production</a>
-, <a class="el" href="classpitaya_1_1_symbol_set.html#aa468b2cdeba3d68b2ee12223d5ccc926">pitaya::SymbolSet</a>
+, <a class="el" href="classpitaya_1_1_symbol_set.html#a2785fbf46aad4c1d694502b928b8ec08">pitaya::SymbolSet</a>
 </li>
 </ul>
 
 
 <h3><a class="anchor" id="index_p"></a>- p -</h3><ul>
+<li>parse()
+: <a class="el" href="classpitaya_1_1_parser.html#acfc6828fa967789b8283c67ccabaf53d">pitaya::Parser</a>
+, <a class="el" href="classpitaya_1_1_tokenizer.html#a939aacad211f0d8a200e13f0881297e3">pitaya::Tokenizer</a>
+</li>
+<li>Parser()
+: <a class="el" href="classpitaya_1_1_parser.html#a9603588c312efcb0742444a02d8ed19f">pitaya::Parser</a>
+</li>
+<li>peek()
+: <a class="el" href="classpitaya_1_1_tokenizer.html#a83a2a6601e1993cf5f19e0de490a9d1d">pitaya::Tokenizer</a>
+</li>
 <li>precedence()
 : <a class="el" href="classpitaya_1_1_symbol.html#a4dbd53e3327f16b16f6ff56fc90eaf96">pitaya::Symbol</a>
 </li>
 <li>Production()
-: <a class="el" href="classpitaya_1_1_production.html#a76d8a2118a2913e9264aeb5a07df1524">pitaya::Production</a>
+: <a class="el" href="classpitaya_1_1_production.html#a9eac5a151492cddb361786761a0d7d52">pitaya::Production</a>
 </li>
 <li>production_count()
 : <a class="el" href="classpitaya_1_1_grammar.html#a9edb9bc35a72917bbb7c8cc64d11e9f8">pitaya::Grammar</a>
 </li>
 <li>production_id()
-: <a class="el" href="classpitaya_1_1_item.html#ab3d5e7b178c7f75fe01c3a3852dcd06d">pitaya::Item</a>
+: <a class="el" href="classpitaya_1_1_basic_item.html#ac44a81cc442849156b8d4fcd60f363c5">pitaya::BasicItem</a>
 </li>
 <li>productions_by_lhs()
-: <a class="el" href="classpitaya_1_1_grammar.html#a68c5e51cc57c86af63b0bf3487a5e5bc">pitaya::Grammar</a>
+: <a class="el" href="classpitaya_1_1_grammar.html#aaac1350776d1b85273e676a6ce8b0cf2">pitaya::Grammar</a>
 </li>
 </ul>
 
 
 <h3><a class="anchor" id="index_r"></a>- r -</h3><ul>
+<li>rank()
+: <a class="el" href="classpitaya_1_1_production.html#a5890c6b9ae62c218c9c86fa554c65860">pitaya::Production</a>
+</li>
 <li>read()
 : <a class="el" href="classpitaya_1_1_grammar.html#abf8d00d65f2abe5ac219ad49d449432c">pitaya::Grammar</a>
 </li>
 <li>reset()
 : <a class="el" href="classpitaya_1_1_item_set.html#a9722cb2255086a13a7e9932458f9560b">pitaya::ItemSet</a>
+, <a class="el" href="classpitaya_1_1_state.html#acc3bb80313453e72fab974f14787ca17">pitaya::State</a>
 </li>
 <li>resize()
 : <a class="el" href="classpitaya_1_1_symbol_set.html#a220d4306c1d3025a3bdaae6a9770353e">pitaya::SymbolSet</a>
+</li>
+<li>resolve_conflict()
+: <a class="el" href="classpitaya_1_1_item_set_builder.html#a66f59764956eb975219e583f6c2829d1">pitaya::ItemSetBuilder</a>
 </li>
 <li>rhs_count()
 : <a class="el" href="classpitaya_1_1_production.html#a650aabc78b6cd74821a93a9a4a83a40c">pitaya::Production</a>
@@ -325,14 +385,33 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 
 
 <h3><a class="anchor" id="index_s"></a>- s -</h3><ul>
+<li>shared_terminal()
+: <a class="el" href="classpitaya_1_1_symbol.html#ad4147cdd9cd399765e9214a161035be7">pitaya::Symbol</a>
+</li>
 <li>size()
 : <a class="el" href="classpitaya_1_1_symbol_set.html#afca1665ba93a499bff861486fc3b3ff7">pitaya::SymbolSet</a>
 </li>
 <li>sort()
 : <a class="el" href="classpitaya_1_1_item_set.html#ae9a2467a5599c8c26e02f7a80154aead">pitaya::ItemSet</a>
+, <a class="el" href="classpitaya_1_1_state.html#a25e34c7ae804f76c94f3859c41a0699e">pitaya::State</a>
+</li>
+<li>State()
+: <a class="el" href="classpitaya_1_1_state.html#a9203d677573eebd635d2c1482171ae38">pitaya::State</a>
+</li>
+<li>StateBuilder()
+: <a class="el" href="classpitaya_1_1_state_builder.html#a7ec66966a46524edfd6f85d0ba29590a">pitaya::StateBuilder</a>
 </li>
 <li>Symbol()
-: <a class="el" href="classpitaya_1_1_symbol.html#a8d55b9ed16f943f3cc859f8084b5b94c">pitaya::Symbol</a>
+: <a class="el" href="classpitaya_1_1_symbol.html#a1e8a6bed905735f379472054c436239d">pitaya::Symbol</a>
+</li>
+<li>symbol_begin()
+: <a class="el" href="classpitaya_1_1_grammar.html#a153be0562f440ad9925919d5718f5132">pitaya::Grammar</a>
+</li>
+<li>symbol_count()
+: <a class="el" href="classpitaya_1_1_grammar.html#a415f6a0953b4074174382c7247028c0b">pitaya::Grammar</a>
+</li>
+<li>symbol_end()
+: <a class="el" href="classpitaya_1_1_grammar.html#adb57c3c39c4ff5be6622ca964c204e06">pitaya::Grammar</a>
 </li>
 <li>SymbolSet()
 : <a class="el" href="classpitaya_1_1_symbol_set.html#a97f45dc49adc94fb80fe934671984536">pitaya::SymbolSet</a>
@@ -341,8 +420,20 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 
 
 <h3><a class="anchor" id="index_t"></a>- t -</h3><ul>
-<li>terminal_count()
-: <a class="el" href="classpitaya_1_1_grammar.html#aac78e7c0afd2e913fe7b015ff4125c01">pitaya::Grammar</a>
+<li>terminal_begin()
+: <a class="el" href="classpitaya_1_1_grammar.html#a763079e7abbe94839af72fe3f0943a7b">pitaya::Grammar</a>
+</li>
+<li>terminal_end()
+: <a class="el" href="classpitaya_1_1_grammar.html#a0fadd52133b5f7a195c66456f3e1311c">pitaya::Grammar</a>
+</li>
+<li>token_index()
+: <a class="el" href="classpitaya_1_1_state.html#a0bbfcf7c4debb8c6ca4290008480149e">pitaya::State</a>
+</li>
+<li>Tokenizer()
+: <a class="el" href="classpitaya_1_1_tokenizer.html#a06c6b91e796a4aca0d54e8707b19ce0c">pitaya::Tokenizer</a>
+</li>
+<li>transit()
+: <a class="el" href="classpitaya_1_1_state.html#add9ec877fe4dbc099ae1317ac4d840f7">pitaya::State</a>
 </li>
 <li>type()
 : <a class="el" href="classpitaya_1_1_symbol.html#a5bf43d39d18b397482a24f9c1ee19ec0">pitaya::Symbol</a>
@@ -352,7 +443,7 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 
 <h3><a class="anchor" id="index_u"></a>- u -</h3><ul>
 <li>union_with()
-: <a class="el" href="classpitaya_1_1_symbol_set.html#a90b4b88de64ea256b9d8870c867db092">pitaya::SymbolSet</a>
+: <a class="el" href="classpitaya_1_1_symbol_set.html#a0181a23160cf3bcc7ff31b21def9f408">pitaya::SymbolSet</a>
 </li>
 </ul>
 

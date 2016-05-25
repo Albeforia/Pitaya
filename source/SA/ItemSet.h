@@ -38,12 +38,6 @@ namespace pitaya {
 		*/
 		Item& add_kernel(const Production&, Item::Dot = 0);
 
-		//! Get a kernel.
-		const Item& get_kernel(std::size_t pos) const;
-
-		//! Number of kernels.
-		std::size_t kernel_count() const;
-
 		//! Compute the closure of kernels.
 		void compute_closure(Grammar&, ItemSetBuilder&);
 
@@ -56,7 +50,7 @@ namespace pitaya {
 		*/
 		Action& add_action(const Symbol&, ActionType, std::size_t value) const;
 
-		//! Evaluate the action when encounter a symbol.
+		//! Evaluate the action against a symbol.
 		Action evaluate(const Symbol&) const;
 
 		//! Clear all items.
@@ -78,9 +72,6 @@ namespace pitaya {
 		StateID m_id;		//!< ID of the set(or state).
 
 		//! Actions of this state.
-		/*!
-			Declared mutable because it will be updated after being added to set.
-		*/
 		mutable std::unordered_map<std::size_t, Action> m_actions;
 
 		/// @cond

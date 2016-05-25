@@ -78,10 +78,10 @@ namespace pitaya {
 		std::vector<SharedSymbol> m_symbols;	//!< All symbols in this grammar.
 		std::vector<Production> m_productions;	//!< All productions in this grammar.
 
-		SymbolIterator m_terminal_start;
-		SymbolIterator m_terminal_end;
-		SymbolIterator m_nonterminal_start;
-		SymbolIterator m_nonterminal_end;
+		SymbolIterator m_terminal_start;		//!< The beginning of terminals.
+		SymbolIterator m_terminal_end;			//!< The end of terminals.
+		SymbolIterator m_nonterminal_start;		//!< The beginning of nonterminals.
+		SymbolIterator m_nonterminal_end;		//!< The end of nonterminals.
 
 		//! Productions grouped by their lhs.
 		std::unordered_map<Rank, PP> m_productions_by_lhs;

@@ -30,14 +30,6 @@ namespace pitaya {
 		return m_kernels.back();
 	}
 
-	const Item& ItemSet::get_kernel(std::size_t pos) const {
-		return m_kernels[pos];
-	}
-
-	std::size_t ItemSet::kernel_count() const {
-		return m_kernels.size();
-	}
-
 	void ItemSet::compute_closure(Grammar& grammar, ItemSetBuilder& builder) {
 		// copy kernels into closure
 		for (auto& i : m_kernels) {
