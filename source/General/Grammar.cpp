@@ -7,7 +7,7 @@
 
 namespace pitaya {
 
-	Grammar::Grammar(const char* file)
+	Grammar::Grammar(const std::string& file)
 		: m_symbols {}, m_productions {} {
 		Symbol::create("$");
 		read(file);
@@ -165,7 +165,7 @@ namespace pitaya {
 		} while (not_fin);
 	}
 
-	void Grammar::read(const char* file) {
+	void Grammar::read(const std::string& file) {
 		std::ifstream f;
 		f.open(file);
 		if (f.is_open()) {

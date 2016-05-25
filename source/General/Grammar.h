@@ -25,7 +25,7 @@ namespace pitaya {
 		/*!
 			\param file Grammar file name.
 		*/
-		Grammar(const char* file);
+		Grammar(const std::string&);
 
 		//! Number of symbols in this grammar.
 		std::size_t symbol_count() const;
@@ -87,7 +87,7 @@ namespace pitaya {
 		std::unordered_map<Rank, PP> m_productions_by_lhs;
 
 		//! Parse a grammar file.
-		void read(const char* file);
+		void read(const std::string&);
 
 		/// @cond
 		void rearrange_symbols();
