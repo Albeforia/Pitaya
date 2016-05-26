@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['type',['Type',['../classpitaya_1_1_symbol.html#af236f5b78be4c81c12017f0b7116ecb1',1,'pitaya::Symbol']]]
+  ['actiontype',['ActionType',['../group___s_a.html#ga60f6b92cf04e0c73bcdd5bb67b0c1d15',1,'pitaya']]],
+  ['associativity',['Associativity',['../group___general.html#ga14d9c8e5d66e11d60609c76fd02fc298',1,'pitaya']]]
 ];

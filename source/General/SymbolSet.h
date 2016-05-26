@@ -6,7 +6,10 @@ namespace pitaya {
 
 	class Symbol;
 
-	//! Set of symbols.
+	/*!
+		\ingroup General
+		Set of symbols.
+	*/
 	class SymbolSet {
 
 	public:

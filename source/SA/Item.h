@@ -4,6 +4,11 @@
 
 namespace pitaya {
 
+	/*!
+		\defgroup SA
+		@{
+	*/
+
 	class Item;
 
 	//! Node on propagation links.
@@ -66,5 +71,7 @@ namespace pitaya {
 		mutable PLinkNode* m_backward_plink;	//!< Backward propagation link.
 
 	};
+
+	/** @}*/ // end of SA group
 
 }

@@ -41,6 +41,7 @@ namespace pitaya {
 	}
 
 	Grammar::PP Grammar::productions_by_lhs(const Symbol& lhs) {
+		assert(lhs.type() == SymbolType::NONTERMINAL);
 		return m_productions_by_lhs.at(lhs.rank);
 	}
 

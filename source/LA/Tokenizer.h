@@ -4,6 +4,10 @@
 
 namespace pitaya {
 
+	/*!
+		\ingroup LA
+		Token struct.
+	*/
 	struct Token {
 
 		const char* type;
@@ -11,7 +15,10 @@ namespace pitaya {
 
 	};
 
-	//! Tokenizer class.
+	/*!
+		\ingroup LA
+		Tokenizer class.
+	*/
 	class Tokenizer {
 
 	public:

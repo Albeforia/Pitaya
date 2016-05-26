@@ -4,6 +4,10 @@
 
 namespace pitaya {
 
+	/*!
+		\ingroup SA
+		Action type.
+	*/
 	enum class ActionType {
 
 		SHIFT,
@@ -17,6 +21,10 @@ namespace pitaya {
 
 	};
 
+	/*!
+		\ingroup SA
+		Action struct.
+	*/
 	struct Action {
 
 		ActionType type;

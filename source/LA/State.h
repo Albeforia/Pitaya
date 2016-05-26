@@ -10,6 +10,11 @@
 
 namespace pitaya {
 
+	/*!
+		\defgroup LA
+		@{
+	*/
+
 	//! State class.
 	class State {
 
@@ -96,5 +101,7 @@ namespace pitaya {
 		/// @endcond
 
 	};
+
+	/** @}*/ // end of LA group
 
 }

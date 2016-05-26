@@ -8,7 +8,10 @@
 
 namespace pitaya {
 
-	//! ItemSetBuilder class.
+	/*!
+		\ingroup SA
+		ItemSetBuilder class.
+	*/
 	class ItemSetBuilder {
 
 	public:

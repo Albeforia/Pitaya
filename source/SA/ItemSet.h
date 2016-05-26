@@ -16,7 +16,10 @@ namespace pitaya {
 	class Production;
 	class Grammar;
 
-	//! ItemSet class.
+	/*!
+		\ingroup SA
+		ItemSet class.
+	*/
 	class ItemSet {
 
 	public:

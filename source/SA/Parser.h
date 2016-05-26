@@ -7,6 +7,10 @@
 
 namespace pitaya {
 
+	/*!
+		\ingroup SA
+		Parser class.
+	*/
 	class Parser {
 
 	public:

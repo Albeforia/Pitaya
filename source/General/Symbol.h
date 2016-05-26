@@ -12,6 +12,11 @@ namespace pitaya {
 	using SharedSymbol = std::shared_ptr<Symbol>;
 	using Rank = std::size_t;
 
+	/*!
+		\defgroup General
+		@{
+	*/
+
 	//! Symbol type.
 	enum class SymbolType {
 		UNDEFINED,
@@ -149,5 +154,7 @@ namespace pitaya {
 		}
 
 	};
+
+	/** @}*/ // end of General group
 
 }

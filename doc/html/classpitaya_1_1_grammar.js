@@ -2,7 +2,7 @@ var classpitaya_1_1_grammar =
 [
     [ "PP", "classpitaya_1_1_grammar.html#a486ba7906ea93529a29fdd0af05e429a", null ],
     [ "SymbolIterator", "classpitaya_1_1_grammar.html#ad8ce57017dbf7bca906620e4f444f12b", null ],
-    [ "Grammar", "classpitaya_1_1_grammar.html#a2635ab7fd749974729473500db670736", null ],
+    [ "Grammar", "classpitaya_1_1_grammar.html#ad0a8c23a65225e5468af562c5ce56c0f", null ],
     [ "endmark", "classpitaya_1_1_grammar.html#a06d4bb2a5ef95a634d4f5247c4d394f1", null ],
     [ "get_production", "classpitaya_1_1_grammar.html#a0740160e95d10d68a7d806af010154f2", null ],
     [ "get_symbol", "classpitaya_1_1_grammar.html#a9130e9871d27b70e83759c11b89ef366", null ],
@@ -11,7 +11,7 @@ var classpitaya_1_1_grammar =
     [ "nonterminal_end", "classpitaya_1_1_grammar.html#aa97b7b8f92c31e0c6b07098dfd70896a", null ],
     [ "production_count", "classpitaya_1_1_grammar.html#a9edb9bc35a72917bbb7c8cc64d11e9f8", null ],
     [ "productions_by_lhs", "classpitaya_1_1_grammar.html#aaac1350776d1b85273e676a6ce8b0cf2", null ],
-    [ "read", "classpitaya_1_1_grammar.html#abf8d00d65f2abe5ac219ad49d449432c", null ],
+    [ "read", "classpitaya_1_1_grammar.html#a0476f4e6b7f1a6102c5382bea63f3c87", null ],
     [ "symbol_begin", "classpitaya_1_1_grammar.html#a153be0562f440ad9925919d5718f5132", null ],
     [ "symbol_count", "classpitaya_1_1_grammar.html#a415f6a0953b4074174382c7247028c0b", null ],
     [ "symbol_end", "classpitaya_1_1_grammar.html#adb57c3c39c4ff5be6622ca964c204e06", null ],

@@ -46,6 +46,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="modules.html"><span>Modules</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -111,18 +112,15 @@ $(document).ready(function(){initNavTree('classpitaya_1_1_grammar.html','');});
 <a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classpitaya_1_1_grammar-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">pitaya::Grammar Class Reference</div>  </div>
+<div class="title">pitaya::Grammar Class Reference<div class="ingroups"><a class="el" href="group___general.html">General</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p><a class="el" href="classpitaya_1_1_grammar.html" title="Grammar class. ">Grammar</a> class.  
- <a href="classpitaya_1_1_grammar.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a2635ab7fd749974729473500db670736"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_grammar.html#a2635ab7fd749974729473500db670736">Grammar</a> (const char *file)</td></tr>
-<tr class="memdesc:a2635ab7fd749974729473500db670736"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a2635ab7fd749974729473500db670736">More...</a><br /></td></tr>
-<tr class="separator:a2635ab7fd749974729473500db670736"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad0a8c23a65225e5468af562c5ce56c0f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_grammar.html#ad0a8c23a65225e5468af562c5ce56c0f">Grammar</a> (const std::string &amp;)</td></tr>
+<tr class="memdesc:ad0a8c23a65225e5468af562c5ce56c0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#ad0a8c23a65225e5468af562c5ce56c0f">More...</a><br /></td></tr>
+<tr class="separator:ad0a8c23a65225e5468af562c5ce56c0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a415f6a0953b4074174382c7247028c0b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a415f6a0953b4074174382c7247028c0b"></a>
 std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_grammar.html#a415f6a0953b4074174382c7247028c0b">symbol_count</a> () const </td></tr>
 <tr class="memdesc:a415f6a0953b4074174382c7247028c0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of symbols in this grammar. <br /></td></tr>
@@ -186,10 +184,10 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>SymbolIterator</b> =
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
-<tr class="memitem:abf8d00d65f2abe5ac219ad49d449432c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abf8d00d65f2abe5ac219ad49d449432c"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_grammar.html#abf8d00d65f2abe5ac219ad49d449432c">read</a> (const char *file)</td></tr>
-<tr class="memdesc:abf8d00d65f2abe5ac219ad49d449432c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse a grammar file. <br /></td></tr>
-<tr class="separator:abf8d00d65f2abe5ac219ad49d449432c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0476f4e6b7f1a6102c5382bea63f3c87"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0476f4e6b7f1a6102c5382bea63f3c87"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpitaya_1_1_grammar.html#a0476f4e6b7f1a6102c5382bea63f3c87">read</a> (const std::string &amp;)</td></tr>
+<tr class="memdesc:a0476f4e6b7f1a6102c5382bea63f3c87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse a grammar file. <br /></td></tr>
+<tr class="separator:a0476f4e6b7f1a6102c5382bea63f3c87"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -223,16 +221,16 @@ std::unordered_map&lt; Rank, PP &gt;&#160;</td><td class="memItemRight" valign="
 <tr class="separator:a26b5db059ff708fe907ab98d6259f227"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p><a class="el" href="classpitaya_1_1_grammar.html" title="Grammar class. ">Grammar</a> class. </p>
+<div class="textblock"><p><a class="el" href="classpitaya_1_1_grammar.html">Grammar</a> class. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a2635ab7fd749974729473500db670736"></a>
+<a class="anchor" id="ad0a8c23a65225e5468af562c5ce56c0f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">pitaya::Grammar::Grammar </td>
           <td>(</td>
-          <td class="paramtype">const char *&#160;</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>file</em></td><td>)</td>
           <td></td>
         </tr>
@@ -242,7 +240,7 @@ std::unordered_map&lt; Rank, PP &gt;&#160;</td><td class="memItemRight" valign="
 <p>Constructor. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">file</td><td><a class="el" href="classpitaya_1_1_grammar.html" title="Grammar class. ">Grammar</a> file name. </td></tr>
+    <tr><td class="paramname">file</td><td><a class="el" href="classpitaya_1_1_grammar.html">Grammar</a> file name. </td></tr>
   </table>
   </dd>
 </dl>

@@ -13,7 +13,10 @@ namespace pitaya {
 
 	namespace sc = boost::statechart;
 
-	//! Grammar class.
+	/*!
+		\ingroup General
+		Grammar class.
+	*/
 	class Grammar {
 
 		using PP = std::pair<ProductionID, ProductionID>;

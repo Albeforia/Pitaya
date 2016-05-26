@@ -9,7 +9,10 @@
 
 namespace pitaya {
 
-	//! StateBuilder class.
+	/*!
+		\ingroup LA
+		StateBuilder class.
+	*/
 	class StateBuilder {
 
 	public:

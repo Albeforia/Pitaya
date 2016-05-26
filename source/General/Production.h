@@ -8,7 +8,10 @@ namespace pitaya {
 
 	using ProductionID = std::size_t;
 
-	//! Production class.
+	/*!
+		\ingroup General
+		Production class.
+	*/
 	class Production {
 
 		friend class Grammar;

@@ -4,7 +4,10 @@
 
 namespace pitaya {
 
-	//! BasicItem class.
+	/*!
+		\ingroup General
+		BasicItem class.
+	*/
 	class BasicItem {
 
 	public:
