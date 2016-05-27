@@ -112,11 +112,10 @@ namespace pitaya {
 			if (!state.is_final()) continue;
 			for (auto& item : state.m_closure) {
 				if (state.m_final_index == item.first) {
-					state.token_index() = item.second;
+					state.m_token_index = item.second;
 					break;
 				}
 			}
-			//assert(prec != -1);
 		}
 	}
 

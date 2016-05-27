@@ -19,9 +19,9 @@ int main(int argc, char* argv[]) {
 	po::options_description opt("Options");
 	opt.add_options()
 		("help,h", "show help message")
-		("lexical", po::value<std::string>(), "the lexical spec")
-		("syntax", po::value<std::string>(), "the syntax spec")
-		("source,s", po::value<std::string>(), "the source file")
+		("lexical", po::value<std::string>(), "lexical spec file")
+		("syntax", po::value<std::string>(), "syntax spec file")
+		("source,s", po::value<std::string>(), "source file")
 		("silence", "do not report")
 		("graph", "generate dot graph");
 
@@ -75,6 +75,9 @@ int main(int argc, char* argv[]) {
 		else {
 			std::cout << "ACCEPT";
 		}
+	}
+	else {
+		std::cout << opt << std::endl;
 	}
 
 	return 0;
