@@ -6,6 +6,7 @@
 #include <fstream>
 #include <iostream>
 #include <iomanip>
+#include <regex>
 
 namespace pitaya {
 
@@ -123,10 +124,16 @@ namespace pitaya {
 		return *m_sorted.at(id);
 	}
 
-	void StateBuilder::print_all() const {
-		std::ofstream file;
+	void StateBuilder::report(bool graph) const {
+		std::ofstream file, gfile;
 		file.open("report\\lexical_states", std::ios::trunc);
+		if (graph) {
+			gfile.open("report\\graph\\lexical.dot", std::ios::trunc);
+		}
 		if (file.is_open()) {
+			if (gfile.is_open()) {
+				gfile << "digraph lexical_graph {\n" << "node [shape=record];\n";
+			}
 			for (auto& p : m_sorted) {
 				auto& state = *p.second;
 				file << "[state " << state.m_id << "]";
@@ -136,19 +143,41 @@ namespace pitaya {
 				file << '\n';
 
 				auto cols = 3, col = 0;
+				std::string gitems;
 				for (auto& item : state.m_closure) {
-					std::string it;
-					it.append("( ").append(m_grammar.get_symbol(item.first).name())
-						.append("  ").append(m_grammar.get_symbol(item.second).name())
+					std::string items;
+					std::string first(m_grammar.get_symbol(item.first).name());
+					std::string second(m_grammar.get_symbol(item.second).name());
+					items.append("( ").append(first)
+						.append("  ").append(second)
 						.append(" )");
-					file << std::setw(40) << std::left << it;
+					file << std::setw(40) << std::left << items;
 					if (++col == cols) {
 						col = 0;
 						file << '\n';
 					}
+
+					std::regex re("[|<>{}]");
+					first = std::regex_replace(first, re, "\\$&");
+					second = std::regex_replace(second, re, "\\$&");
+					gitems.append("{ ").append(first)
+						.append(" | ").append(second)
+						.append(" }|");
 				}
 				if (col != 0) {
 					file << '\n';
+				}
+				if (gfile.is_open()) {
+					if (gitems.size() > 0) {
+						// remove the last '|'
+						gitems.erase(gitems.size() - 1);
+					}
+					gfile << state.m_id << " [label=\"" << state.m_id << "|{"
+						<< gitems << "}\"";
+					if (state.is_final()) {
+						gfile << ", style=bold";
+					}
+					gfile << "];\n";
 				}
 
 				State::ID to;
@@ -156,10 +185,21 @@ namespace pitaya {
 					if (state.transit(**it, to)) {
 						file << ">\t" << std::setw(20)
 							<< **it << "-->\t" << to << '\n';
+						if (gfile.is_open()) {
+							gfile << state.m_id << " -> " << to
+								<< " [label=\"" << **it << "\"];\n";
+						}
 					}
 				}
 				file << '\n';
 			}
+			if (gfile.is_open()) {
+				gfile << "}\n";
+			}
+		}
+		file.close();
+		if (graph) {
+			gfile.close();
 		}
 	}
 

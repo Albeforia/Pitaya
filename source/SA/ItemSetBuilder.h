@@ -31,9 +31,8 @@ namespace pitaya {
 		//! Get a new PLinkNode.
 		PLinkNode*& new_link();
 
-		/// @cond test
-		void print_all() const;
-		/// @endcond
+		//! Generate report file.
+		void report(bool graph) const;
 
 	private:
 

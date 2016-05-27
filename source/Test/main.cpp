@@ -21,7 +21,9 @@ int main(int argc, char* argv[]) {
 		("help,h", "show help message")
 		("lexical", po::value<std::string>(), "the lexical spec")
 		("syntax", po::value<std::string>(), "the syntax spec")
-		("source,s", po::value<std::string>(), "the source file");
+		("source,s", po::value<std::string>(), "the source file")
+		("silence", "do not report")
+		("graph", "generate dot graph");
 
 	po::variables_map vm;
 	po::store(po::parse_command_line(argc, argv, opt), vm);
@@ -36,7 +38,10 @@ int main(int argc, char* argv[]) {
 		auto lexical {std::make_unique<Grammar>(vm["lexical"].as<std::string>())};
 		auto builder1 {std::make_unique<StateBuilder>(*lexical)};
 		builder1->build();
-		builder1->print_all();
+		if (!vm.count("silence")) {
+			bool graph = vm.count("graph") != 0;
+			builder1->report(graph);
+		}
 
 		auto tokenizer {std::make_unique<Tokenizer>(*lexical, *builder1)};
 		std::ifstream f;
@@ -48,14 +53,19 @@ int main(int argc, char* argv[]) {
 			}
 		}
 		f.close();
-		tokenizer->print_all();
+		if (!vm.count("silence")) {
+			tokenizer->report();
+		}
 
 		Symbol::clear();
 
 		auto syntax {std::make_unique<Grammar>(vm["syntax"].as<std::string>())};
 		auto builder2 {std::make_unique<ItemSetBuilder>(*syntax)};
 		builder2->build();
-		builder2->print_all();
+		if (!vm.count("silence")) {
+			bool graph = vm.count("graph") != 0;
+			builder2->report(graph);
+		}
 
 		auto parser {std::make_unique<Parser>(*syntax,*builder2)};
 		auto acc = parser->parse(*tokenizer);

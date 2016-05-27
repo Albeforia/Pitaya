@@ -46,9 +46,8 @@ namespace pitaya {
 		//! Whether there are any tokens left.
 		bool has_next() const;
 
-		/// @cond test
-		void print_all() const;
-		/// @endcond
+		//! Generate report file.
+		void report() const;
 
 	private:
 

@@ -4,6 +4,7 @@
 #include <fstream>
 #include <iostream>
 #include <iomanip>
+#include <regex>
 
 namespace pitaya {
 
@@ -273,44 +274,77 @@ namespace pitaya {
 		return m_plinks.back();
 	}
 
-	void ItemSetBuilder::print_all() const {
-		std::ofstream file;
+	void ItemSetBuilder::report(bool graph) const {
+		std::ofstream file, gfile;
 		file.open("report\\lalr_states", std::ios::trunc);
+		if (graph) {
+			gfile.open("report\\graph\\lalr.dot", std::ios::trunc);
+		}
 		if (file.is_open()) {
+			if (gfile.is_open()) {
+				gfile << "digraph lalr_graph {\n" << "node [shape=record];\n";
+			}
 			std::string dot = "[>";
 			for (auto& p : m_sorted) {
-				auto& set = *p.second;
-				file << "[state " << set.m_id << "]\n";
-				///*
-				for (auto& item : set.m_closure) {
+				auto& state = *p.second;
+				file << "[state " << state.m_id << "]\n";
+				std::string gitems;
+				for (auto& item : state.m_closure) {
 					if (!item.is_kernel()) continue;
 					auto& p = m_grammar.get_production(item.production_id());
-					file << ">\t" << std::setw(20) << std::left << p[0] << "==>\t";
+					std::string pstr(p[0].name());
+					pstr.append(" ==> ");
 					for (std::size_t i = 0; i <= p.rhs_count(); i++) {
-						if (item.dot() == i) {
-							file << dot;
+						if (i == item.dot()) {
+							pstr.append(dot);
 						}
-						if (0 <= i && i < p.rhs_count()) {
-							file << p[i + 1] << " ";
+						if (i < p.rhs_count()) {
+							pstr.append(p[i + 1].name()).append(" ");
 						}
 					}
-					file << "\n\t\t";
+					file << ">\t" << std::setw(20) << pstr << "\n\t\t";
+
+					std::string lookaheads;
+					auto cols = 4, col = 0;
 					for (auto it = m_grammar.symbol_begin(); it != m_grammar.symbol_end(); it++) {
 						if (item.lookaheads()[**it]) {
 							file << **it << "\t";
+							lookaheads.append((**it).name()).append(" ");
+							if (++col == cols) {
+								col = 0;
+								lookaheads.append("\\n");
+							}
 						}
 					}
 					file << "\n";
+
+					std::regex re("[|<>{}]");
+					pstr = std::regex_replace(pstr, re, "\\$&");
+					lookaheads = std::regex_replace(lookaheads, re, "\\$&");
+					gitems.append("{ ").append(pstr).append(" | ")
+						.append(lookaheads).append("}|");
 				}
 				file << '\n';
-				//*/
-				for (auto& action : set.m_actions) {
+				if (gfile.is_open()) {
+					if (gitems.size() > 0) {
+						// remove the last '|'
+						gitems.erase(gitems.size() - 1);
+					}
+					gfile << state.m_id << " [label=\"" << state.m_id << "|{"
+						<< gitems << "}\"];\n";
+				}
+
+				for (auto& action : state.m_actions) {
 					file << ">\t" << std::setw(30)
 						<< std::left << m_grammar.get_symbol(action.first)
 						<< std::right << action.second.type;
 					if (action.second.type == ActionType::SHIFT
 						|| action.second.type == ActionType::GOTO) {
 						file << std::setw(10) << "[ state " << action.second.value << " ]";
+						if (gfile.is_open()) {
+							gfile << state.m_id << " -> " << action.second.value
+								<< " [label=\"" << m_grammar.get_symbol(action.first) << "\"];\n";
+						}
 					}
 					else if (action.second.type == ActionType::REDUCE) {
 						file << std::setw(10) << "[ " << m_grammar.get_production(action.second.value) << " ]";
@@ -320,11 +354,14 @@ namespace pitaya {
 				file << '\n';
 			}
 			file << "Total conflicts: " << m_conflict_count << '\n';
-		}
-		else {
-			std::cout << "fail opening file!" << std::endl;
+			if (gfile.is_open()) {
+				gfile << "}\n";
+			}
 		}
 		file.close();
+		if (graph) {
+			gfile.close();
+		}
 	}
 
 }

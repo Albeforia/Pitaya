@@ -26,9 +26,8 @@ namespace pitaya {
 		//! Get a state by id.
 		const State& get_state(State::ID) const;
 
-		/// @cond test
-		void print_all() const;
-		/// @endcond
+		//! Generate report file.
+		void report(bool graph) const;
 
 	private:
 

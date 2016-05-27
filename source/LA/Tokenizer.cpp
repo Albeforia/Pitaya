@@ -109,7 +109,7 @@ namespace pitaya {
 		return m_current < m_tokens.size();
 	}
 
-	void Tokenizer::print_all() const {
+	void Tokenizer::report() const {
 		std::ofstream file;
 		file.open("report\\token_stream", std::ios::trunc);
 		auto cols = 5, col = 0;
@@ -122,6 +122,7 @@ namespace pitaya {
 				file << '\n';
 			}
 		}
+		file.close();
 	}
 
 }
