@@ -176,7 +176,7 @@ jump_stat					goto identifier ;
 jump_stat					continue ;
 jump_stat					break ;
 jump_stat					return exp ;
-jump_stat					retur ;
+jump_stat					return ;
 
 exp							assignment_exp
 exp							exp , assignment_exp
