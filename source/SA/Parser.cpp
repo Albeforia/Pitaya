@@ -30,7 +30,7 @@ namespace pitaya {
 			}
 			bool stop = evaluate(action, state_stack, tokenizer);
 			if (stop) {
-				bool error = action.type != ActionType::ERROR;
+				bool error = action.type == ActionType::ERROR;
 				if (file.is_open()) {
 					if (error) {
 						file << "ERROR\n";
