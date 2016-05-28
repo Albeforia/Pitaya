@@ -236,7 +236,7 @@ namespace pitaya {
 				file << "[ SRCONFLICT in " << state.m_id << " ]\n"
 					<< '\t' << sym << '\n'
 					<< '\t' << m_grammar.get_production(conflict.value) << '\n'
-					<< "resolved to\t" << sym << "\n\n";
+					<< "resolved to\t" << m_grammar.get_production(conflict.value) << "\n\n";
 			}
 			m_conflict_count--;
 			return true;
